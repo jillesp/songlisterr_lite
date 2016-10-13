@@ -1,0 +1,18 @@
+<ion-view view-title="{{setlist.setlistName}}" cache-view="false">
+    <ion-nav-bar class="bar-dark">
+        <ion-nav-buttons side="left"><button class="button" ng-click="back()"><i class="ion-ios-arrow-back"></i></button></ion-nav-buttons>
+        <ion-nav-buttons side="right"><button class="button" ng-click="editRoles()"><i class="ion-edit"></i></button></ion-nav-buttons>
+    </ion-nav-bar>
+      <ion-content class="padding">
+            <div class="info band"> 
+              <p class="header">Assigned Band Roles:</p>
+
+              <ion-item class="wrapper" ng-repeat="role in roles" type="item-text-wrap">
+                <div class="assignment">
+                  <label>{{role.roleName}}:</label>
+                  <p>{{role.roleUser}}</p>
+                </div>
+              </ion-item>
+          </div>
+      </ion-content>
+</ion-view>

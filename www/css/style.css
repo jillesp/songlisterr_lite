@@ -1,0 +1,187 @@
+* {box-sizing: border-box;}
+input {width: 100%;}
+button img {max-width: 28px !important; }
+
+::-webkit-scrollbar { display: none; }
+
+i {font-size: 24px; color: #888; cursor: pointer;}
+
+.options {font-size: 16px; color: #888; float: right;}
+
+.info {width: 100%; margin: 10px auto; padding: 10px; border-bottom: 3px solid #FFF; overflow: hidden;}
+.info p {font-size: 12px; color: #CCC; margin: 10px auto;}
+.info label {font-size: 13px; color: #888; font-weight: bold; margin: 10px auto 0; display: block;}
+.info span {margin: 0; display: block; font-size: 12px; color: #33adff; margin: 0 0 0 5px;}
+.info > div {float: left; width: 33.33%;}
+.info > div i {text-align: right; display: block; width: 100%;}
+.edit label {text-align: left;}
+.edit label span {font-size: 10px; display: inline-block; margin: 0 0 0 10px;}
+.edit input {display: inline-block; border: 1px solid #888; padding: 10px;}
+
+.editInfo {width: 100px; height: 30px; font-size: 12px; color: #FFF; background: #33cd5f; font-weight: bold; display: block; margin: 30px auto; border: none; outline: none; border-radius: 10px;}
+
+.songAction {height: 60px !important; margin: 0; width: 100%; border: none;}
+.songAction > * {float: left; margin-top: -8px;}
+.songAction i {padding: 8px 8px 8px 10px; text-align: left; border-radius: 100px; background: #ff8533; width: 40px; color: #FFF;}
+.songAction h2 {margin-left: 20px; margin-top: 2px;}
+
+.buttons, .button {border: none; outline: none;}
+
+.setlist {margin: 0 auto 50px;}
+.setlist p {font-size: 12px; color: #888; margin: 20px auto 10px; text-align: left;}
+.setlist select, .setlist option {width: 100%; background: #FFF; color: #888; padding: 5px; font-size: 12px;}
+.setlist textarea {min-height: 150px; resize: none; width: 100%; border: 1px solid #888;}
+.setlist span {width: 100% !important;}
+
+.song, .setlist {margin: 0 auto 50px ;}
+
+p.required {padding: 5px 0; color: #990000; font-size: 10px; text-align: left;}
+
+.band {background: #FFF; margin: 0; padding: 10px; border: 1px solid #F2F2F2;}
+.band > div {width: 50%; float: left; border-top: 1px solid #F2F2F2;}
+.band p.header {margin: 0 auto 15px; text-align: left; font-weight: bold; color: #ff8533;}
+.band p {text-align: left; color: #888; font-size: 15px; display: block !important; color: #33adff; font-size: 10px;}
+.band label {display: block !important; text-align: left;}
+
+.heading {font-size: 16px; color: #ff8533; text-align: center;}
+
+.search .container {overflow: scroll; clear: both;}
+.buttonGroup {box-shadow: 0px -5px 41px -8px rgba(0,0,0,0.75); border-top: 1px solid #F8F8F8; z-index: 5; width: 500px;}
+.buttonGroup .query {height: 40px; width: 100px; background: #FFF; color: #888; font-size: 12px; display: block; float: left;}
+.buttonGroup .query p {text-align: center; margin-top: 10px;}
+.underline {border-bottom: 3px #ff8533 solid;}
+
+.container.browse {overflow: hidden;}
+.buttonGroup.browse {width: 100%;}
+.buttonGroup.browse .query {width: 50%;}
+.buttonGroup.browse .disabled {background: #CCC;}
+
+.search {width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important;}
+.search form {overflow: hidden; border-bottom: 1px solid #F2F2F2;}
+.search form input {padding: 10px; position: relative; z-index: 10; float: left; width: 80%; height: 40px !important;}
+.search form input[placeholder] {color: #CCC;}
+.search form .searchBtn {float: left; width: 20%; height: 40px; outline: none; border: none; background: #ff8533;}
+.search form .searchBtn i {color: #FFF;}
+
+.padding {border: none !important; width: 100% !important; max-width: 100% !important; margin-bottom: 20px !important;}
+.padding .wrapper {overflow: hidden; height: 70px !important; background: #FFF; width: 90% !important; max-width: 90% !important; margin: 10px auto;}
+.padding .wrapper div {vertical-align: middle !important;}
+
+.action {padding: 0 !important; background: #f2f2f2;}
+
+.pane {background-color: #F8F8F8 !important;}
+.content {box-shadow: 0px 0px 40px -12px rgba(0,0,0,0.75) !important;}
+
+.pinMsg {color: #888; text-align: center; margin: 50px auto 0;}
+
+.sideMenuParent {height: 100%;}
+.sideMenu {overflow: hidden; height: 100%; background: #444;}
+.sideMenu .button {text-align: center; height: 100%; vertical-align: middle; background: none; display: block; overflow: hidden;}
+.sideMenu .button:active,
+.sideMenu .button:hover,
+.sideMenu .button:focus {background: #1a1a1a !important; color: #ff8533 !important;}
+
+.sideMenu .button.two {float: left; width: 50%;}
+.sideMenu .button i {font-size: 32px; color: #FFF; vertical-align: middle; line-height: 70px;}
+
+.listItem {margin: 15px 10px 0; background: none;}
+.listItem .heading {font-weight: bold; font-size: 15px; text-align: left; margin: 0; color: #888;} 
+.listItem .subheading {font-size: 12px; margin: 0;}
+.listItem .subheading span:nth-child(1) {color: #ff8533;}
+.listItem .subheading span:nth-child(2) {color: #33adff;}
+
+.centered * {text-align: center;}
+
+.songCard {margin: 10px auto; max-width: 95%; background: #FFF; padding: 5px 20px 0; box-shadow: 0px 0px 5px 2px rgba(199,199,199,1);}
+.sheet {margin: 0px auto 10px; position: relative; max-width: 90%;}
+.sheet .lyrics {margin: 0 0 0 5px; color: #444; }
+.sheet .lyrics a {color: #888;}
+.sheet .chords {top: -15px; position: absolute; color: #ac3973; left: 0; margin: 0;}
+.sheet .headers {position: absolute; top: 0; left: 5px; font-weight: bold; font-family: Arial !important; color: #ff6666; text-transform: uppercase;}
+.sheet p {line-height: 45px; font-size: 10px; left: 15px; font-family: "Courier"; min-width: 500px;}
+p.chorded.lyrics {line-height: 20px;}
+p.chorded.headers {line-height: 20px;}
+
+.sheetmusic * {font-family: "Courier";}
+.sheetmusic > div {width: 100%; float: none;}
+.sheetmusic p {line-height: 45px;}
+.sheetmusic textarea {min-height: 500px; width: 100%; display: block;}
+.sheetmusic button {outline: none; border: none; width: 100%; height: 50px; color: #FFF;}
+.sheetmusic .preview {background: #bf4040;}
+.sheetmusic .submit {background: #ac3973;}
+
+.sheetmusic .results {margin: 0; line-height: auto;}
+.sheetmusic .section {position: relative; width: 100% !important;}
+.sheetmusic .lyrics {font-size: 12px; width: 100% !important;}
+.sheetmusic .chords {font-size: 12px; color: #ac3973; position: absolute; top: -35px; left: 15px; letter-spacing: -1px; width: 100% !important;}
+
+.settings {overflow: hidden;}
+.settings p, .settings > div {float: left; width: 50%;}
+.settings > div .item {background: none; border: none;}
+
+.chordCtrl {background: none;}
+
+.right-buttons i {color: #FFF;}
+.right-buttons img {margin-top: 2px;}
+
+.tabs {height: 65px !important; padding: 0 !important; box-shadow: 0px 0px 40px -12px rgba(0,0,0,0.75) !important; background: #888;}
+.tabs .tabs-item {max-width: none !important; width: 100% !important; vertical-align: middle !important;}
+.tabs .icon {margin-top: 10px !important;}
+.tabs i {color: #888;}
+
+.tab-item {max-width: 100%; background: #FFF; opacity: 1;}
+.tab-item-active {background: #888; border-top: #ff8533 solid 4px; position: relative; margin-top: -10px; border-radius: 5px 5px 0 0;}
+.tab-item-active i {color: #FFF;}
+.tab-item-active .tab-title {color: #FFF;}
+
+.track {height: 20px !important; width: 42px !important;}
+.track .handle {height: 15px; width: 20px;}
+
+.ion-android-more-vertical {margin-top: 5px;}
+.ion-ios-locked {font-size: 10px; position: absolute; top: 5px; right: 10px; display: none;}
+
+img.spotify {width: 42px;}
+
+.controls {height: 40px; width: 100%; position: fixed; top: 40px; background: #FFF; border-top: 2px solid #CCC; box-shadow: 0px -5px 41px -8px rgba(0,0,0,0.75); z-index: 8;}
+.controls > div {float: left;}
+.controls button {outline: none; border: none; background: #ff8533; width: 25px; height: 25px; margin: 8px 1px 0; border-radius: 100px;}
+.controls div button i {color: #FFF; line-height: 14px; font-size: 18px; position: relative;}
+.controls div > * {float: left;}
+.controls label {font-size: 10px; display: block; margin: 12px 5px 0;}
+.controls .chords .item-toggle {padding-right: 40px; border: none;}
+.controls .chords .item-toggle .toggle {top: 0; margin: 6px 0 0; left: 0;}
+.controls .chords .item-toggle .toggle .handle {top: 8px;}
+.controls .nav button {border-radius: 0; width: 100%; height: 38px; margin: 0;}
+
+.controls .transpose {width: 35%;}
+.controls .chords {width: 32%;}
+.controls .jump {width: 23%;}
+.controls .nav {width: 5%;}
+
+.songLanding {padding: 40px 0 200px 0 !important; overflow-y: scroll !important;}
+
+.controls.two {top: 80px; box-shadow: none; border: none;}
+.controls.two  * {height: 38px; border: none; outline: none; background: #FFF;}
+.controls.two form {overflow: hidden;}
+.controls.two form select {float: left; width: 80%;}
+.controls.two form button {float: left; width: 20%; background: #ff8533; border-radius: 0; margin: 0;}
+.controls.two form button i {color: #FFF; background: none;}
+
+.platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader) {height: 40px !important;}
+
+.songLanding .option {font-size: 30px; margin: 15px 0 0 0; color: #1a1a1a;}
+
+.btnRole {width: 100%; background: #ff8533; outline: none; border: none; color: #FFF; height: 40px; margin: 20px 2.5%; width: 45%; float: left; border-radius: 10px;}
+
+.assignment label {margin-top: -5px;}
+.assignment p {margin: -2.5px 0 0 10px;}
+
+.bar.bar-dark {border: none;}
+.sortie {height: 40px; background: #444;}
+.sortie form {width: 100%; overflow: hidden;}
+.sortie .orderBy {float: left; background: none; width: 100%; outline: none; border: none; width: 65%; display: block; margin: 0 auto; padding: 10px;}
+.sortie * {float: left; color: #FFF !important; background: #444;}
+.sortie label {display: block; margin: 0 auto; font-size: 15px; text-align: center; padding: 10px; width: 25%; font-weight: bold;}
+.sortie button {display: block; width: 10%; float: right; outline: none; border: none; text-align: center;}
+.sortie button i {line-height: 41px;}
+.sortie:focus, .sortie:active {outline: none !important; border: none !important;}

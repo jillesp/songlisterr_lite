@@ -1,0 +1,29 @@
+<ion-view view-title="{{song.songTitle}}" cache-view="false">
+  <ion-nav-bar class="bar-dark">
+      <ion-nav-buttons side="left"><button class="button" ng-click="back()"><i class="ion-ios-arrow-back"></i></button></ion-nav-buttons>
+  </ion-nav-bar>
+  <ion-content class="padding action" style="margin-top: 2px;">
+     <ion-list>
+        <ion-item class="songAction" type="item-text-wrap" ng-click="goYoutube()">
+            <i class="ion-social-youtube" style="padding-left: 8px;"></i>
+            <h2>Visit on Youtube</h2>
+        </ion-item>
+        <ion-item class="songAction" type="item-text-wrap" ng-click="goSpotify()">
+            <img src="img/spotify.png" style="float: left; width: 42px;">
+            <h2>Visit on Spotify</h2>
+        </ion-item>
+        <ion-item class="songAction" type="item-text-wrap" >
+            <i class="ion-link" style="padding-left: 10px;"></i>
+            <h2>Open in Others</h2>
+        </ion-item>
+        <ion-item class="songAction" type="item-text-wrap" ng-click="addToSetlist({{song.songId}})">
+            <i class="ion-android-add-circle"></i>
+            <h2>Add to Setlist</h2>
+        </ion-item>
+        <ion-item class="songAction" type="item-text-wrap"  ng-click="delete({{song.songId}})">
+            <i class="ion-ios-trash" style="padding-left: 13px;"></i>
+            <h2>Delete</h2>
+        </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

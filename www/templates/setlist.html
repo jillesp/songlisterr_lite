@@ -1,0 +1,10 @@
+
+<ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-controller="SetlistCtrl">
+  <ion-tab title="Info" icon="ion-ios-information" href="setlist/setlists/{{sharedProperty2.data}}/info">
+    <ion-nav-view name="setlist-details" cache-view="false"></ion-nav-view>
+  </ion-tab>
+
+   <ion-tab title="Actions" icon="ion-ios-play" href="setlist/setlists/{{sharedProperty2.data}}/action">
+    <ion-nav-view name="setlist-action" cache-view="false"></ion-nav-view>
+  </ion-tab>
+</ion-tabs>

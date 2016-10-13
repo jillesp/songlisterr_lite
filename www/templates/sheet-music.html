@@ -1,0 +1,15 @@
+<ion-view view-title="Sheet Music" cache-view="false">
+    <ion-nav-bar class="bar-dark">
+        <ion-nav-buttons side="left"><button class="button" ng-click="back()"><i class="ion-ios-arrow-back"></i></button></ion-nav-buttons>
+        <ion-nav-buttons side="right"><button class="button" ng-click="verify()"><i class="ion-android-checkmark-circle"></i></button></ion-nav-buttons>
+    </ion-nav-bar>
+      <ion-content class="padding">
+        <div class="info sheetmusic">
+            <form ng-submit="verify()" name="form.sheet">
+                <p class="instructions" style="line-height: 14px; color: #888;"><strong style="color:#000;">Instructions:</strong> <br/>Type in the lyrics and the chords, placing the latter on which text you want it to appear above. Enclose all chords in [brackets]. <br/><br/> To enable section jumping, wrap section in &lt;a&gt; tags, like so: <br/>&lt;a id="chorus"&gt;Lyrics here..&lt;/a&gt;</p>
+                <textarea ng-model="model.sheet" style="padding: 10px;"></textarea>
+                <button class="submit" type="submit">Submit</button>
+            </form>
+        </div>
+      </ion-content>
+</ion-view>

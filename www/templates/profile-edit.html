@@ -1,0 +1,23 @@
+<ion-view view-title="Edit Profile" cache-view="false">
+    <ion-nav-bar class="bar-dark">
+        <ion-nav-buttons side="left"><button class="button" ng-click="back()"><i class="ion-ios-arrow-back"></i></button></ion-nav-buttons>
+        <ion-nav-buttons side="right"><button class="button" ng-click="saveEditProfile()"><i class="ion-checkmark-round"></i></button></ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content class="padding">
+
+        <div class="info edit">
+            <p>Edit Information:</p>
+
+            <form ng-submit="saveEditProfile()" name="form.editProfile">
+                <label>Name: </label>
+                <p> {{profileUser.username}}"</p>
+
+                <label>Email: </label>
+                <input type="text" placeholder="{{profileUser.email}}" ng-model="model.email">
+
+                <label>Band Role: </label>
+                <input type="text" placeholder="{{profileUser.profileBandRole}}" ng-model="model.bandrole">
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,38 @@
+
+<ion-view view-title="{{song.title}}">
+<ion-nav-bar class="bar-balanced">
+    <ion-nav-back-button><i class="ion-chevron-left" style="padding: 0 10px;"></i></ion-nav-back-button>
+</ion-nav-bar>
+  <ion-content class="padding">
+    <img ng-src="{{song.album}}" style="width: 125px; height: 125px; display: block; margin: 20px auto;">
+    <p style="text-align: center; font-size 20px; font-weight: bold;">{{song.title}}</p>
+    <p style="text-align: center; font-size: 14px;">by {{song.artist}}</p>
+
+    <div class="info">
+    	<p>Additional Information:</p>
+
+    	<label>Album: </label>
+    	<span>{{song.albumName}}</span>
+
+    	<label>Release: </label>
+    	<span>{{song.year}}</span>
+
+    	<label>Genre: </label>
+    	<span>{{song.genre}}</span>
+
+    	<label>Key: </label>
+    	<span>{{song.key}}</span>
+
+    	<label>BPM: </label>
+    	<span>{{song.bpm}}</span>
+
+    	<label>Tempo: </label>
+    	<span>{{song.tempo}}</span>
+    </div>
+
+    <p style="font-size: 15px; color: #888; margin: 30px auto 10px; text-align: center;">Lyrics:</p>
+    <p style="font-size: 12px; color: #888; margin: 0 auto 20px; text-align: center;">Chords: <span style="font-weight:bold;">{{song.chords}}</span></p>
+    <p style="font-size: 12px; text-align: center; white-space: pre-wrap;">{{song.lyrics}}</p>
+
+  </ion-content>
+</ion-view>

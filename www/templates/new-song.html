@@ -1,0 +1,33 @@
+<ion-view view-title="New Song" cache-view="false">
+    <ion-nav-bar class="bar-dark">
+        <ion-nav-buttons side="left"><button class="button" ng-click="back()"><i class="ion-ios-arrow-back"></i></button></ion-nav-buttons>
+        <ion-nav-buttons side="right"><button class="button" ng-click="verify()"><i class="ion-android-checkmark-circle"></i></button></ion-nav-buttons>
+    </ion-nav-bar>
+      <ion-content class="padding">
+        <div class="info edit song">
+            <form ng-submit="verify()" name="form.newSong" novalidate="">
+                <p class="required" ng-show="req">Some fields are required.</p>
+                <label>Song Title: <span>**required</span></label>
+                <input type="text" placeholder="Title" ng-model="model.songtitle" required>
+                
+                <label>Song Artist: <span>**required</span></label>
+                <input type="text" placeholder="Artist" ng-model="model.artist" required>
+
+                <label>Album: </label>
+                <input type="text" placeholder="Album Name" ng-model="model.albumName">
+
+                <label>Key: </label>
+                <input type="text" placeholder="Key" ng-model="model.key">
+
+                <label style="margin: 20px auto 0;">Upload New Album Art: </label>
+                <input type="text" placeholder="Image URL" ng-model="model.albumArt">
+
+                <label style="margin: 20px auto 0;">Youtube Link: </label>
+                <input type="text" placeholder="Youtube URL" ng-model="model.youtube">
+
+                <label>Spotify Link: </label>
+                <input type="text" placeholder="Spotify URL" ng-model="model.spotify">
+            </form>
+        </div>
+      </ion-content>
+</ion-view>

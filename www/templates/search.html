@@ -1,0 +1,82 @@
+<ion-view view-title="Search" cache-view="false">
+  <ion-nav-bar class="bar-dark">
+    
+  </ion-nav-bar>
+
+  <ion-content class="padding search">
+      <form name="form.search" ng-submit="search()">
+        <input type="text" placeholder="Search Query" ng-model="model.query" required ng-click="model.query = '';">
+        <button type="submit" class="searchBtn"><i class="ion-ios-search-strong"></i></button>
+      </form>
+      <div class="container">
+        <div class="buttonGroup">
+              <div class="query" ng-click="activateOne()" ng-class="{'underline': isActiveOne}"><p>Title</p></div>
+              <div class="query" ng-click="activateTwo()" ng-class="{'underline': isActiveTwo}"><p>Artist</p></div>
+              <div class="query" ng-click="activateThree()" ng-class="{'underline': isActiveThree}"><p>Album</p></div>
+              <div class="query" ng-click="activateFour()" ng-class="{'underline': isActiveFour}"><p>Setlist</p></div>
+              <div class="query" ng-click="activateFive()" ng-class="{'underline': isActiveFive}"><p>Tags</p></div>
+        </div>
+      </div>      
+
+      <ion-item class="wrapper" ng-repeat="song in songs" type="item-text-wrap" ng-show="val">
+          <ion-side-menus>
+            <ion-side-menu-content edge-drag-threshold="50"> 
+                <div class="listItem" ng-click="go({{song.songId}})">
+                  <h2 ng-click="go({{song.songId}})" class="heading">{{song.songTitle}}</h2>
+                  <p ng-click="go({{song.songId}})" class="subheading"><span>{{song.songAlbumName}}</span> by <span>{{song.songArtist}}</span></p>
+                </div>
+            </ion-side-menu-content>
+            <ion-side-menu side="left" width="60" class="sideMenuParent">
+              <ion-content class="sideMenu">
+                <a class="button" ng-click="addToSetlist({{song.songId}})">
+                  <i class="ion-android-add-circle"></i>
+                </a>
+              </ion-content>
+            </ion-side-menu>
+            <ion-side-menu side="right" width="120">
+              <ion-content class="sideMenu">
+                <a class="button two">
+                  <i class="ion-code-download"></i>
+                </a>
+                <a class="button two" ng-click="delete({{song.songId}})">
+                  <i class="ion-trash-a"></i>
+                </a>                
+              </ion-content>
+            </ion-side-menu>            
+          </ion-side-menus>
+      </ion-item>
+
+      <ion-item class="wrapper" ng-hide="val" ng-repeat="setlist in setlists" type="item-text-wrap" ng-click="goSetlist({{setlist.setlistId}})">
+         <ion-side-menus>
+            <ion-side-menu-content edge-drag-threshold="50"> 
+                <div class="listItem" style="overflow:hidden;">
+                  <div style="float:left; border: none;" ng-click="go({{setlist.setlistId}})">
+                    <h2 class="heading">{{setlist.setlistName}}</h2>
+                    <p class="subheading"><span>{{setlist.setlistSongs.length}}</span> Tracks, by <span style="color: #00cc44;">{{setlist.ownerId}}</span></p>
+                  </div>
+                  <i class="ion-android-more-vertical" style="float:right; color: #1a1a1a;" ng-click="goInfo({{setlist.setlistId}})"></i>
+                </div>
+            </ion-side-menu-content>
+            <ion-side-menu side="left" width="60" class="sideMenuParent">
+              <ion-content class="sideMenu">
+                <a class="button" ng-click="practice()">
+                  <i class="ion-ipod"></i>
+                </a>
+              </ion-content>
+            </ion-side-menu>
+            <ion-side-menu side="right" width="120">
+              <ion-content class="sideMenu">
+                <a class="button two">
+                  <i class="ion-code-download"></i>
+                </a>
+                <a class="button two" ng-click="deleteItem({{setlist.setlistId}})">
+                  <i class="ion-trash-a"></i>
+                </a>                
+              </ion-content>
+            </ion-side-menu>            
+          </ion-side-menus>
+      </ion-item>
+
+    </ion-list>
+  </ion-content>
+</ion-view>

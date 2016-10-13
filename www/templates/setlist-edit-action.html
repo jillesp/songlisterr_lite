@@ -1,0 +1,15 @@
+
+<ion-view view-title="{{song.songTitle}}" cache-view="false">
+  <ion-nav-bar class="bar-dark">
+      <ion-nav-buttons side="left"><button class="button" ng-click="back()"><i class="ion-ios-arrow-back"></i></button></ion-nav-buttons>
+      <ion-nav-buttons side="right"><button class="button" ng-click="editSong({{song.songId}})"><i class="ion-edit"></i></button></ion-nav-buttons>
+  </ion-nav-bar>
+  <ion-content class="padding action">
+     <ion-list >
+      <ion-item class="songAction" type="item-text-wrap" ng-click="go({{setlist.setlistId}})">
+          <i class="ion-ios-color-wand-outline"></i>
+          <h2>Edit Setlist Roles</h2>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

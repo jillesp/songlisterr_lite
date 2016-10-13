@@ -1,0 +1,16 @@
+<ion-view view-title="{{setlist.setlistName}}" cache-view="false">
+    <ion-nav-bar class="bar-dark">
+        <ion-nav-buttons side="left"><button class="button" ng-click="back()"><i class="ion-ios-arrow-back"></i></button></ion-nav-buttons>
+        <ion-nav-buttons side="right"><button class="button" ng-click="editBandRoles({{setlist.setlistId}})"><i class="ion-edit"></i></button></ion-nav-buttons>
+    </ion-nav-bar>
+      <ion-content class="padding">
+        <div>
+            <p style="font-size 20px; font-weight: bold; margin: 10px auto 0; color: #ff8533;">{{setlist.setlistName}}</p>
+            <p style="font-size: 10px; margin: 10px auto 0; line-height: 12px;">Spotify URL: <span style="color: #33adff;">{{setlist.setlistSpotify}}</span></p>
+        </div>
+        <div class="notes" style="margin: 20px auto;">
+            <p style="color: #888; font-size: 12px;">Notes: </p>
+            <p style="min-height: 100px; background: #FFF; padding: 10px; font-size: 12px; color: #888;">{{setlist.setlistNotes}}</p>
+        </div>
+      </ion-content>
+</ion-view>

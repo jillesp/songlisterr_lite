@@ -1,0 +1,21 @@
+<ion-view view-title="Edit Setlist" cache-view="false">
+    <ion-nav-bar class="bar-dark">
+        <ion-nav-buttons side="left"><button class="button" ng-click="back()"><i class="ion-ios-arrow-back"></i></button></ion-nav-buttons>
+        <ion-nav-buttons side="right"><button class="button" ng-click="verify()"><i class="ion-android-checkmark-circle"></i></button></ion-nav-buttons>
+    </ion-nav-bar>
+      <ion-content class="padding">
+        <div class="info edit setlist">
+            <form ng-submit="verify()" name="form.newSetlist">
+                <p class="required" ng-show="req">Setlist Title is required.</p>
+                <label>Setlist Title <span>**required</span></label>
+                <input type="text" ng-model="model.name" required>
+
+                <label>Spotify URL</label>
+                <input type="text" ng-model="model.spotify">
+
+                <label>Notes: </label>
+                <textarea ng-model="model.notes" style="padding: 10px;"></textarea>
+            </form>
+        </div>
+      </ion-content>
+</ion-view>

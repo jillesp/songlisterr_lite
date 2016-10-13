@@ -1,0 +1,36 @@
+<ion-view view-title="{{song.songTitle}}" cache-view="false">
+    <ion-nav-title>
+        <p>{{song.songTitle}}</p>
+    </ion-nav-title>
+    <ion-nav-bar class="bar-dark">
+        <ion-nav-buttons side="left"><button class="button" ng-click="back()"><i class="ion-ios-arrow-back"></i></button></ion-nav-buttons>
+        <ion-nav-buttons side="right"><button class="button" ng-click="editSong({{song.songId}})"><i class="ion-edit"></i></button></ion-nav-buttons>
+    </ion-nav-bar>
+      <ion-content class="padding">
+        <img ng-src="{{song.songAlbum}}" style="width: 125px; height: 125px; display: block; margin: 20px auto;">
+        <p style="text-align: center; font-size 20px; font-weight: bold;">{{song.songTitle}}</p>
+        <p style="text-align: center; font-size: 14px;">by {{song.songArtist}}</p>
+
+        <div class="info centered">
+        	<p>Additional Information:</p>
+
+        	<label>Album: </label>
+        	<span>{{song.songAlbumName}}</span>
+
+        	<label>Key: </label>
+        	<span>{{song.songKey}}</span>
+
+            <label>Tags: </label>
+            <span>{{song.songTags}}</span>
+
+            <label>Youtube URL: </label>
+            <span style="color: #33adff;">{{song.songYoutube}}</span>
+
+            <label>Spotify URL: </label>
+            <span style="color: #33adff;">{{song.songSpotify}}</span>
+
+            <label>Other URL: </label>
+            <span style="color: #33adff;">{{song.songOther}}</span>
+        </div>
+      </ion-content>
+</ion-view>
