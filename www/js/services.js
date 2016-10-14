@@ -1,8 +1,8 @@
 angular.module('songDroid.services', ['LocalStorageModule'])
 
-.service('Songs', function(localStorageService) {
+.service('Songs', function(localStorageService, $q, pouchDB) {
 
- function getData() {
+  function getData() {
 
       var i = new Image();
 
@@ -13,11 +13,30 @@ angular.module('songDroid.services', ['LocalStorageModule'])
               VERSION = 'v1';
 
         Backendless.initApp(APPLICATION_ID, SECRET_KEY, VERSION);
-        localStorageService.set('localSongs', Backendless.Persistence.of(Songs).find());
+        
+        //create document
+        // db.put(songsDoc);
+        // localStorageService.set('localSongs', Backendless.Persistence.of(Songs).find());
+
+
+        // var pouchPromise = db.allDocs({startkey: 'move_', endkey: 'move_\uffff', include_docs: true});
+        // $q.when(pouchPromise).then(function(recordList){
+        //     $scope.recordList = recordList;
+        //     console.log($scope.recordlist);
+        // });
+
+
+          
+
+        // localStorageService.set('localSongs', songs);
         localStorageService.set('localSetlists', Backendless.Persistence.of(Setlists).find());
         localStorageService.set('localUsers', Backendless.Persistence.of(Backendless.User).find());
         localStorageService.set('localRoles', Backendless.Persistence.of(Roles).find());
         console.log("User is online. Connection success.");
+
+
+
+        console.log(songs);
       }
 
       i.onerror = function() {
@@ -27,21 +46,17 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       i.src = 'http://gfx2.hotmail.com/mail/uxp/w4/m4/pr014/h/s7.png?d=' + escape(Date());
   }
 
+
       return {
         all: function() {
           getData();
           songs = localStorageService.get('localSongs').data;
           return songs;
         },
-        active: function() {  
-          getData();
-          songs = localStorageService.get('localSongs').data;
-          songs = songs.filter(
-              function(songs){
-                return songs.isActive == 1
-              }
-          );
-          return songs;
+        active: function(songsList) {  
+          var songsList = db.allDocs().then(function (result){}).catch(function (err) {console.log(err);});
+          console.log(songsList);
+          return songsList;
         },
         get: function(songId) {
           getData();
@@ -57,10 +72,10 @@ angular.module('songDroid.services', ['LocalStorageModule'])
           getData();
           songs = localStorageService.get('localSongs');
             ctr = 1;
-            for (var i = 0; i < songs.data.length; i++) {
-                ctr++;
-            }
-            return ctr;
+            // for (var i = 0; i < songs.data.length; i++) {
+            //     ctr++;
+            // }
+            // return ctr;
         },
         search: function(type, string) {
           getData();

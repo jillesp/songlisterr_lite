@@ -2,9 +2,13 @@ angular.module('songDroid.controllers', [])
 
 .controller('BrowseCtrl', function($scope, Songs, $location, $stateParams, sharedProperties, $ionicSideMenuDelegate) {
 
-    $scope.songs = Songs.active();
+    Songs.active().then(function(songs) {
+      $scope.songs = songs;
+    });
+
+    console.log(Songs.active());
     $scope.isActiveOne = true;
-    
+          
     $scope.go = function(id) {
         sharedProperties.setProperty(id);
         $location.path('tab/' + id + '/landing');

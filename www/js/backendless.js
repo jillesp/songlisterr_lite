@@ -1,4 +1,3 @@
-
 function Songs(args) {
     args = args || {};
     this.songId = args.songId || "";
@@ -81,9 +80,10 @@ function saveEditSong(id, info) {
 
 function saveNewSong(info) {
 
-    var object = new Setlists();
+    // var object = new Setlists();
 
-    var newSong = new Songs({
+    var newSong = {
+        _id: new Date().toISOString(),
         songId: parseInt(info.count),
         songTitle: String(info.title),
         songArtist: String(info.artist),
@@ -94,9 +94,16 @@ function saveNewSong(info) {
         songSpotify: String(info.spotify),
         ownerId: "testUser",
         isActive: 1
-    })
-    var updated = Backendless.Persistence.of(Songs).save(newSong);
-    console.log("Song saved: " + updated);
+    }
+    
+    // var updated = Backendless.Persistence.of(Songs).save(newSong);
+    var updated = db.put(newSong, function callback(err, results) {
+        if (!err) {
+            console.log('Successfully posted song!');
+        } else {
+            console.log(err);
+        }
+    });
 }
 
 function saveNewSetlist(info) {

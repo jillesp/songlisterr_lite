@@ -1,4 +1,7 @@
-angular.module('songDroid', ['ionic', 'ngSanitize', 'hmTouchEvents','songDroid.controllers', 'songDroid.services'])
+var db = new PouchDB('songlisterr');
+var remoteCouch = false;
+
+angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','songDroid.controllers', 'songDroid.services'])
 
 .config(function($ionicConfigProvider) {
     $ionicConfigProvider.tabs.position('bottom');
