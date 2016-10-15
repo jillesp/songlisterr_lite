@@ -18,7 +18,6 @@ angular.module('songDroid.controllers', [])
 
     $scope.go = function() {
         id = this.$$watchers[5].last;
-
         sharedProperties.setProperty(id);
         $location.path('tab/' + id + '/landing');
     };
@@ -218,19 +217,18 @@ angular.module('songDroid.controllers', [])
 })
 
 .controller('SongLandingCtrl', function($scope, $stateParams, Songs, $location, $state, sharedProperties, $window, $sanitize, $sce, $ionicScrollDelegate, $ionicLoading, $timeout, $anchorScroll, $ionicPopover) {
-  // console.log(sharedProperties.getProperty());
   var songs = Songs.get(sharedProperties.getProperty()).then(function(result) {
-    $scope.songs = result;
+    $scope.song = result;
   });
 
-  // $scope.song = Songs.get(sharedProperties.getProperty());
-  // $scope.go = function(id) {
-  //     $location.path('song/' + id + '/info');
-  // };
+  $scope.go = function(id) {
+      $location.path('song/' + id + '/info');
+  };
 
   $scope.back = function() {
     $location.path('tab/browse');
   }
+
   $scope.goSpotify = function() {
     var url = Songs.get(sharedProperties.getProperty()).songSpotify;
     console.log(url);

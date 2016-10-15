@@ -94,9 +94,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
         //TEST: OK
         get: function(songId) {
           var song = String(songId);
-          console.log(songId);
-          
-          var song = $q.when(db.get(songId).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
+              song = $q.when(db.get(songId).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
           return song;
         },
         count: function() {

@@ -1,6 +1,6 @@
 <ion-view view-title="{{song.songTitle}}" cache-view="false" class="songLanding">
     <ion-nav-title>
-        <p>{{song.doc.title}}</p>
+        <p>{{song.title}}</p>
     </ion-nav-title>
     <ion-nav-bar class="bar-dark">
         <ion-nav-buttons side="right"><button class="button" ng-click="goSpotify()"><img src="img/spotify.png"></button></ion-nav-buttons>
@@ -9,18 +9,18 @@
       <ion-content class="padding songLanding">
         <div hm-swipeleft="prevSong()" hm-swiperight="nextSong()" class="songCard">
             <div>
-                <p style="font-size 20px; font-weight: bold; margin: 10px auto 0; color: #ff8533;">{{song.doc.title}}</p>
-                <p style="font-size: 10px; margin-top: -5px;"><span style="color:#33adff;">{{song.doc.albumName}}</span> by <span style="color:#33adff;">{{song.doc.artist}}</span></p>
+                <p style="font-size 20px; font-weight: bold; margin: 10px auto 0; color: #ff8533;">{{song.title}}</p>
+                <p style="font-size: 10px; margin-top: -5px;"><span style="color:#33adff;">{{song.albumName}}</span> by <span style="color:#33adff;">{{song.artist}}</span></p>
             </div>
             <div class="info">
                 <div>
                 	<label>BPM: </label>
-                	<span>{{song.doc.bpm}}</span>
+                	<span>{{song.bpm}}</span>
                 </div>
                 <div>
                     <label>Original Key: </label>
-                    <span>{{song.doc.key}}</span>
-                </div>            
+                    <span>{{song.key}}</span>
+                </div>
                 <div ng-click="(go({{song.songId}}))">
                     <i class="ion-android-more-vertical option"></i>
                 </div>
@@ -29,8 +29,8 @@
         <p style="font-size: 12px; text-align: left; color: #888; font-weight: bold; max-width: 90%; margin: 0 auto;">Lyrics: </p>
         <div class="sheet" style="padding-bottom: 300px;" hm-doubletap="toggleChords" hm-swipeleft="transposeDown({{song.songId}})" hm-swiperight="transposeUp({{song.songId}})">
             <p style="white-space:pre-wrap;" class="lyrics" ng-class="{'chorded': !model.chordsVisible}" ng-bind-html="to_trusted(song.songLyrics)"></p>
-            <p style="white-space:pre-wrap;" class="chords" ng-show="model.chordsVisible">{{song.doc.chords}}</p>
-            <p style="white-space:pre-wrap;" class="headers" ng-class="{'chorded': !model.chordsVisible}" >{{song.doc.headers}}</p>
+            <p style="white-space:pre-wrap;" class="chords" ng-show="model.chordsVisible">{{song.chords}}</p>
+            <p style="white-space:pre-wrap;" class="headers" ng-class="{'chorded': !model.chordsVisible}" >{{song.headers}}</p>
         </div>
       </ion-content>
       <div class="controls">
@@ -45,14 +45,14 @@
             <div class="chords">
                 <label>Chords:</label>
                 <ion-toggle style="height: 38px;" toggle-class="toggle-dark" style="transform: scale(1); background: none;" ng-model="model.chordsVisible" name="chordsVisible"></ion-toggle>
-            </div>        
+            </div>
             <div class="jump">
                 <label>Jump:</label>
                 <button ng-click="jump()"><i class="ion-arrow-graph-up-right" style="left: -2px;"></i></button>
-            </div>    
+            </div>
             <div class="nav">
                 <button ng-click="nextSong()"><i class="ion-ios-arrow-right"></i></button>
-            </div>            
+            </div>
       </div>
         <div class="controls two" ng-show="doJump">
         <form ng-submit="jumpTo()" name="form.jumper">
@@ -63,4 +63,3 @@
         </form>
         </div>
 </ion-view>
-
