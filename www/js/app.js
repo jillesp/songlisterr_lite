@@ -1,5 +1,4 @@
-var db = new PouchDB('songlisterr');
-var remoteCouch = false;
+var db = new PouchDB('testDB');
 
 angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','songDroid.controllers', 'songDroid.services'])
 

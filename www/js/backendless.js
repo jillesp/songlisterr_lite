@@ -1,3 +1,5 @@
+var db = new PouchDB('testDB');
+
 function Songs(args) {
     args = args || {};
     this.songId = args.songId || "";

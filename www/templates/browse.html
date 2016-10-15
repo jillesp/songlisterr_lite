@@ -15,26 +15,25 @@
       <ion-item class="wrapper" ng-repeat="song in songs" type="item-text-wrap" >
           <ion-side-menus>
             <ion-side-menu-content edge-drag-threshold="50"> 
-                <div class="listItem" ng-click="go({{song.songId}})">
+                <div class="listItem" ng-click="go({{song.id}})">
                   <i class="ion-ios-locked"></i>
-                  <h2 ng-click="go({{song.songId}})" class="heading">{{song.songTitle}}</h2>
-                  <p ng-click="go({{song.songId}})" class="subheading"><span>{{song.songAlbumName}}</span> by <span>{{song.songArtist}}</span></p>
-                  <p>HELLO</p>
+                  <h2 ng-click="go({{song.id}})" class="heading">{{song.doc.title}}</h2>
+                  <p ng-click="go({{song.id}})" class="subheading"><span>{{song.doc.albumName}}</span> by <span>{{song.doc.artist}}</span></p>
                 </div>
             </ion-side-menu-content>
             <ion-side-menu side="left" width="60" class="sideMenuParent">
               <ion-content class="sideMenu">
-                <a class="button" ng-click="addToSetlist({{song.songId}})">
+                <a class="button" ng-click="addToSetlist({{song.id}})">
                   <i class="ion-android-add-circle"></i>
                 </a>
               </ion-content>
             </ion-side-menu>
             <ion-side-menu side="right" width="120">
               <ion-content class="sideMenu">
-                <a class="button two" ng-click="saveOffline({{song.songId}})">
+                <a class="button two" ng-click="saveOffline({{song.id}})">
                   <i class="ion-code-download"></i>
                 </a>
-                <a class="button two" ng-click="delete({{song.songId}})">
+                <a class="button two" ng-click="delete({{song.id}})">
                   <i class="ion-trash-a"></i>
                 </a>                
               </ion-content>
@@ -46,24 +45,24 @@
       <ion-item class="wrapper" ng-repeat="localSong in localSongs" type="item-text-wrap" >
           <ion-side-menus>
             <ion-side-menu-content edge-drag-threshold="50"> 
-                <div class="listItem" ng-click="go({{localSong.songId}})">
-                  <h2 ng-click="go({{localSong.songId}})" class="heading">{{localSong.songTitle}}</h2>
-                  <p ng-click="go({{localSong.songId}})" class="subheading">{{localSong.songArtist}} | {{localSong.songAlbumName}}</p>
+                <div class="listItem" ng-click="go({{localSong.id}})">
+                  <h2 ng-click="go({{localSong.id}})" class="heading">{{localSong.songTitle}}</h2>
+                  <p ng-click="go({{localSong.id}})" class="subheading">{{localSong.songArtist}} | {{localSong.songAlbumName}}</p>
                 </div>
             </ion-side-menu-content>
             <ion-side-menu side="left" width="60" class="sideMenuParent">
               <ion-content class="sideMenu">
-                <a class="button" ng-click="addToSetlist({{localSong.songId}})">
+                <a class="button" ng-click="addToSetlist({{localSong.id}})">
                   <i class="ion-android-add-circle"></i>
                 </a>
               </ion-content>
             </ion-side-menu>
             <ion-side-menu side="right" width="120">
               <ion-content class="sideMenu">
-                <a class="button two" ng-click="saveOffline({{localSong.songId}})">
+                <a class="button two" ng-click="saveOffline({{localSong.id}})">
                   <i class="ion-code-download"></i>
                 </a>
-                <a class="button two" ng-click="delete({{localSong.songId}})">
+                <a class="button two" ng-click="delete({{localSong.id}})">
                   <i class="ion-trash-a"></i>
                 </a>                
               </ion-content>

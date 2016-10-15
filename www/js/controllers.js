@@ -1,15 +1,23 @@
 angular.module('songDroid.controllers', [])
 
-.controller('BrowseCtrl', function($scope, Songs, $location, $stateParams, sharedProperties, $ionicSideMenuDelegate) {
+.controller('BrowseCtrl', function($scope, Songs, $location, $stateParams, sharedProperties, $ionicSideMenuDelegate, $q) {
+    //TEST OK
 
-    Songs.active().then(function(songs) {
-      $scope.songs = songs;
+    var songs = Songs.active().then(function(result) {
+      $scope.songs = result;
+      // return result;
     });
 
-    console.log(Songs.active());
+
+    //next option: this
+    setTimeout(function () {
+        $scope.$apply();
+    }, 2000);
+
     $scope.isActiveOne = true;
           
     $scope.go = function(id) {
+        $q.when(id, function(){console.log(id)});
         sharedProperties.setProperty(id);
         $location.path('tab/' + id + '/landing');
     };
@@ -210,10 +218,14 @@ angular.module('songDroid.controllers', [])
 
 .controller('SongLandingCtrl', function($scope, $stateParams, Songs, $location, $state, sharedProperties, $window, $sanitize, $sce, $ionicScrollDelegate, $ionicLoading, $timeout, $anchorScroll, $ionicPopover) {
 
-  $scope.song = Songs.get(sharedProperties.getProperty());
-  $scope.go = function(id) {
-      $location.path('song/' + id + '/info');
-  };
+  var songs = Songs.get(sharedProperties.getProperty()).then(function(result) {
+    $scope.songs = result;
+  });
+
+  // $scope.song = Songs.get(sharedProperties.getProperty());
+  // $scope.go = function(id) {
+  //     $location.path('song/' + id + '/info');
+  // };
 
   $scope.back = function() {
     $location.path('tab/browse');
