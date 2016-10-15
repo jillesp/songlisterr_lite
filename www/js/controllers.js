@@ -10,14 +10,15 @@ angular.module('songDroid.controllers', [])
 
 
     //next option: this
-    setTimeout(function () {
-        $scope.$apply();
-    }, 2000);
+    // setTimeout(function () {
+    //     $scope.$apply();
+    // }, 2000);
 
     $scope.isActiveOne = true;
-          
-    $scope.go = function(id) {
-        $q.when(id, function(){console.log(id)});
+
+    $scope.go = function() {
+        id = this.$$watchers[5].last;
+
         sharedProperties.setProperty(id);
         $location.path('tab/' + id + '/landing');
     };
@@ -197,7 +198,7 @@ angular.module('songDroid.controllers', [])
                      info.spotify = $scope.model.spotify;
                      info.count = count++;
 
-                saveNewSong(info); 
+                saveNewSong(info);
                 $state.reload();
                 $state.go('tab.songs', {}, {cache: false});
             }
@@ -217,7 +218,7 @@ angular.module('songDroid.controllers', [])
 })
 
 .controller('SongLandingCtrl', function($scope, $stateParams, Songs, $location, $state, sharedProperties, $window, $sanitize, $sce, $ionicScrollDelegate, $ionicLoading, $timeout, $anchorScroll, $ionicPopover) {
-
+  // console.log(sharedProperties.getProperty());
   var songs = Songs.get(sharedProperties.getProperty()).then(function(result) {
     $scope.songs = result;
   });
@@ -309,7 +310,7 @@ angular.module('songDroid.controllers', [])
           index = index + 1;
       console.log("Next index:" + index);
 
-      if(index < storage.length && index >= 0){   
+      if(index < storage.length && index >= 0){
         var nextSong = storage[index];
         sharedProperties.setProperty(nextSong);
         $location.path('tab/' + nextSong + '/landing');
@@ -319,7 +320,7 @@ angular.module('songDroid.controllers', [])
         $location.path('tab/' + nextSong + '/landing');
         console.log("Index defaulted to " + storage.length - 1);
       }
-   };  
+   };
 
    $scope.nextSong = function() {
     $ionicLoading.show({
@@ -334,13 +335,13 @@ angular.module('songDroid.controllers', [])
     var songs = Songs.active();
     angular.forEach(songs, function(song){
         storage.push(song.songId);
-    });    
+    });
       var current = Songs.get(sharedProperties.getProperty()).songId;
       var index = storage.indexOf(current);
           index = index - 1;
       console.log("Next index:" + index);
 
-      if(index >= 0 && index < storage.length){   
+      if(index >= 0 && index < storage.length){
         var nextSong = storage[index];
         sharedProperties.setProperty(nextSong);
         $location.path('tab/' + nextSong + '/landing');
@@ -350,7 +351,7 @@ angular.module('songDroid.controllers', [])
         $location.path('tab/' + nextSong + '/landing');
         console.log("Index defaulted to 0.");
       }
-   };  
+   };
 
 
 })
@@ -379,7 +380,7 @@ angular.module('songDroid.controllers', [])
     var url = Songs.get(sharedProperties.getProperty()).songOthers;
     console.log(url);
     $window.open(url);
-  };  
+  };
   $scope.back = function() {
     $location.path('tab/'+sharedProperties.getProperty()+'/landing');
   }
@@ -474,7 +475,7 @@ angular.module('songDroid.controllers', [])
 
   $scope.back = function() {
     $location.path('tab/setlists');
-  };  
+  };
 
   $scope.sendEmail = function() {
     var title = getSetlist(sharedProperties2.getProperty()).setlistName;
@@ -487,7 +488,7 @@ angular.module('songDroid.controllers', [])
 
     console.log(arr);
     sendMail(content, arr);
-  };  
+  };
 
 
 })
@@ -534,7 +535,7 @@ angular.module('songDroid.controllers', [])
                  } else {
                    info.notes = "";
                  }
-                 
+
               saveEditedSetlist(info, id);
               $location.path('setlist/setlists/' + id + '/info');
          } else if ($scope.form.newSetlist.$pristine == true) {
@@ -579,7 +580,7 @@ angular.module('songDroid.controllers', [])
 })
 
 .controller('SearchCtrl', function($scope, Songs, Setlists, $location, $stateParams, sharedProperties, sharedProperties2, $state, $ionicScrollDelegate ) {
-    
+
     var type = "songs";
     var column = "songTitle";
     $scope.val = true;
@@ -605,8 +606,8 @@ angular.module('songDroid.controllers', [])
         $scope.isActiveFive = false;
 
         type = "songs";
-        column = "songArtist";   
-        $scope.val = true;     
+        column = "songArtist";
+        $scope.val = true;
     }
     $scope.activateThree = function(){
         $scope.isActiveOne = false;
@@ -616,8 +617,8 @@ angular.module('songDroid.controllers', [])
         $scope.isActiveFive = false;
 
         type = "songs";
-        column = "songAlbumName";  
-        $scope.val = true;      
+        column = "songAlbumName";
+        $scope.val = true;
     }
     $scope.activateFour = function(){
         $scope.isActiveOne = false;
@@ -627,8 +628,8 @@ angular.module('songDroid.controllers', [])
         $scope.isActiveFive = false;
 
         type = "setlists";
-        column = "setlistName"; 
-        $scope.val = false;       
+        column = "setlistName";
+        $scope.val = false;
     }
     $scope.activateFive = function(){
         $scope.isActiveOne = false;
@@ -638,9 +639,9 @@ angular.module('songDroid.controllers', [])
         $scope.isActiveFive = true;
 
         type = "songs";
-        column = "songTags"; 
-        $scope.val = true;      
-    }                
+        column = "songTags";
+        $scope.val = true;
+    }
 
           $scope.model = { query: '' };
           $scope.form = {};
@@ -685,7 +686,7 @@ angular.module('songDroid.controllers', [])
    var user = "F2AC443E-7F6D-4D8E-FFD1-5BEA2E195300";
 
     var pinned = Setlists.pinned(user);
-    
+
     $scope.isPinned = true;
 
       if(!pinned[0].isUndefinedOrNull){
@@ -772,7 +773,7 @@ angular.module('songDroid.controllers', [])
 .controller('ProfileEditCtrl', function($scope, sharedProperties, Users, $location, $state, $stateParams) {
     $scope.profileUser =Users.data();
     var profileid = Users.data().objectId
-  
+
     $scope.model = { email: '' };
     $scope.form = {};
 

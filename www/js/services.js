@@ -4,8 +4,8 @@ angular.module('songDroid.services', ['LocalStorageModule'])
   function getData() {
     db.bulkDocs([
       {
-          title : 'Lisa Says', 
-          artist: "Lisa", 
+          title : 'Lisa Says',
+          artist: "Lisa",
           albumName: "Lisa's Debut",
           albumCover: null,
           songKey: "A",
@@ -23,8 +23,8 @@ angular.module('songDroid.services', ['LocalStorageModule'])
           _id: 'songs0001'
       },
       {
-          title : 'Staple Stable', 
-          artist: "supercell", 
+          title : 'Staple Stable',
+          artist: "supercell",
           albumName: "Bakemonogatari OPM",
           albumCover: null,
           songKey: "A",
@@ -42,8 +42,8 @@ angular.module('songDroid.services', ['LocalStorageModule'])
           _id: 'songs0002'
       },
       {
-          title : 'Photograph', 
-          artist: "Ed Sheeran", 
+          title : 'Photograph',
+          artist: "Ed Sheeran",
           albumName: "x",
           albumCover: null,
           songKey: "A",
@@ -71,7 +71,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
         VERSION = 'v1';
 
     Backendless.initApp(APPLICATION_ID, SECRET_KEY, VERSION);
-        
+
     localStorageService.set('localSetlists', Backendless.Persistence.of(Setlists).find());
     localStorageService.set('localUsers', Backendless.Persistence.of(Backendless.User).find());
     localStorageService.set('localRoles', Backendless.Persistence.of(Roles).find());
@@ -86,14 +86,17 @@ angular.module('songDroid.services', ['LocalStorageModule'])
         },
 
         //TEST: OK
-        active: function(songsList) { 
+        active: function(songsList) {
           var songsList = $q.when(db.allDocs({include_docs: true, startkey: "songs"}).then(function (result){ return result.rows; }).catch(function (err) {console.log(err);}));
           console.log(songsList);
           return songsList;
         },
         //TEST: OK
         get: function(songId) {
-          var song = $q.when(db.get(songId).then(function (doc){ return doc; }).catch(function (err) {console.log(err);}));
+          var song = String(songId);
+          console.log(songId);
+          
+          var song = $q.when(db.get(songId).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
           return song;
         },
         count: function() {
@@ -141,7 +144,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
     };
 })
 
-.service('Setlists', function(localStorageService) {  
+.service('Setlists', function(localStorageService) {
 
    function getData() {
 
@@ -261,7 +264,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
 
       i.src = 'http://gfx2.hotmail.com/mail/uxp/w4/m4/pr014/h/s7.png?d=' + escape(Date());
   }
-    
+
     return {
       all: function() {
         getData();
@@ -336,5 +339,3 @@ angular.module('songDroid.services', ['LocalStorageModule'])
 
     }
 })
-
-
