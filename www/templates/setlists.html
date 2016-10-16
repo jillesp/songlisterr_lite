@@ -6,7 +6,7 @@
 
   <ion-content class="padding action">
       <ion-item class="wrapper" ng-repeat="setlist in setlists" type="item-text-wrap">
-         <ion-side-menus>
+         <ion-side-menus enable-menu-with-back-views="true" >
             <ion-side-menu-content edge-drag-threshold="50"> 
                 <div class="listItem" style="overflow:hidden;">
                   <div style="float:left; border: none;" ng-click="go({{setlist.setlistId}})">
@@ -16,14 +16,14 @@
                   <i class="ion-android-more-vertical" style="float:right; color: #1a1a1a;" ng-click="goInfo({{setlist.setlistId}})"></i>
                 </div>
             </ion-side-menu-content>
-            <ion-side-menu side="left" width="60" class="sideMenuParent">
+            <ion-side-menu  side="left" width="60" class="sideMenuParent">
               <ion-content class="sideMenu">
                 <a class="button" ng-click="practice({{setlist.setlistId}})">
                   <i class="ion-ipod"></i>
                 </a>
               </ion-content>
             </ion-side-menu>
-            <ion-side-menu side="right" width="120">
+            <ion-side-menu  side="right" width="120">
               <ion-content class="sideMenu">
                 <a class="button two">
                   <i class="ion-code-download"></i>

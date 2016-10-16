@@ -19,7 +19,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
           bpm: null,
           sections: null,
           headers: null,
-          isActive: 1,
+          status: 'Active',
           _id: 'songs0001'
       },
       {
@@ -38,7 +38,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
           bpm: null,
           sections: null,
           headers: null,
-          isActive: 1,
+          status: 'Active',
           _id: 'songs0002'
       },
       {
@@ -57,7 +57,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
           bpm: null,
           sections: null,
           headers: null,
-          isActive: 1,
+          status: 'Active',
           _id: 'songs0003'
       },
     ]).then(function (result) {
@@ -86,6 +86,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
 
         //TEST: OK
         active: function(songsList) {
+          // getData();
           var songsList = $q.when(db.allDocs({include_docs: true, startkey: "songs"}).then(function (result){ return result.rows; }).catch(function (err) {console.log(err);}));
           return songsList;
         },
@@ -96,7 +97,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
           return song;
         },
         count: function() {
-          var songs = $q.when(db.allDocs({include_docs: true, startkey: "songs"}).then(function (result){ return result.total_rows; }).catch(function (err) {console.log(err);}));
+          var songs = $q.when(db.allDocs({include_docs: true, startkey: "songs"}).then(function (result){ return result.total_rows + 1; }).catch(function (err) {console.log(err);}));
           return songs;
         },
         search: function(type, string) {

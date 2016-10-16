@@ -19,21 +19,21 @@
       </div>      
 
       <ion-item class="wrapper" ng-repeat="song in songs" type="item-text-wrap" ng-show="val">
-          <ion-side-menus>
+          <ion-side-menus enable-menu-with-back-views="true" >
             <ion-side-menu-content edge-drag-threshold="50"> 
                 <div class="listItem" ng-click="go({{song.songId}})">
                   <h2 ng-click="go({{song.songId}})" class="heading">{{song.title}}</h2>
                   <p ng-click="go({{song.songId}})" class="subheading"><span>{{song.albumName}}</span> by <span>{{song.artist}}</span></p>
                 </div>
             </ion-side-menu-content>
-            <ion-side-menu side="left" width="60" class="sideMenuParent">
+            <ion-side-menu  side="left" width="60" class="sideMenuParent">
               <ion-content class="sideMenu">
                 <a class="button" ng-click="addToSetlist({{song.songId}})">
                   <i class="ion-android-add-circle"></i>
                 </a>
               </ion-content>
             </ion-side-menu>
-            <ion-side-menu side="right" width="120">
+            <ion-side-menu  side="right" width="120">
               <ion-content class="sideMenu">
                 <a class="button two">
                   <i class="ion-code-download"></i>
@@ -47,7 +47,7 @@
       </ion-item>
 
       <ion-item class="wrapper" ng-hide="val" ng-repeat="setlist in setlists" type="item-text-wrap" ng-click="goSetlist({{setlist.setlistId}})">
-         <ion-side-menus>
+         <ion-side-menus enable-menu-with-back-views="true" >
             <ion-side-menu-content edge-drag-threshold="50"> 
                 <div class="listItem" style="overflow:hidden;">
                   <div style="float:left; border: none;" ng-click="go({{setlist.setlistId}})">
@@ -57,14 +57,14 @@
                   <i class="ion-android-more-vertical" style="float:right; color: #1a1a1a;" ng-click="goInfo({{setlist.setlistId}})"></i>
                 </div>
             </ion-side-menu-content>
-            <ion-side-menu side="left" width="60" class="sideMenuParent">
+            <ion-side-menu  side="left" width="60" class="sideMenuParent">
               <ion-content class="sideMenu">
                 <a class="button" ng-click="practice()">
                   <i class="ion-ipod"></i>
                 </a>
               </ion-content>
             </ion-side-menu>
-            <ion-side-menu side="right" width="120">
+            <ion-side-menu  side="right" width="120">
               <ion-content class="sideMenu">
                 <a class="button two">
                   <i class="ion-code-download"></i>

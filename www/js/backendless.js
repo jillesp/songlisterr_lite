@@ -1,4 +1,5 @@
 var db = new PouchDB('testDB');
+// db.destroy(db);
 
 function Songs(args) {
     args = args || {};
@@ -68,7 +69,7 @@ function saveEditSong(id, info) {
       urlOther: String(info.urlOther)
     });
     }).then(function(response) {
-      console.log("Song saved.")
+      console.log(msg)
     }).catch(function (err) {
       console.log(err);
     });
@@ -77,7 +78,7 @@ function saveEditSong(id, info) {
 //TEST OK
 function saveNewSong(info) {
   db.put({
-      _id: 'songs000' + String(info.result),
+      _id: 'songs000' + String(info.id),
       title: String(info.title),
       artist: String(info.artist),
       albumName: String(info.albumName),
@@ -107,11 +108,15 @@ function saveNewSetlist(info) {
 }
 
 function deleteItem(id) {
-    var update = getObject(id).objectId;
-        update = Backendless.Persistence.of(Songs).findById(update);
-        update["isActive"] = 0;
-        update = Backendless.Persistence.of(Songs).save(update);
-    console.log("Song deleted: " + updated);
+  var id = String(id);
+  db.get(id).then(function(doc) {
+    return db.remove(doc);
+  }).then(function (result) {
+    console.log("Song deleted.");
+  }).catch(function (err) {
+    console.log(err);
+  });
+  return "Song deleted.";
 }
 
 function deleteSetlist(id) {

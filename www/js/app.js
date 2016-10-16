@@ -48,7 +48,8 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
                     templateUrl: 'templates/browse.html',
                     controller: 'BrowseCtrl'
                 }
-            }
+            },
+            params:{msg:null}
         })
 
             .state('tab.new-song', {
@@ -88,7 +89,8 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
                                 templateUrl: 'templates/song-info.html',
                                 controller: 'SongInfoCtrl'
                             }
-                        }
+                        },
+                        params:{msg:null}
                     })
 
                     .state('song.song-action', {
@@ -128,7 +130,8 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
                                 templateUrl: 'templates/edit-song.html',
                                 controller: 'SongEditCtrl'
                             }
-                        }
+                        },
+                        params:{msg:null}
                     })
 
                     .state('song-edit.edit-action', {

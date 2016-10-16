@@ -85,7 +85,7 @@ p.required {padding: 5px 0; color: #990000; font-size: 10px; text-align: left;}
 .sideMenu .button i {font-size: 32px; color: #FFF; vertical-align: middle; line-height: 70px;}
 
 .listItem {margin: 15px 10px 0; background: none;}
-.listItem .heading {font-weight: bold; font-size: 15px; text-align: left; margin: 0; color: #888;} 
+.listItem .heading {font-weight: bold; font-size: 15px; text-align: left; margin: 0; color: #888;}
 .listItem .subheading {font-size: 12px; margin: 0;}
 .listItem .subheading span:nth-child(1) {color: #ff8533;}
 .listItem .subheading span:nth-child(2) {color: #33adff;}
@@ -185,3 +185,10 @@ img.spotify {width: 42px;}
 .sortie button {display: block; width: 10%; float: right; outline: none; border: none; text-align: center;}
 .sortie button i {line-height: 41px;}
 .sortie:focus, .sortie:active {outline: none !important; border: none !important;}
+
+.notification {color: #FFF; text-align: center; height: 30px; line-height: 30px; font-family: "Arial", sans-serif; font-weight: bold; background-color; transition: 1s;}
+.notification.success {background-color: #DFF0D8; color: green;}
+.notification.error {background-color: #F2DEDE; color: red;}
+.notification.hidden {display: none;}
+
+.notification p {margin: 0;}

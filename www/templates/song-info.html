@@ -6,7 +6,13 @@
         <ion-nav-buttons side="left"><button class="button" ng-click="back()"><i class="ion-ios-arrow-back"></i></button></ion-nav-buttons>
         <ion-nav-buttons side="right"><button class="button" ng-click="editSong({{song.songId}})"><i class="ion-edit"></i></button></ion-nav-buttons>
     </ion-nav-bar>
-      <ion-content class="padding">
+
+      <ion-content>
+
+        <div class="notification" ng-class="{'success': hasParams}">
+          <p>{{msg}}</p>
+        </div>
+
         <img ng-src="{{song.albumCover}}" style="width: 125px; height: 125px; display: block; margin: 20px auto;">
         <p style="text-align: center; font-size 20px; font-weight: bold;">{{song.title}}</p>
         <p style="text-align: center; font-size: 14px;">by {{song.artist}}</p>

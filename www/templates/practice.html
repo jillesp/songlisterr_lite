@@ -6,30 +6,30 @@
   <ion-content class="padding">
       <p class="heading" ng-show="!isPinned">Pinned Setlist Songs:</p>
       <ion-item class="wrapper" ng-repeat="song in songs" type="item-text-wrap">
-         <ion-side-menus>
-            <ion-side-menu-content edge-drag-threshold="50"> 
+         <ion-side-menus enable-menu-with-back-views="true" >
+            <ion-side-menu-content edge-drag-threshold="50">
                 <div class="listItem" ng-click="go({{song.songId}})">
                   <h2 ng-click="go({{song.songId}})" class="heading">{{song.title}}</h2>
                   <p ng-click="go({{song.songId}})" class="subheading">{{song.artist}} | {{song.albumName}}</p>
                 </div>
             </ion-side-menu-content>
-            <ion-side-menu side="left" width="60" class="sideMenuParent">
+            <ion-side-menu  side="left" width="60" class="sideMenuParent">
               <ion-content class="sideMenu">
                 <a class="button" ng-click="addToSetlist({{song.songId}})">
                   <i class="ion-android-add-circle"></i>
                 </a>
               </ion-content>
             </ion-side-menu>
-            <ion-side-menu side="right" width="120">
+            <ion-side-menu  side="right" width="120">
               <ion-content class="sideMenu">
                 <a class="button two">
                   <i class="ion-code-download"></i>
                 </a>
                 <a class="button two" ng-click="delete({{song.songId}})">
                   <i class="ion-trash-a"></i>
-                </a>                
+                </a>
               </ion-content>
-            </ion-side-menu>            
+            </ion-side-menu>
           </ion-side-menus>
       </ion-item>
   <p class="pinMsg" ng-show="isPinned">There are no pinned setlists.</p>
