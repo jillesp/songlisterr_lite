@@ -8,8 +8,8 @@
             <form ng-submit="verify()" name="form.newSong" novalidate="">
                 <p class="required" ng-show="req">Some fields are required.</p>
                 <label>Song Title: <span>**required</span></label>
-                <input type="text" placeholder="Title" ng-model="model.songtitle" required>
-                
+                <input type="text" placeholder="Title" ng-model="model.title" required>
+
                 <label>Song Artist: <span>**required</span></label>
                 <input type="text" placeholder="Artist" ng-model="model.artist" required>
 
@@ -18,6 +18,9 @@
 
                 <label>Key: </label>
                 <input type="text" placeholder="Key" ng-model="model.key">
+
+                <label>BPM: </label>
+                <input type="text" placeholder="Key" ng-model="model.bpm">
 
                 <label style="margin: 20px auto 0;">Upload New Album Art: </label>
                 <input type="text" placeholder="Image URL" ng-model="model.albumArt">

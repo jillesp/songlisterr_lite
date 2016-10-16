@@ -31,7 +31,7 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
 
         .state('tab.search', {
             url: '/search',
-            cache: false,         
+            cache: false,
             views: {
                 'search': {
                     templateUrl: 'templates/search.html',
@@ -194,7 +194,7 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
                         controller: 'SetlistItemsCtrl'
                     }
                 }
-            })            
+            })
 
             .state('setlist', {
                 url: "/setlist",
@@ -235,7 +235,7 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
                     }
                 })
 
-            
+
 
             .state('setlist-edit', {
                 url: "/setlist-edit",
@@ -253,7 +253,7 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
                             controller: 'SetlistEditActionCtrl'
                         }
                     }
-                })             
+                })
 
                 .state('setlist-edit.setlists-roles-edit', {
                     url: '/setlists/:setlistId/roles/edit',
@@ -264,7 +264,7 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
                             controller: 'EditRolesCtrl'
                         }
                     }
-                })           
+                })
 
                 .state('setlist-edit.setlists-roles-add', {
                     url: '/setlists/:setlistId/roles/add',
@@ -275,7 +275,7 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
                             controller: 'AddRolesCtrl'
                         }
                     }
-                })   
+                })
 
                 .state('setlist-edit.setlists-details-edit', {
                     url: '/setlists/:setlistId/edit-setlist',

@@ -1,37 +1,40 @@
-<ion-view view-title="{{song.songTitle}}" cache-view="false">
+<ion-view view-title="{{song.title}}" cache-view="false">
     <ion-nav-bar class="bar-dark">
         <ion-nav-buttons side="left"><button class="button" ng-click="back()"><i class="ion-ios-arrow-back"></i></button></ion-nav-buttons>
         <ion-nav-buttons side="right"><button class="button" ng-click="saveEditSong()"><i class="ion-android-checkmark-circle"></i></button></ion-nav-buttons>
     </ion-nav-bar>
       <ion-content class="padding">
-        <img ng-src="{{song.songAlbum}}" style="width: 125px; height: 125px; display: block; margin: 20px auto;">
-        <p style="text-align: center; font-size 20px; font-weight: bold;">{{song.songTitle}}</p>
-        <p style="text-align: center; font-size: 14px;">by {{song.songArtist}}</p>
+        <img ng-src="{{song.albumCover}}" style="width: 125px; height: 125px; display: block; margin: 20px auto;">
+        <p style="text-align: center; font-size 20px; font-weight: bold;">{{song.title}}</p>
+        <p style="text-align: center; font-size: 14px;">by {{song.artist}}</p>
 
         <div class="info edit">
         	<p>Edit Information:</p>
 
             <form ng-submit="saveEditSong()" name="form.editSong">
                 <label>Song Title: </label>
-                <input type="text" placeholder="{{song.songTitle}}" ng-model="model.title">
-                
+                <input type="text" placeholder="{{song.title}}" ng-model="model.title">
+
                 <label>Song Artist: </label>
-                <input type="text" placeholder="{{song.songArtist}}" ng-model="model.artist">
+                <input type="text" placeholder="{{song.artist}}" ng-model="model.artist">
 
             	<label>Album: </label>
-            	<input type="text" placeholder="{{song.songAlbumName}}" ng-model="model.albumName">
+            	<input type="text" placeholder="{{song.albumName}}" ng-model="model.albumName">
 
             	<label>Key: </label>
-            	<input type="text" placeholder="{{song.songKey}}" ng-model="model.key">
+            	<input type="text" placeholder="{{song.key}}" ng-model="model.key">
+
+              <label>BPM: </label>
+            	<input type="text" placeholder="{{song.bpm}}" ng-model="model.bpm">
 
                 <label style="margin: 20px auto 0;">Upload New Album Art: </label>
-                <input type="text" placeholder="{{song.songAlbum}}" ng-model="model.albumArt">
+                <input type="text" placeholder="{{song.albumCover}}" ng-model="model.albumArt">
 
                 <label style="margin: 20px auto 0;">Youtube Link: </label>
-                <input type="text" placeholder="{{song.songYoutube}}" ng-model="model.youtube">
+                <input type="text" placeholder="{{song.urlYoutube}}" ng-model="model.youtube">
 
                 <label>Spotify Link: </label>
-                <input type="text" placeholder="{{song.songSpotify}}" ng-model="model.spotify">
+                <input type="text" placeholder="{{song.urlSpotify}}" ng-model="model.spotify">
 
                 <label>Other Link: </label>
                 <input type="text" placeholder="{{song.songOthers}}" ng-model="model.others">

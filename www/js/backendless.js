@@ -50,61 +50,47 @@ function Roles(args) {
 }
 
 // FUNCTIONS
+
+//TEST OK
 function saveEditSong(id, info) {
-    var objectId = getObject(id).objectId;
-    var update = Backendless.Persistence.of(Songs).findById(objectId);
-
-    if(info.title != null) {
-        update["songTitle"] = String(info.title);
-    }
-    if(info.artist != null) {
-        update["songArtist"] = String(info.artist);
-    }
-    if(info.albumName != null) {
-        update["songAlbumName"] = String(info.albumName);
-    }
-    if(info.key != null) {
-        update["songKey"] = String(info.key);
-    }
-    if(info.albumArt != null) {
-        update["songAlbum"] = String(info.albumArt);
-    }
-    if(info.youtube != null) {
-        update["songYoutube"] = String(info.youtube);
-    }
-    if(info.spotify != null) {
-        update["songSpotify"] = String(info.spotify);
-    }
-
-    update = Backendless.Persistence.of(Songs).save(update);
-    console.log("Song edited: " + updated);
+  db.get(id).then(function(doc) {
+    return db.put({
+      _id: id,
+      _rev: doc._rev,
+      title: String(info.title),
+      artist: String(info.artist),
+      albumName: String(info.albumName),
+      albumArt: String(info.albumArt),
+      key: String(info.key),
+      bpm: String(info.bpm),
+      urlYouTube: String(info.urlYouTube),
+      urlSpotify: String(info.urlSpotify),
+      urlOther: String(info.urlOther)
+    });
+    }).then(function(response) {
+      console.log("Song saved.")
+    }).catch(function (err) {
+      console.log(err);
+    });
 }
 
+//TEST OK
 function saveNewSong(info) {
-
-    // var object = new Setlists();
-
-    var newSong = {
-        _id: new Date().toISOString(),
-        songId: parseInt(info.count),
-        songTitle: String(info.title),
-        songArtist: String(info.artist),
-        songAlbumName: String(info.albumName),
-        songAlbum: String(info.albumArt),
-        songKey: String(info.key),
-        songYoutube: String(info.youtube),
-        songSpotify: String(info.spotify),
-        ownerId: "testUser",
-        isActive: 1
-    }
-    
-    // var updated = Backendless.Persistence.of(Songs).save(newSong);
-    var updated = db.put(newSong, function callback(err, results) {
-        if (!err) {
-            console.log('Successfully posted song!');
-        } else {
-            console.log(err);
-        }
+  db.put({
+      _id: 'songs000' + String(info.result),
+      title: String(info.title),
+      artist: String(info.artist),
+      albumName: String(info.albumName),
+      albumArt: String(info.albumArt),
+      key: String(info.key),
+      bpm: String(info.bpm),
+      urlYouTube: String(info.urlYouTube),
+      urlSpotify: String(info.urlSpotify),
+      urlOther: String(info.urlOther)
+    }).then(function(response) {
+      console.log("Song saved.")
+    }).catch(function (err) {
+      console.log(err);
     });
 }
 
@@ -137,16 +123,13 @@ function deleteSetlist(id) {
 }
 
 function getObject(songId) {
-    // var songs = localStorage.getItem('localSongs');
     var songs = Backendless.Persistence.of(Songs).find();
-        // songs = JSON.parse(songs);
      for (var i = 0; i < songs.data.length; i++) {
         if (songs.data[i].songId === parseInt(songId)) {
           return (songs.data[i]);
         }
      }
 }
-
 function getSetlist(setlistId) {
     var setlists = Backendless.Persistence.of(Setlists).find();
         // setlists = JSON.parse(setlists);
@@ -156,7 +139,6 @@ function getSetlist(setlistId) {
         }
      }
 }
-
 function addSongToSetlist(songId, setlistId) {
      var songId = getObject(songId).objectId;
      var setlistId = getSetlist(setlistId).objectId;
@@ -174,6 +156,7 @@ function addSongToSetlist(songId, setlistId) {
      console.log("Song added to Setlist: " + updated);
 }
 
+//TEST OK
 angular.isUndefinedOrNull = function(val) {
     return angular.isUndefined(val) || val === null
 }
@@ -339,16 +322,16 @@ function sendMail(content, arr) {
     var successCallback = function( response ) {
       console.log( "[ASYNC] message has been sent" );
     };
-     
+
     var failureCallback = function( fault ) {
       console.log( "Error - " + fault.message );
     };
-     
+
     // prepare message bodies (plain and html) and attachment
     var bodyParts = new Bodyparts();
     bodyParts.textmessage = content;
     var attachments = [];
-     
+
     // asynchronous call
     var responder = new Backendless.Async( successCallback, failureCallback );
     Backendless.Messaging.sendEmail( "Songlisterr Update", bodyParts, arr, attachments, responder );

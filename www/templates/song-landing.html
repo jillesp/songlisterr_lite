@@ -1,4 +1,4 @@
-<ion-view view-title="{{song.songTitle}}" cache-view="false" class="songLanding">
+<ion-view view-title="{{song.title}}" cache-view="false" class="songLanding">
     <ion-nav-title>
         <p>{{song.title}}</p>
     </ion-nav-title>
@@ -21,7 +21,7 @@
                     <label>Original Key: </label>
                     <span>{{song.key}}</span>
                 </div>
-                <div ng-click="(go({{song.songId}}))">
+                <div ng-click="go({{song}})">
                     <i class="ion-android-more-vertical option"></i>
                 </div>
             </div>

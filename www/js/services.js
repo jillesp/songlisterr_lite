@@ -80,15 +80,13 @@ angular.module('songDroid.services', ['LocalStorageModule'])
 
       return {
         all: function() {
-          getData();
-          songs = localStorageService.get('localSongs').data;
-          return songs;
+          var songsList = $q.when(db.allDocs({include_docs: true, startkey: "songs"}).then(function (result){ return result.rows; }).catch(function (err) {console.log(err);}));
+          return songsList;
         },
 
         //TEST: OK
         active: function(songsList) {
           var songsList = $q.when(db.allDocs({include_docs: true, startkey: "songs"}).then(function (result){ return result.rows; }).catch(function (err) {console.log(err);}));
-          console.log(songsList);
           return songsList;
         },
         //TEST: OK
@@ -98,13 +96,8 @@ angular.module('songDroid.services', ['LocalStorageModule'])
           return song;
         },
         count: function() {
-          getData();
-          songs = localStorageService.get('localSongs');
-            ctr = 1;
-            // for (var i = 0; i < songs.data.length; i++) {
-            //     ctr++;
-            // }
-            // return ctr;
+          var songs = $q.when(db.allDocs({include_docs: true, startkey: "songs"}).then(function (result){ return result.total_rows; }).catch(function (err) {console.log(err);}));
+          return songs;
         },
         search: function(type, string) {
           getData();

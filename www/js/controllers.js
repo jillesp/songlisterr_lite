@@ -1,34 +1,24 @@
 angular.module('songDroid.controllers', [])
 
 .controller('BrowseCtrl', function($scope, Songs, $location, $stateParams, sharedProperties, $ionicSideMenuDelegate, $q) {
-    //TEST OK
 
-    var songs = Songs.active().then(function(result) {
-      $scope.songs = result;
-      // return result;
-    });
-
-
-    //next option: this
-    // setTimeout(function () {
-    //     $scope.$apply();
-    // }, 2000);
+  //TEST OK
+  Songs.active().then(function(result) {
+    $scope.songs = result;
+    $scope.go = function(data) {
+        sharedProperties.setProperty(data.id);
+        $location.path('tab/' + data.id + '/landing');
+    };
+    $scope.delete = function(data) {
+        deleteItem(data.id);
+        $location.path('/tab/browse');
+    }
+  });
 
     $scope.isActiveOne = true;
 
-    $scope.go = function() {
-        id = this.$$watchers[5].last;
-        sharedProperties.setProperty(id);
-        $location.path('tab/' + id + '/landing');
-    };
-
     $scope.addNewSong = function() {
         $location.path('/tab/browse/new');
-    }
-
-    $scope.delete = function(id) {
-        deleteItem(id);
-        $location.path('/tab/browse');
     }
 
     $scope.toggleLeft = function() {
@@ -162,50 +152,40 @@ angular.module('songDroid.controllers', [])
    }
 })
 
-.controller('AddSongCtrl', function($scope, Songs, $location, $stateParams, $state) {
-   $scope.songs = Songs.all();
+.controller('AddSongCtrl', function($scope, Songs, $stateParams, $state) {
 
-   var count = Songs.count();
+  //TEST OK
+  $scope.model = { title: '' };
+  $scope.form = { newSong: '' };
+  $scope.req = $scope.form.newSong.$invalid;
+  Songs.count().then(function(result) {
+    $scope.songs = result;
+    $scope.verify = function() {
 
-       $scope.model = { title: '' };
-       $scope.form = {};
-
-       $scope.verify = function() {
-//            console.log($scope.form.newSong.$invalid);
-            $scope.req = $scope.form.newSong.$invalid;
-
-            if($scope.form.newSong.$valid == true) {
-                var  info = new Object();
-                     info.title = $scope.model.songtitle;
-                     info.artist = $scope.model.artist;
-
-                     if(!angular.isUndefinedOrNull($scope.model.albumName)){
-                         info.albumName = $scope.model.albumName;
-                     } else {
-                         info.albumName = "Unknown";
-                     }
-
-                     info.key = $scope.model.key;
-
-                     if(!angular.isUndefinedOrNull($scope.model.albumArt)){
-                         info.albumArt = $scope.model.albumArt;
-                     } else {
-                         info.albumArt = "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg";
-                     }
-
-                     info.youtube = $scope.model.youtube;
-                     info.spotify = $scope.model.spotify;
-                     info.count = count++;
-
-                saveNewSong(info);
-                $state.reload();
-                $state.go('tab.songs', {}, {cache: false});
-            }
-       }
+         if($scope.form.newSong.$valid == true) {
+             var  info = new Object();
+                  if(!angular.isUndefinedOrNull($scope.model.title)) { info.title = $scope.model.title; }
+                  if(!angular.isUndefinedOrNull($scope.model.artist)) { info.artist = $scope.model.artist; }
+                  if(!angular.isUndefinedOrNull($scope.model.albumName)){ info.albumName = $scope.model.albumName; } else { info.albumName = "Unknown"; }
+                  if(!angular.isUndefinedOrNull($scope.model.key)) { info.key = $scope.model.key; } else { info.key = "Unspecified" }
+                  if(!angular.isUndefinedOrNull($scope.model.bpm)) { info.bpm = $scope.model.bpm; } else { info.bpm = "Unspecified" }
+                  if(!angular.isUndefinedOrNull($scope.model.albumArt)){ info.albumArt = $scope.model.albumArt; } else { info.albumArt = "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"; }
+                  if(!angular.isUndefinedOrNull($scope.model.youtube)) { info.youtube = $scope.model.youtube; } else { info.youtube = "Unspecified" }
+                  if(!angular.isUndefinedOrNull($scope.model.spotify)) { info.spotify = $scope.model.spotify; } else { info.spotify = "Unspecified" }
+                  info.count = String(result);
+                  saveNewSong(info);
+                  $state.go('tab.songs');
+         }
+    }
+  });
 })
 
 .controller('SongInfoCtrl', function($scope, $stateParams, Songs, $location, $state, sharedProperties) {
-  $scope.song = Songs.get(sharedProperties.getProperty());
+
+  //TEST OK
+  Songs.get(sharedProperties.getProperty()).then(function(result) {
+    $scope.song = result;
+  });
 
   songs = Songs.get(sharedProperties.getProperty());
   $scope.editSong = function(id) {
@@ -217,13 +197,14 @@ angular.module('songDroid.controllers', [])
 })
 
 .controller('SongLandingCtrl', function($scope, $stateParams, Songs, $location, $state, sharedProperties, $window, $sanitize, $sce, $ionicScrollDelegate, $ionicLoading, $timeout, $anchorScroll, $ionicPopover) {
-  var songs = Songs.get(sharedProperties.getProperty()).then(function(result) {
-    $scope.song = result;
-  });
 
-  $scope.go = function(id) {
-      $location.path('song/' + id + '/info');
-  };
+  //TEST OK
+  Songs.get(sharedProperties.getProperty()).then(function(result) {
+    $scope.song = result;
+    $scope.go = function() {
+        $location.path('song/' + result._id + '/info');
+    };
+  });
 
   $scope.back = function() {
     $location.path('tab/browse');
@@ -403,39 +384,47 @@ angular.module('songDroid.controllers', [])
   $scope.setProperty = sharedProperties2.setProperty;
 })
 
-.controller('SongEditCtrl', function($scope, sharedProperties, Songs, $location, $state) {
-  $scope.song = Songs.get(sharedProperties.getProperty());
-  var song = Songs.get(sharedProperties.getProperty());
+.controller('SongEditCtrl', function($scope, sharedProperties, Songs, $state) {
 
-       $scope.model = { title: '' };
-       $scope.form = {};
+  //CONTROLLER TEST OK
+  Songs.get(sharedProperties.getProperty()).then(function(result) {
+    $scope.song = result;
+    var song = result;
 
-       $scope.model.title = song.songTitle;
-       $scope.model.artist = song.songArtist;
-       $scope.model.albumName = song.songAlbumName;
-       $scope.model.key = song.songKey;
-       $scope.model.albumArt = song.songAlbum;
-       $scope.model.youtube = song.songYoutube;
-       $scope.model.spotify = song.songSpotify;
-       $scope.model.others = song.songOthers;
+    $scope.model = { title: '' };
+    $scope.form = {};
 
-  $scope.saveEditSong = function() {
-      var  info = new Object();
-           info.title = $scope.model.title;
-           info.artist = $scope.model.artist;
-           info.albumName = $scope.model.albumName;
-           info.key = $scope.model.key;
-           info.albumArt = $scope.model.albumArt;
-           info.youtube = $scope.model.youtube;
-           info.spotify = $scope.model.spotify;
-           info.others = $scope.model.others;
+    $scope.model.title = song.title;
+    $scope.model.artist = song.artist;
+    $scope.model.albumName = song.albumName;
+    $scope.model.key = song.key;
+    $scope.model.albumArt = song.albumArt;
+    $scope.model.youtube = song.urlYouTube;
+    $scope.model.spotify = song.urlSpotify;
+    $scope.model.others = song.urlOther;
 
-      saveEditSong(sharedProperties.getProperty(), info);
-      $location.path('song/' + sharedProperties.getProperty() + '/info');
-  };
-  $scope.back = function() {
-    $location.path('song/'+sharedProperties.getProperty()+'/info');
-  }
+    $scope.saveEditSong = function() {
+        var  info = new Object();
+        if($scope.model.title != null) { info.title = $scope.model.title; };
+        if($scope.model.artist != null) { info.artist = $scope.model.artist; };
+        if($scope.model.albumName != null) { info.albumName = $scope.model.albumName; };
+        if($scope.model.key != null) { info.key = $scope.model.key; };
+        if($scope.model.bpm != null) { info.bpm = $scope.model.bpm; };
+        if($scope.model.albumArt != null) { info.albumArt = $scope.model.albumArt; };
+        if($scope.model.youtube != null) { info.youtube = $scope.model.youtube; };
+        if($scope.model.spotify != null) { info.spotify = $scope.model.spotify; };
+        if($scope.model.others != null) { info.others = $scope.model.others; };
+        saveEditSong(sharedProperties.getProperty(), info);
+
+        Songs.get(sharedProperties.getProperty()).then(function(){
+          $state.go('song.song-info', $state.$current.params, { reload: true });
+        });
+
+        $scope.back = function() {
+          $state.go('song.song-info', $state.$current.params, { reload: true });
+        }
+    };
+  });
 })
 
 .controller('SongAddToSetlistCtrl', function($scope, sharedProperties, Setlists, $location) {
