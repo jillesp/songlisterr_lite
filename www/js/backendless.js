@@ -53,7 +53,7 @@ function Roles(args) {
 // FUNCTIONS
 
 //TEST OK
-function saveEditSong(id, info) {
+function saveEditSong(id, info, result) {
   db.get(id).then(function(doc) {
     return db.put({
       _id: id,
@@ -66,10 +66,15 @@ function saveEditSong(id, info) {
       bpm: String(info.bpm),
       urlYouTube: String(info.urlYouTube),
       urlSpotify: String(info.urlSpotify),
-      urlOther: String(info.urlOther)
+      urlOther: String(info.urlOther),
+      sheet: String(result.sheet),
+      lyrics: String(result.lyrics),
+      chords: String(result.chords),
+      sections: String(result.collect),
+      headers: String(result.headers)      
     });
     }).then(function(response) {
-      console.log(msg)
+      console.log(info.title + " updated.")
     }).catch(function (err) {
       console.log(err);
     });
@@ -85,9 +90,9 @@ function saveNewSong(info) {
       albumArt: String(info.albumArt),
       key: String(info.key),
       bpm: String(info.bpm),
-      urlYouTube: String(info.urlYouTube),
-      urlSpotify: String(info.urlSpotify),
-      urlOther: String(info.urlOther)
+      urlYouTube: null,
+      urlSpotify: null,
+      urlOther: null  
     }).then(function(response) {
       console.log("Song saved.")
     }).catch(function (err) {
@@ -96,15 +101,18 @@ function saveNewSong(info) {
 }
 
 function saveNewSetlist(info) {
-    var newSetlist = new Setlists({
-        setlistId: parseInt(info.count),
-        setlistName: String(info.name),
-        setlistNotes: String(info.notes),
-        setlistSongs: [],
-        isActive: 1
-    })
-    var updated = Backendless.Persistence.of(Setlists).save(newSetlist);
-    console.log("Setlist saved: " + updated);
+    db.put({
+      _id: 'setlists000' + String(info.id),
+      title: String(info.title),
+      notes: String(info.notes),
+      songs: [],
+      roles: [],
+      owner: String(info.owner)
+    }).then(function(response) {
+      console.log("Setlist saved.")
+    }).catch(function (err) {
+      console.log(err);
+    });
 }
 
 function deleteItem(id) {
@@ -242,8 +250,8 @@ angular.isUndefinedOrNull = function(val) {
     return angular.isUndefined(val) || val === null
 }
 
-function processSheetMusic(info, id) {
-    var songId = getObject(id).objectId;
+function processSheetMusic(info, id, result) {
+    console.log(id);
 
     var collect = info.match(/[\"].+[\"]/gi);
         collect = JSON.stringify(collect).replace(/[\"]/gi, '').replace(/\\/gi, '\"').replace(/\ /g, '_');;
@@ -253,14 +261,31 @@ function processSheetMusic(info, id) {
     var chords = sheet.replace(/[^[\n\r\ \]](?![^[\]]*])/g, " ").replace(/[\[\]]/g, "");
     var headers = sheet.replace(/[^\<\>\n\r](?![^\<\>]*>)/g, '').replace(/<.[^.>]+(?=\=\")/g, '').replace(/[="]/g, '').replace(/(<\/a\>)/g, '').replace(/>/g, ':');
 
-    var update = Backendless.Persistence.of(Songs).findById(songId);
-        update["songLyrics"] = lyrics;
-        update["songSheet"] = sheet;
-        update["songChords"] = chords;
-        update["songSections"] = collect;
-        update["songHeaders"] = headers;
-    var updated = Backendless.Persistence.of(Songs).save(update);
-    console.log("Sheet processed: \n" + chords);
+    db.get(id).then(function(doc) {
+    return db.put({
+      _id: id,
+      _rev: doc._rev,
+      title: String(result.title),
+      artist: String(result.artist),
+      albumName: String(result.albumName),
+      albumArt: String(result.albumArt),
+      key: String(result.key),
+      bpm: String(result.bpm),
+      urlYouTube: String(result.urlYouTube),
+      urlSpotify: String(result.urlSpotify),
+      urlOther: String(result.urlOther),
+      sheet: String(sheet),
+      lyrics: String(lyrics),
+      chords: String(chords),
+      sections: String(collect),
+      headers: String(headers)
+    });
+    }).then(function(response) {
+      console.log(doc);
+      console.log("Lyrics updated.")
+    }).catch(function (err) {
+      console.log(err);
+    });
 }
 
 function saveEditedRoles(info, id) {

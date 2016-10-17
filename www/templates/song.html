@@ -1,10 +1,10 @@
 
 <ion-tabs class="tabs-icon-top tabs-color-active-positive">
-  <ion-tab title="Info" icon="ion-ios-information" href="song/{{sharedProperty.data}}/info">
+  <ion-tab title="Info" icon="ion-ios-information" ng-click="goTo('songInfo')">
     <ion-nav-view name="song-info" cache-view="false"></ion-nav-view>
   </ion-tab>
 
-   <ion-tab title="Actions" icon="ion-ios-play" href="song/{{sharedProperty.data}}/action">
+   <ion-tab title="Actions" icon="ion-ios-play" ng-click="goTo('songAction')">
     <ion-nav-view name="song-action" cache-view="false"></ion-nav-view>
   </ion-tab>
 </ion-tabs>

@@ -9,16 +9,16 @@
          <ion-side-menus enable-menu-with-back-views="true" >
             <ion-side-menu-content edge-drag-threshold="50"> 
                 <div class="listItem" style="overflow:hidden;">
-                  <div style="float:left; border: none;" ng-click="go({{setlist.setlistId}})">
-                    <h2 class="heading">{{setlist.setlistName}}</h2>
-                    <p class="subheading"><span>{{setlist.setlistSongs.length}}</span> Tracks, by <span style="color: #00cc44;">{{setlist.ownerId}}</span></p>
+                  <div style="float:left; border: none;" ng-click="go({{setlist}})">
+                    <h2 class="heading">{{setlist.doc.title}}</h2>
+                    <p class="subheading"><span>{{setlist.doc.songs.length}}</span> Tracks, by <span style="color: #00cc44;">{{setlist.doc.owner}}</span></p>
                   </div>
-                  <i class="ion-android-more-vertical" style="float:right; color: #1a1a1a;" ng-click="goInfo({{setlist.setlistId}})"></i>
+                  <i class="ion-android-more-vertical" style="float:right; color: #1a1a1a;" ng-click="goInfo({{setlist}})"></i>
                 </div>
             </ion-side-menu-content>
             <ion-side-menu  side="left" width="60" class="sideMenuParent">
               <ion-content class="sideMenu">
-                <a class="button" ng-click="practice({{setlist.setlistId}})">
+                <a class="button" ng-click="practice({{setlist}})">
                   <i class="ion-ipod"></i>
                 </a>
               </ion-content>
@@ -28,7 +28,7 @@
                 <a class="button two">
                   <i class="ion-code-download"></i>
                 </a>
-                <a class="button two" ng-click="deleteItem({{setlist.setlistId}})">
+                <a class="button two" ng-click="deleteItem({{setlist}})">
                   <i class="ion-trash-a"></i>
                 </a>                
               </ion-content>

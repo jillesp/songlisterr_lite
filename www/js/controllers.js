@@ -11,6 +11,7 @@ angular.module('songDroid.controllers', [])
     $scope.msg = $state.params.msg;
       $timeout(function(){
         $scope.hasParams = false;
+        $state.params.msg = "";
         $scope.msg = null;
       }, 1000);
  };
@@ -21,7 +22,6 @@ angular.module('songDroid.controllers', [])
         sharedProperties.setProperty(data.id);
         $location.path('tab/' + data.id + '/landing');
     };
-
   });
 
   $scope.delete = function(data) {
@@ -60,7 +60,26 @@ angular.module('songDroid.controllers', [])
 
 })
 
+//TESTING
 .controller('SetlistsCtrl', function($scope, Setlists, $location, $stateParams, sharedProperties2, $state) {
+   
+  Setlists.active().then(function(result) {
+    $scope.setlists = result;
+
+    $scope.go = function(data) {
+        sharedProperties2.setProperty(data.id);
+        $location.path('tab/' + data.id + '/landing');
+    };
+  });
+
+  // Songs.active().then(function(result) {
+  //   $scope.songs = result;
+  //   $scope.go = function(data) {
+  //       sharedProperties.setProperty(data.id);
+  //       $location.path('tab/' + data.id + '/landing');
+  //   };
+  // });
+
    $scope.setlists = Setlists.active();
    $scope.addSetlist = function() {
         $location.path('/tab/setlists/new');
@@ -89,44 +108,29 @@ angular.module('songDroid.controllers', [])
 
 })
 
+//TESTING
 .controller('AddSetlistCtrl', function($scope, Setlists, $location, $stateParams, $state, Users) {
-   $scope.setlists = Setlists.active();
 
-   $scope.vocals = Users.roles("isVocals");
-   $scope.guitar = Users.roles("isGuitar");
-   $scope.bass = Users.roles("isBass");
-   $scope.keyboard = Users.roles("isKeyboard");
-   $scope.drums = Users.roles("isDrums");
+    $scope.model = { name: '' };
+    $scope.form = {};
 
-   var count = Setlists.count();
-
-          $scope.model = { name: '' };
-          $scope.form = {};
-
-     $scope.verify = function() {
+    Setlists.count().then(function(result) {
+      $scope.verify = function() {
 
          $scope.req = $scope.form.newSetlist.$invalid;
          if($scope.form.newSetlist.$valid == true) {
              var info = new Object();
 
-               if(!angular.isUndefinedOrNull($scope.model.name)) {
-                 info.name = $scope.model.name;
-               } else {
-                 info.name = "";
-               }
-
-               if(!angular.isUndefinedOrNull($scope.model.notes)) {
-                 info.notes = $scope.model.notes;
-               } else {
-                 info.notes = "";
-               }
-
-               info.count = count++;
+              if(!angular.isUndefinedOrNull($scope.model.title)) { info.title = $scope.model.title; }
+              if(!angular.isUndefinedOrNull($scope.model.notes)) { info.notes = $scope.model.notes; } else { info.notes = "None" }
+              info.owner = "Jilles";
+              info.id = String(result);
 
               saveNewSetlist(info);
-              $state.go('tab.setlists');
+              $state.go('tab.setlists', {msg: String($scope.model.title) + " created."});
          }
-     }
+      }
+    });
 
      $scope.back = function() {
         $location.path('tab/setlists');
@@ -146,7 +150,6 @@ angular.module('songDroid.controllers', [])
 
   $scope.goSpotify = function() {
     var url = Setlists.get(sharedProperties2.getProperty()).setlistSpotify;
-    console.log(url);
     $window.open(url);
   };
 
@@ -177,27 +180,25 @@ angular.module('songDroid.controllers', [])
     $scope.verify = function() {
        if($scope.form.newSong.$valid == true) {
            var  info = new Object();
-                if(!angular.isUndefinedOrNull($scope.model.title)) { info.title = $scope.model.title; }
-                if(!angular.isUndefinedOrNull($scope.model.artist)) { info.artist = $scope.model.artist; }
-                if(!angular.isUndefinedOrNull($scope.model.albumName)){ info.albumName = $scope.model.albumName; } else { info.albumName = "Unknown"; }
-                if(!angular.isUndefinedOrNull($scope.model.key)) { info.key = $scope.model.key; } else { info.key = "Unspecified" }
-                if(!angular.isUndefinedOrNull($scope.model.bpm)) { info.bpm = $scope.model.bpm; } else { info.bpm = "Unspecified" }
-                if(!angular.isUndefinedOrNull($scope.model.albumArt)){ info.albumArt = $scope.model.albumArt; } else { info.albumArt = "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"; }
-                if(!angular.isUndefinedOrNull($scope.model.youtube)) { info.youtube = $scope.model.youtube; } else { info.youtube = "Unspecified" }
-                if(!angular.isUndefinedOrNull($scope.model.spotify)) { info.spotify = $scope.model.spotify; } else { info.spotify = "Unspecified" }
-                info.id = String(result);
-                saveNewSong(info);
-                $state.go('tab.songs', {msg: String($scope.model.title) + " created."});
+              if(!angular.isUndefinedOrNull($scope.model.title)) { info.title = $scope.model.title; }
+              if(!angular.isUndefinedOrNull($scope.model.artist)) { info.artist = $scope.model.artist; }
+              if(!angular.isUndefinedOrNull($scope.model.albumName)){ info.albumName = $scope.model.albumName; } else { info.albumName = "Unknown"; }
+              if(!angular.isUndefinedOrNull($scope.model.key)) { info.key = $scope.model.key; } else { info.key = "Unspecified" }
+              if(!angular.isUndefinedOrNull($scope.model.bpm)) { info.bpm = $scope.model.bpm; } else { info.bpm = "Unspecified" }
+              if(!angular.isUndefinedOrNull($scope.model.albumArt)){ info.albumArt = $scope.model.albumArt; } else { info.albumArt = "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"; }
+              if(!angular.isUndefinedOrNull($scope.model.youtube)) { info.youtube = $scope.model.youtube; } else { info.youtube = "Unspecified" }
+              if(!angular.isUndefinedOrNull($scope.model.spotify)) { info.spotify = $scope.model.spotify; } else { info.spotify = "Unspecified" }
+              info.id = String(result);
+              saveNewSong(info, result);
+              $state.go('tab.songs', {msg: String($scope.model.title) + " created."});
        }
     }
   });
 })
 
 .controller('SongInfoCtrl', function($scope, $stateParams, Songs, $location, $state, sharedProperties, $timeout) {
-
   //TEST OK
   $scope.hasParams = false;
-
   if($state.params.msg!=null){
      $scope.hasParams = true;
      $scope.msg = $state.params.msg;
@@ -214,9 +215,10 @@ angular.module('songDroid.controllers', [])
   $scope.editSong = function(id) {
       $location.path('song-edit/' + id + '/edit-info');
   };
+
   $scope.back = function() {
     $location.path('tab/'+sharedProperties.getProperty()+'/landing');
-  }
+  };
 })
 
 .controller('SongLandingCtrl', function($scope, $stateParams, Songs, $location, $state, sharedProperties, $window, $sanitize, $sce, $ionicScrollDelegate, $ionicLoading, $timeout, $anchorScroll, $ionicPopover) {
@@ -358,9 +360,46 @@ angular.module('songDroid.controllers', [])
 
 })
 
-.controller('SongActionCtrl', function($scope, $stateParams, Songs, sharedProperties, $location, $window) {
+.controller('SongActionCtrl', function($scope, $stateParams, Songs, sharedProperties, $location, $window, $state, $timeout) {
+  
+  $scope.hasParams = false;
+  $scope.isActiveOne = true;
+
+  if($state.params.msg!=null){
+      $scope.hasParams = true;
+      $scope.msg = $state.params.msg;
+        $timeout(function(){
+          $scope.hasParams = false;
+          $state.params.msg = "";
+          $scope.msg = null;
+        }, 1000);
+  };
+
   Songs.get(sharedProperties.getProperty()).then(function(result) {
     $scope.song = result;
+
+       
+    $scope.goYoutube = function() {
+       if(!angular.isUndefinedOrNull(result.urlYouTube)) {
+        $window.open(result.urlYouTube);
+      } else {
+        $state.go($state.$current, {msg: "This song doesn't have a valid URL."}, {reload: true})
+      }
+    };
+    $scope.goSpotify = function() {
+       if(!angular.isUndefinedOrNull(result.urlSpotify)) {
+        $window.open(result.url);
+      } else {
+        $state.go($state.$current, {msg: "This song doesn't have a valid URL."}, {reload: true})
+      }
+    };
+    $scope.goOthers = function() {
+       if(!angular.isUndefinedOrNull(result.urlOther)) {
+        $window.open(result.urlOther);
+      } else {
+        $state.go($state.$current, {msg: "This song doesn't have a valid URL."}, {reload: true})
+      }
+    };    
   });
 
   $scope.delete = function(data) {
@@ -375,22 +414,7 @@ angular.module('songDroid.controllers', [])
   $scope.addToSetlist = function(id) {
     $location.path('song/' + id + '/add');
   };
-  $scope.goYoutube = function() {
-    var url = Songs.get(sharedProperties.getProperty()).songYoutube;
-    console.log(url);
-    $window.open(url);
-  };
-  $scope.goSpotify = function() {
-    var url = Songs.get(sharedProperties.getProperty()).songSpotify;
-    console.log(url);
-    $window.open(url);
-  };
 
-  $scope.goOthers = function() {
-    var url = Songs.get(sharedProperties.getProperty()).songOthers;
-    console.log(url);
-    $window.open(url);
-  };
   $scope.back = function() {
     $location.path('tab/'+sharedProperties.getProperty()+'/landing');
   }
@@ -430,6 +454,7 @@ angular.module('songDroid.controllers', [])
     $scope.model.artist = song.artist;
     $scope.model.albumName = song.albumName;
     $scope.model.key = song.key;
+    $scope.model.bpm = song.bpm;
     $scope.model.albumArt = song.albumArt;
     $scope.model.youtube = song.urlYouTube;
     $scope.model.spotify = song.urlSpotify;
@@ -446,7 +471,7 @@ angular.module('songDroid.controllers', [])
         if($scope.model.youtube != null) { info.urlYouTube = $scope.model.youtube; };
         if($scope.model.spotify != null) { info.urlSpotify = $scope.model.spotify; };
         if($scope.model.others != null) { info.urlOther = $scope.model.others; };
-        saveEditSong(sharedProperties.getProperty(), info);
+        saveEditSong(sharedProperties.getProperty(), info, result);
 
         Songs.get(sharedProperties.getProperty()).then(function(){
           $state.go('song.song-info', {msg:  $scope.model.title + " edited."}, {reload: true});
@@ -723,22 +748,28 @@ angular.module('songDroid.controllers', [])
     };
 })
 
-.controller('SheetMusicCtrl', function($scope, sharedProperties, Songs, $location, $state, $stateParams) {
-  $scope.song = Songs.get(sharedProperties.getProperty());
-  $scope.back = function() {
-    $location.path('song-edit/' + sharedProperties.getProperty() + '/edit-action');
-  }
-  var song = Songs.get(sharedProperties.getProperty());
-  var id = sharedProperties.getProperty();
-       $scope.model = { sheet: '' };
-       $scope.form = {};
+.controller('SheetMusicCtrl', function($scope, sharedProperties, Songs, $state, $stateParams) {
+  
+  Songs.get(sharedProperties.getProperty()).then(function(result) {
+    $scope.song = result;
 
-  $scope.model.sheet = song.songSheet;
-  $scope.verify = function() {
+    $scope.model = { sheet: '' };
+    $scope.form = {};
+    $scope.model.sheet = result.sheet;
+
+    $scope.verify = function() {
       var  info =  $scope.model.sheet;
-           info = processSheetMusic(info, id);
-      $location.path('tab/' + id + '/landing');
-  };
+           info = processSheetMusic(info, id, result);
+      Songs.get(sharedProperties.getProperty()).then(function(){
+          $state.go('tab.song-landing', {msg:  $scope.model.title + " edited."}, {reload: true});
+        });
+    };
+  });
+
+  // $scope.back = function() {
+  //   $location.path('song-edit/' + sharedProperties.getProperty() + '/edit-action');
+  // }
+
 })
 
 .controller('SetlistRolesCtrl', function($scope, $stateParams, Setlists, sharedProperties2, $location) {
@@ -821,4 +852,36 @@ angular.module('songDroid.controllers', [])
     $location.path('setlist-edit/setlists/'+ sharedProperties2.getProperty() +'/roles/edit');
   }
 
+})
+
+//TABS CONTROLLERS
+
+.controller('SongTabsCtrl', function($scope, sharedProperties2, Roles, $location, $state, $stateParams) {
+  $scope.goTo = function(location) {
+    switch (location) {
+      case "songInfo":
+        $state.go('song.song-info', {msg:null}, {});
+      break;
+      case "songAction": 
+       $state.go('song.song-action', {}, {});
+      break;
+      default:
+      break;
+    }
+  }
+})
+
+.controller('MainTabsCtrl', function($scope, sharedProperties2, Roles, $location, $state, $stateParams) {
+  // $scope.goTo = function(location) {
+  //   switch (location) {
+  //     case "":
+  //       $state.go('song.song-info', {msg:null}, {});
+  //     break;
+  //     case "": 
+  //      $state.go('song.song-action', {}, {});
+  //     break;
+  //     default:
+  //     break;
+  //   }
+  // }
 })

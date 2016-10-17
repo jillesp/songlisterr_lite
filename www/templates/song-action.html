@@ -1,8 +1,13 @@
-<ion-view view-title="{{song}}" cache-view="false">
+<ion-view view-title="{{song.title}}" cache-view="false">
   <ion-nav-bar class="bar-dark">
       <ion-nav-buttons side="left"><button class="button" ng-click="back()"><i class="ion-ios-arrow-back"></i></button></ion-nav-buttons>
   </ion-nav-bar>
   <ion-content class="padding action" style="margin-top: 2px;">
+
+  <div class="notification" ng-class="{'error': hasParams}">
+      <p>{{msg}}</p>
+  </div>
+
      <ion-list>
         <ion-item class="songAction" type="item-text-wrap" ng-click="goYoutube()">
             <i class="ion-social-youtube" style="padding-left: 8px;"></i>

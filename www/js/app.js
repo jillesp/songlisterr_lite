@@ -25,8 +25,8 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
     .state('tab', {
     url: "/tab",
     abstract: true,
-
-    templateUrl: "templates/tabs.html"
+    templateUrl: "templates/tabs.html",
+    controller: 'MainTabsCtrl'
     })
 
         .state('tab.search', {
@@ -78,7 +78,8 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
                     url: "/song",
                     abstract: true,
                     cache: false,
-                    templateUrl: "templates/song.html"
+                    templateUrl: "templates/song.html",
+                    controller: 'SongTabsCtrl'
                 })
 
                     .state('song.song-info', {
@@ -101,7 +102,8 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
                                 templateUrl: 'templates/song-action.html',
                                 controller: 'SongActionCtrl'
                             }
-                        }
+                        },
+                        params:{msg:null}
                     })
 
                     .state('song.song-setlist', {
@@ -313,5 +315,5 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
                 }
             })
 
-  $urlRouterProvider.otherwise('tab/browse');
+  $urlRouterProvider.otherwise('tab/setlists');
 });
