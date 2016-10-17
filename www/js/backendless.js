@@ -71,7 +71,8 @@ function saveEditSong(id, info, result) {
       lyrics: String(result.lyrics),
       chords: String(result.chords),
       sections: String(result.collect),
-      headers: String(result.headers)      
+      headers: String(result.headers),
+      category: 'song'
     });
     }).then(function(response) {
       console.log(info.title + " updated.")
@@ -92,7 +93,8 @@ function saveNewSong(info) {
       bpm: String(info.bpm),
       urlYouTube: null,
       urlSpotify: null,
-      urlOther: null  
+      urlOther: null,
+      category: 'song'
     }).then(function(response) {
       console.log("Song saved.")
     }).catch(function (err) {
@@ -105,9 +107,11 @@ function saveNewSetlist(info) {
       _id: 'setlists000' + String(info.id),
       title: String(info.title),
       notes: String(info.notes),
+      urlSpotify: String(info.urlSpotify),
       songs: [],
       roles: [],
-      owner: String(info.owner)
+      owner: String(info.owner),
+      category: 'setlist'
     }).then(function(response) {
       console.log("Setlist saved.")
     }).catch(function (err) {
@@ -124,15 +128,18 @@ function deleteItem(id) {
   }).catch(function (err) {
     console.log(err);
   });
-  return "Song deleted.";
 }
 
 function deleteSetlist(id) {
-    var update = getSetlist(id).objectId;
-        update = Backendless.Persistence.of(Setlists).findById(update);
-        update.isActive = 0;
-        update = Backendless.Persistence.of(Setlists).save(update);
-    console.log("Setlist deleted " + updated);
+  console.log(id);
+  var id = String(id);
+  db.get(id).then(function(doc) {
+    return db.remove(doc);
+  }).then(function (result) {
+    console.log("Setlist deleted.");
+  }).catch(function (err) {
+    console.log(err);
+  });
 }
 
 function getObject(songId) {
@@ -143,15 +150,7 @@ function getObject(songId) {
         }
      }
 }
-function getSetlist(setlistId) {
-    var setlists = Backendless.Persistence.of(Setlists).find();
-        // setlists = JSON.parse(setlists);
-     for (var i = 0; i < setlists.data.length; i++) {
-        if (setlists.data[i].setlistId === parseInt(setlistId)) {
-          return (setlists.data[i]);
-        }
-     }
-}
+
 function addSongToSetlist(songId, setlistId) {
      var songId = getObject(songId).objectId;
      var setlistId = getSetlist(setlistId).objectId;

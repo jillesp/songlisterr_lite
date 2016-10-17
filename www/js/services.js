@@ -161,16 +161,16 @@ angular.module('songDroid.services', ['LocalStorageModule'])
     });
   }
 
-          var APPLICATION_ID = '48F7E0A1-E799-EE7C-FF56-D3687FF1BF00',
-              SECRET_KEY = 'B68610CE-62FD-34D1-FFD2-EF348786DD00',
-              VERSION = 'v1';
-
-        Backendless.initApp(APPLICATION_ID, SECRET_KEY, VERSION);
-        localStorageService.set('localSongs', Backendless.Persistence.of(Songs).find());
-        localStorageService.set('localSetlists', Backendless.Persistence.of(Setlists).find());
-        localStorageService.set('localUsers', Backendless.Persistence.of(Backendless.User).find());
-        localStorageService.set('localRoles', Backendless.Persistence.of(Roles).find());
-        console.log("User is online. Connection success.");
+        //   var APPLICATION_ID = '48F7E0A1-E799-EE7C-FF56-D3687FF1BF00',
+        //       SECRET_KEY = 'B68610CE-62FD-34D1-FFD2-EF348786DD00',
+        //       VERSION = 'v1';
+        //
+        // Backendless.initApp(APPLICATION_ID, SECRET_KEY, VERSION);
+        // localStorageService.set('localSongs', Backendless.Persistence.of(Songs).find());
+        // localStorageService.set('localSetlists', Backendless.Persistence.of(Setlists).find());
+        // localStorageService.set('localUsers', Backendless.Persistence.of(Backendless.User).find());
+        // localStorageService.set('localRoles', Backendless.Persistence.of(Roles).find());
+        // console.log("User is online. Connection success.");
 
     return {
       all: function() {
@@ -194,20 +194,16 @@ angular.module('songDroid.services', ['LocalStorageModule'])
         return setlists[0].setlistSongs;
       },
       get: function(setlistId) {
-        getData();
-        setlists = localStorageService.get('localSetlists');
-          for (var i = 0; i < setlists.data.length; i++) {
-            if (setlists.data[i].setlistId === parseInt(setlistId)) {
-              return setlists.data[i];
-            }
-          }
-          return null;
+        var setlist = String(setlistId);
+            setlist = $q.when(db.get(setlistId).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
+        return setlist;
       },
 
       //TESTING
       active: function() {
-        // getData();
-        var setList = $q.when(db.allDocs({include_docs: true, startkey: "setlists"}).then(function (result){ return result.rows; }).catch(function (err) {console.log(err);}));
+        db.createIndex({index: {fields: ['category']}}).then(function (result) {}).catch(function (err) {console.log(err);});
+        var setList = $q.when(db.find({selector: {category: {$gte:"setlist"}}}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
+        console.log(setList.$$state);
         return setList;
       },
       search: function(type, string) {

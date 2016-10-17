@@ -1,4 +1,5 @@
 var db = new PouchDB('testDB');
+// db.plugin(require('pouchdb-find'));
 
 angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','songDroid.controllers', 'songDroid.services'])
 
@@ -177,7 +178,8 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
                   templateUrl: 'templates/setlists.html',
                   controller: 'SetlistsCtrl'
                 }
-            }
+            },
+            params: {msg:null}
         })
             .state('tab.setlist-new', {
                 url: '/setlists/new',

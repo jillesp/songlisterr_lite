@@ -1,13 +1,18 @@
 <ion-view view-title="Setlists" cache-view="false">
   <ion-nav-bar class="bar-dark">
-    
+
     <ion-nav-buttons side="right"><button class="button" ng-click="addSetlist()"><i class="ion-plus-round"></i></button></ion-nav-buttons>
   </ion-nav-bar>
 
   <ion-content class="padding action">
+
+    <div class="notification" ng-class="{'success': hasParams}">
+      <p>{{msg}}</p>
+    </div>
+
       <ion-item class="wrapper" ng-repeat="setlist in setlists" type="item-text-wrap">
          <ion-side-menus enable-menu-with-back-views="true" >
-            <ion-side-menu-content edge-drag-threshold="50"> 
+            <ion-side-menu-content edge-drag-threshold="50">
                 <div class="listItem" style="overflow:hidden;">
                   <div style="float:left; border: none;" ng-click="go({{setlist}})">
                     <h2 class="heading">{{setlist.doc.title}}</h2>
@@ -30,9 +35,9 @@
                 </a>
                 <a class="button two" ng-click="deleteItem({{setlist}})">
                   <i class="ion-trash-a"></i>
-                </a>                
+                </a>
               </ion-content>
-            </ion-side-menu>            
+            </ion-side-menu>
           </ion-side-menus>
       </ion-item>
   </ion-content>
