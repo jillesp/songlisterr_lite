@@ -94,7 +94,12 @@ function saveNewSong(info) {
       urlYouTube: null,
       urlSpotify: null,
       urlOther: null,
-      category: 'song'
+      category: 'song',
+      sheet: "",
+      lyrics: "",
+      chords: "",
+      sections: "",
+      headers: ""
     }).then(function(response) {
       console.log("Song saved.")
     }).catch(function (err) {
@@ -131,7 +136,6 @@ function deleteItem(id) {
 }
 
 function deleteSetlist(id) {
-  console.log(id);
   var id = String(id);
   db.get(id).then(function(doc) {
     return db.remove(doc);
@@ -142,30 +146,24 @@ function deleteSetlist(id) {
   });
 }
 
-function getObject(songId) {
-    var songs = Backendless.Persistence.of(Songs).find();
-     for (var i = 0; i < songs.data.length; i++) {
-        if (songs.data[i].songId === parseInt(songId)) {
-          return (songs.data[i]);
-        }
-     }
-}
-
-function addSongToSetlist(songId, setlistId) {
-     var songId = getObject(songId).objectId;
-     var setlistId = getSetlist(setlistId).objectId;
-
-     var setlistObject = Backendless.Persistence.of(Setlists).findById(setlistId);
-     var songObject = Backendless.Persistence.of(Songs).findById(songId);
-
-     var stupidArray = setlistObject["setlistSongs"].push({objectId: songObject.objectId,___class: "Songs"});
-
-//     console.log("Setlist: " + JSON.stringify(setlistObject));
-//     console.log("Array: " + JSON.stringify(stupidArray));
-//     console.log("Array: " + JSON.stringify(stupidArray));
-
-     var updated = Backendless.Persistence.of(Setlists).save(setlistObject);
-     console.log("Song added to Setlist: " + updated);
+function addSongToSetlist(songs, setlistId, setlist) {
+  db.get(setlistId).then(function(doc) {
+    return db.put({
+      _id: setlistId,
+      _rev: doc._rev,
+      title: String(setlist.title),
+      notes: String(setlist.notes),
+      urlSpotify: String(setlist.urlSpotify),
+      songs: songs,
+      roles: setlist.roles,
+      owner: String(setlist.owner),
+      category: 'setlist'
+    });
+    }).then(function(response) {
+      console.log(setlist.title + " updated.")
+    }).catch(function (err) {
+      console.log(err);
+    });
 }
 
 //TEST OK
@@ -174,14 +172,14 @@ angular.isUndefinedOrNull = function(val) {
 }
 
 function saveEditedSetlist(info, id) {
-    var objectId = getSetlist(id).objectId;
-    var update = Backendless.Persistence.of(Setlists).findById(objectId);
-        update["setlistName"] = info.name;
-        update["setlistSpotify"] = info.spotify;
-        update["setlistNotes"] = info.notes;
+    // var objectId = getSetlist(id).objectId;
+    // var update = Backendless.Persistence.of(Setlists).findById(objectId);
+    //     update["setlistName"] = info.name;
+    //     update["setlistSpotify"] = info.spotify;
+    //     update["setlistNotes"] = info.notes;
 
-    var updated = Backendless.Persistence.of(Setlists).save(update);
-    console.log("Setlist updated: " + updated);
+    // var updated = Backendless.Persistence.of(Setlists).save(update);
+    // console.log("Setlist updated: " + updated);
 }
 
 function pinSetlist(setlistId) {
@@ -197,7 +195,7 @@ function pinSetlist(setlistId) {
      console.log("Setlist added to User: " + JSON.stringify(updated));
 }
 
-function spliceFromSetlist(setlistId, songId) {
+function removeFromSetlist(setlistId, songId) {
 
      var setlistId = getSetlist(setlistId).objectId;
      var setlistObject = Backendless.Persistence.of(Setlists).findById(setlistId);
@@ -250,7 +248,7 @@ angular.isUndefinedOrNull = function(val) {
 }
 
 function processSheetMusic(info, id, result) {
-    console.log(id);
+    console.log(result);
 
     var collect = info.match(/[\"].+[\"]/gi);
         collect = JSON.stringify(collect).replace(/[\"]/gi, '').replace(/\\/gi, '\"').replace(/\ /g, '_');;
@@ -277,10 +275,10 @@ function processSheetMusic(info, id, result) {
       lyrics: String(lyrics),
       chords: String(chords),
       sections: String(collect),
-      headers: String(headers)
+      headers: String(headers),
+      category: 'song'
     });
     }).then(function(response) {
-      console.log(doc);
       console.log("Lyrics updated.")
     }).catch(function (err) {
       console.log(err);

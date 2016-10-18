@@ -5,10 +5,15 @@
   </ion-nav-bar>
 
   <ion-content class="padding">
+
+      <div class="notification" ng-class="{'success': hasParams}">
+        <p>{{msg}}</p>
+      </div>
+      
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="setlist in setlists" type="item-text-wrap" ng-click="addTo({{setlist}})">
             <img ng-src="http://thumbs.dreamstime.com/x/music-logo-13731704.jpg">
-            <h2>{{setlist.doc.title}}</h2>
-            <p ><span>{{setlist.doc.songs.length}}</span> Tracks, by <span style="color: #00cc44;">{{setlist.doc.owner}}</span></p>
+            <h2>{{setlist.title}}</h2>
+            <p ><span>{{setlist.songs.length}}</span> Tracks, by <span style="color: #00cc44;">{{setlist.owner}}</span></p>
       </ion-item>
     </ion-list>
   </ion-content>

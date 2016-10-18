@@ -1,0 +1,4 @@
+flush $stateParams on tab switch
+remove deleted song from all setlists
+delete local button
+get/set $stateParams

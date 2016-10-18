@@ -1,72 +1,8 @@
 angular.module('songDroid.services', ['LocalStorageModule'])
 
 .service('Songs', function(localStorageService, $q, pouchDB) {
-  function getData() {
-    db.bulkDocs([
-      {
-          title : 'Lisa Says',
-          artist: "Lisa",
-          albumName: "Lisa's Debut",
-          albumCover: null,
-          songKey: "A",
-          urlYouTube: null,
-          urlSpotify: null,
-          urlOther: null,
-          sheet: null,
-          lyrics: null,
-          chords: null,
-          tags: null,
-          bpm: null,
-          sections: null,
-          headers: null,
-          status: 'Active',
-          _id: 'songs0001'
-      },
-      {
-          title : 'Staple Stable',
-          artist: "supercell",
-          albumName: "Bakemonogatari OPM",
-          albumCover: null,
-          songKey: "A",
-          urlYouTube: "https://www.youtube.com/watch?v=cEE9IKTDT1A",
-          urlSpotify: null,
-          urlOther: null,
-          sheet: null,
-          lyrics: null,
-          chords: null,
-          tags: null,
-          bpm: null,
-          sections: null,
-          headers: null,
-          status: 'Active',
-          _id: 'songs0002'
-      },
-      {
-          title : 'Photograph',
-          artist: "Ed Sheeran",
-          albumName: "x",
-          albumCover: null,
-          songKey: "A",
-          urlYouTube: "https://www.youtube.com/watch?v=nSDgHBxUbVQ",
-          urlSpotify: null,
-          urlOther: null,
-          sheet: null,
-          lyrics: null,
-          chords: null,
-          tags: null,
-          bpm: null,
-          sections: null,
-          headers: null,
-          status: 'Active',
-          _id: 'songs0003'
-      },
-    ]).then(function (result) {
-      console.log("+3 test songs created.")
-    }).catch(function (err) {
-      console.log(err);
-    });
-  }
 
+  db.createIndex({index: {fields: ['category']}}).then(function (result) {}).catch(function (err) {console.log(err);});
 
       return {
         all: function() {
@@ -76,14 +12,13 @@ angular.module('songDroid.services', ['LocalStorageModule'])
 
         //TEST: OK
         active: function(songsList) {
-          // getData();
-          var songsList = $q.when(db.allDocs({include_docs: true, startkey: "songs"}).then(function (result){ return result.rows; }).catch(function (err) {console.log(err);}));
+          var songsList = $q.when(db.find({selector: {category: {$eq:"song"}}}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
           return songsList;
         },
         //TEST: OK
         get: function(songId) {
           var song = String(songId);
-              song = $q.when(db.get(songId).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
+              song = $q.when(db.get(song).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
           return song;
         },
         //TEST OK -- returns song count
@@ -97,7 +32,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
 
           //   var query = {condition:  type + " LIKE '%" + string + "%' and isActive = 1" };
           //   var foundItems = dataStore.find(query);
-          //   return foundItems.data;
+          //   return foundItems.dat
         }
       }
 })
@@ -128,49 +63,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
 
 .service('Setlists', function(localStorageService, $q, pouchDB) {
 
-   function getData() {
-    db.bulkDocs([
-      {
-          title : 'Lisa Says',
-          roles: null,
-          songs: null,
-          notes: null,
-          status: 'Active',
-          _id: 'setlists0001'
-      },
-      {
-          title : 'Staple Stable',
-          roles: null,
-          songs: null,
-          notes: null,
-          status: 'Active',
-          _id: 'setlists0002'
-      },
-      {
-          title : 'Photograph',
-          roles: null,
-          songs: null,
-          notes: null,
-          status: 'Active',
-          _id: 'setlists0003'
-      },
-    ]).then(function (result) {
-      console.log("+3 test setlists created.")
-    }).catch(function (err) {
-      console.log(err);
-    });
-  }
-
-        //   var APPLICATION_ID = '48F7E0A1-E799-EE7C-FF56-D3687FF1BF00',
-        //       SECRET_KEY = 'B68610CE-62FD-34D1-FFD2-EF348786DD00',
-        //       VERSION = 'v1';
-        //
-        // Backendless.initApp(APPLICATION_ID, SECRET_KEY, VERSION);
-        // localStorageService.set('localSongs', Backendless.Persistence.of(Songs).find());
-        // localStorageService.set('localSetlists', Backendless.Persistence.of(Setlists).find());
-        // localStorageService.set('localUsers', Backendless.Persistence.of(Backendless.User).find());
-        // localStorageService.set('localRoles', Backendless.Persistence.of(Roles).find());
-        // console.log("User is online. Connection success.");
+  db.createIndex({index: {fields: ['category']}}).then(function (result) {}).catch(function (err) {console.log(err);});
 
     return {
       all: function() {
@@ -182,16 +75,11 @@ angular.module('songDroid.services', ['LocalStorageModule'])
         var setlists = $q.when(db.allDocs({include_docs: true, startkey: "setlists"}).then(function (result){ return result.total_rows + 1; }).catch(function (err) {console.log(err);}));
         return setlists;
       },
-      listed: function(setlistObjId) {
-        // getData();
-        setlists = localStorageService.get('localSetlists').data;
-        songs = localStorageService.get('localSongs').data;
-        setlists = setlists.filter(
-          function(setlists){
-              return setlists.objectId == setlistObjId;
-          }
-        );
-        return setlists[0].setlistSongs;
+      listed: function(setlistId) {
+        console.log("Function redirected.");
+        // var setlist = String(setlistId);
+        //     setlist = $q.when(db.get(setlistId).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
+        // return setlist;        
       },
       get: function(setlistId) {
         var setlist = String(setlistId);
@@ -201,11 +89,10 @@ angular.module('songDroid.services', ['LocalStorageModule'])
 
       //TESTING
       active: function() {
-        db.createIndex({index: {fields: ['category']}}).then(function (result) {}).catch(function (err) {console.log(err);});
-        var setList = $q.when(db.find({selector: {category: {$gte:"setlist"}}}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
-        console.log(setList.$$state);
+        var setList = $q.when(db.find({selector: {category: {$eq:"setlist"}}}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
         return setList;
       },
+
       search: function(type, string) {
         getData();
         setlists = Backendless.Persistence.of(Setlists).find();
@@ -213,6 +100,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
           var foundItems = Backendless.Persistence.of(Setlists).find(query);
           return foundItems.data;
       },
+
       pinned: function(userObjId) {
         // getData();
         setlists = localStorageService.get('localSetlists').data;

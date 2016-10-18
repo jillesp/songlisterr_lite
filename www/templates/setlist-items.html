@@ -5,18 +5,23 @@
   </ion-nav-bar>
 
   <ion-content class="padding action">
+
+      <div class="notification" ng-class="{'error': hasParams}">
+        <p>{{msg}}</p>
+      </div>
+
     <ion-list>
-      <ion-item class="wrapper" ng-repeat="song in songs" type="item-text-wrap" ng-click="go({{song.songId}})">
+      <ion-item class="wrapper" ng-repeat="song in songs" type="item-text-wrap" ng-click="go({{song._id}})">
           <ion-side-menus enable-menu-with-back-views="true" >
             <ion-side-menu-content edge-drag-threshold="50"> 
-                <div class="listItem" ng-click="go({{song.songId}})">
-                  <h2 ng-click="go({{song.songId}})" class="heading">{{song.title}}</h2>
-                  <p ng-click="go({{song.songId}})" class="subheading"><span>{{song.albumName}}</span> by <span>{{song.artist}}</span></p>
+                <div class="listItem" ng-click="go({{song._id}})">
+                  <h2 ng-click="go({{song._id}})" class="heading">{{song.title}}</h2>
+                  <p ng-click="go({{song._id}})" class="subheading"><span>{{song.albumName}}</span> by <span>{{song.artist}}</span></p>
                 </div>
             </ion-side-menu-content>
             <ion-side-menu  side="right" width="80">
               <ion-content class="sideMenu">
-                <a class="button" ng-click="delete({{song.songId}})">
+                <a class="button" ng-click="remove({{song._id}})">
                   <i class="ion-minus-circled"></i>
                 </a>                
               </ion-content>

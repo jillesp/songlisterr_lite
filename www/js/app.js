@@ -115,7 +115,8 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
                                 templateUrl: 'templates/add-to-setlist.html',
                                 controller: 'SongAddToSetlistCtrl'
                             }
-                        }
+                        },
+                        params: {msg:null}
                     })
 
                 .state('song-edit', {
@@ -200,7 +201,8 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
                         templateUrl: 'templates/setlist-items.html',
                         controller: 'SetlistItemsCtrl'
                     }
-                }
+                }, 
+                params: {msg:true}
             })
 
             .state('setlist', {

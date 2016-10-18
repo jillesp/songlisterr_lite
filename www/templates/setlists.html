@@ -14,11 +14,11 @@
          <ion-side-menus enable-menu-with-back-views="true" >
             <ion-side-menu-content edge-drag-threshold="50">
                 <div class="listItem" style="overflow:hidden;">
-                  <div style="float:left; border: none;" ng-click="go({{setlist}})">
-                    <h2 class="heading">{{setlist.doc.title}}</h2>
-                    <p class="subheading"><span>{{setlist.doc.songs.length}}</span> Tracks, by <span style="color: #00cc44;">{{setlist.doc.owner}}</span></p>
+                  <div style="border: none; display: inline-block; width: 80%;" ng-click="go({{setlist}})">
+                    <h2 class="heading">{{setlist.title}}</h2>
+                    <p class="subheading"><span>{{setlist.songs.length}}</span> Tracks, by <span style="color: #00cc44;">{{setlist.owner}}</span></p>
                   </div>
-                  <i class="ion-android-more-vertical" style="float:right; color: #1a1a1a;" ng-click="goInfo({{setlist}})"></i>
+                  <i class="ion-android-more-vertical" style="display: inline-block; width: 18%; text-align: right; color: #1a1a1a;" ng-click="goInfo({{setlist}})"></i>
                 </div>
             </ion-side-menu-content>
             <ion-side-menu  side="left" width="60" class="sideMenuParent">

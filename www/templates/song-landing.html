@@ -28,7 +28,7 @@
         </div>
         <p style="font-size: 12px; text-align: left; color: #888; font-weight: bold; max-width: 90%; margin: 0 auto;">Lyrics: </p>
         <div class="sheet" style="padding-bottom: 300px;" hm-doubletap="toggleChords" hm-swipeleft="transposeDown({{song.songId}})" hm-swiperight="transposeUp({{song.songId}})">
-            <p style="white-space:pre-wrap;" class="lyrics" ng-class="{'chorded': !model.chordsVisible}" ng-bind-html="to_trusted(song.songLyrics)"></p>
+            <p style="white-space:pre-wrap;" class="lyrics" ng-class="{'chorded': !model.chordsVisible}" ng-bind-html="to_trusted(song.lyrics)"></p>
             <p style="white-space:pre-wrap;" class="chords" ng-show="model.chordsVisible">{{song.chords}}</p>
             <p style="white-space:pre-wrap;" class="headers" ng-class="{'chorded': !model.chordsVisible}" >{{song.headers}}</p>
         </div>
