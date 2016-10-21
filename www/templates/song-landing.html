@@ -7,6 +7,11 @@
         <ion-nav-buttons side="left"><button class="button" ng-click="back()"><i class="ion-ios-arrow-back"></i></button></ion-nav-buttons>
     </ion-nav-bar>
       <ion-content class="padding songLanding">
+
+        <div class="notification" ng-class="{'success': hasParams}">
+          <p>{{msg}}</p>
+        </div>
+
         <div hm-swipeleft="prevSong()" hm-swiperight="nextSong()" class="songCard">
             <div>
                 <p style="font-size 20px; font-weight: bold; margin: 10px auto 0; color: #ff8533;">{{song.title}}</p>
@@ -27,7 +32,7 @@
             </div>
         </div>
         <p style="font-size: 12px; text-align: left; color: #888; font-weight: bold; max-width: 90%; margin: 0 auto;">Lyrics: </p>
-        <div class="sheet" style="padding-bottom: 300px;" hm-doubletap="toggleChords" hm-swipeleft="transposeDown({{song.songId}})" hm-swiperight="transposeUp({{song.songId}})">
+        <div class="sheet" style="padding-bottom: 300px;" hm-doubletap="toggleChords" hm-swipeleft="transposeDown()" hm-swiperight="transposeUp()">
             <p style="white-space:pre-wrap;" class="lyrics" ng-class="{'chorded': !model.chordsVisible}" ng-bind-html="to_trusted(song.lyrics)"></p>
             <p style="white-space:pre-wrap;" class="chords" ng-show="model.chordsVisible">{{song.chords}}</p>
             <p style="white-space:pre-wrap;" class="headers" ng-class="{'chorded': !model.chordsVisible}" >{{song.headers}}</p>
@@ -39,8 +44,8 @@
             </div>
             <div class="transpose">
                 <label>Transpose:</label>
-                <button ng-click="transposeUp({{song.songId}})"><i class="ion-arrow-up-b"></i></button>
-                <button ng-click="transposeDown({{song.songId}})"><i class="ion-arrow-down-b" style="top: 2px; left: 0px;"></i></button>
+                <button ng-click="transposeUp()"><i class="ion-arrow-up-b"></i></button>
+                <button ng-click="transposeDown()"><i class="ion-arrow-down-b" style="top: 2px; left: 0px;"></i></button>
             </div>
             <div class="chords">
                 <label>Chords:</label>

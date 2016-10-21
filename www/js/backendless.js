@@ -195,22 +195,24 @@ function pinSetlist(setlistId) {
      console.log("Setlist added to User: " + JSON.stringify(updated));
 }
 
-function removeFromSetlist(setlistId, songId) {
-
-     var setlistId = getSetlist(setlistId).objectId;
-     var setlistObject = Backendless.Persistence.of(Setlists).findById(setlistId);
-
-     var stupidArray = setlistObject["setlistSongs"];
-
-    for (var i = 0; i < stupidArray.length; i++) {
-        if (stupidArray[i].songId === parseInt(songId)) {
-          console.log("Found---");
-          stupidArray.splice(i, 1);
-
-           var updated = Backendless.Persistence.of(Setlists).save(setlistObject);
-           console.log("Song spliced : " + JSON.stringify(stupidArray));
-        }
-    }
+function removeFromSetlist(setlist) {
+  db.get(setlist._id).then(function(doc) {
+    return db.put({
+      _id: setlist._id,
+      _rev: doc._rev,
+      title: String(setlist.title),
+      notes: String(setlist.notes),
+      urlSpotify: String(setlist.urlSpotify),
+      songs: setlist.songs,
+      roles: setlist.roles,
+      owner: String(setlist.owner),
+      category: 'setlist'
+    });
+    }).then(function(response) {
+      console.log(setlist.title + " updated.")
+    }).catch(function (err) {
+      console.log(err);
+    });
 }
 
 function spliceFromUser(userId, setlistId) {
@@ -248,8 +250,6 @@ angular.isUndefinedOrNull = function(val) {
 }
 
 function processSheetMusic(info, id, result) {
-    console.log(result);
-
     var collect = info.match(/[\"].+[\"]/gi);
         collect = JSON.stringify(collect).replace(/[\"]/gi, '').replace(/\\/gi, '\"').replace(/\ /g, '_');;
 
@@ -309,40 +309,82 @@ function saveEditedRoles(info, id) {
     console.log("Setlist updated: " + updated);
 }
 
-function transposeUp(id) {
-var songChords = getObject(id).songChords;
-    songChords = songChords.replace(/A(?=[^#&*])/g, 'A*').replace(/A#/g, 'B&');
-    songChords = songChords.replace(/B(?=[^#&*])/g, 'C&');
-    songChords = songChords.replace(/C(?=[^#&*])/g, 'C*').replace(/C#/g, 'D&');
-    songChords = songChords.replace(/D(?=[^#&*])/g, 'D*').replace(/D#/g, 'E&');
-    songChords = songChords.replace(/E(?=[^#&*])/g, 'F&');
-    songChords = songChords.replace(/F(?=[^#&*])/g, 'F*').replace(/F#/g, 'G&');
-    songChords = songChords.replace(/G(?=[^#&*])/g, 'G*').replace(/G#/g, 'A&');
-    songChords = songChords.replace(/[*]/g, '#').replace(/\&/g, '');
+function transposeUp(result) {
 
-var objectId = getObject(id).objectId;
-var update = Backendless.Persistence.of(Songs).findById(objectId);
-    update["songChords"] = songChords;
-    update = Backendless.Persistence.of(Songs).save(update);
+var chords = String(result.chords);
+    chords = chords.replace(/A(?=[^#&*])/g, 'A*').replace(/A#/g, 'B&');
+    chords = chords.replace(/B(?=[^#&*])/g, 'C&');
+    chords = chords.replace(/C(?=[^#&*])/g, 'C*').replace(/C#/g, 'D&');
+    chords = chords.replace(/D(?=[^#&*])/g, 'D*').replace(/D#/g, 'E&');
+    chords = chords.replace(/E(?=[^#&*])/g, 'F&');
+    chords = chords.replace(/F(?=[^#&*])/g, 'F*').replace(/F#/g, 'G&');
+    chords = chords.replace(/G(?=[^#&*])/g, 'G*').replace(/G#/g, 'A&');
+    chords = chords.replace(/[*]/g, '#').replace(/\&/g, '');
 
+    db.get(result._id).then(function(doc) {
+    return db.put({
+      _id: result._id,
+      _rev: doc._rev,
+      title: String(result.title),
+      artist: String(result.artist),
+      albumName: String(result.albumName),
+      albumArt: String(result.albumArt),
+      key: String(result.key),
+      bpm: String(result.bpm),
+      urlYouTube: String(result.urlYouTube),
+      urlSpotify: String(result.urlSpotify),
+      urlOther: String(result.urlOther),
+      sheet: String(result.sheet),
+      lyrics: String(result.lyrics),
+      chords: String(chords),
+      sections: String(result.collect),
+      headers: String(result.headers),
+      category: 'song'
+    });
+    }).then(function(response) {
+      console.log("Lyrics updated.")
+    }).catch(function (err) {
+      console.log(err);
+    });
 }
 
-function transposeDown(id) {
-var songChords = getObject(id).songChords;
-    songChords = songChords.replace(/A(?=[^#&*])/g, 'G*').replace(/A#/g, 'A&');
-    songChords = songChords.replace(/B(?=[^#&*])/g, 'A&');
-    songChords = songChords.replace(/C(?=[^#&*])/g, 'B&').replace(/C#/g, 'C&');
-    songChords = songChords.replace(/D(?=[^#&*])/g, 'C*').replace(/D#/g, 'D&');
-    songChords = songChords.replace(/E(?=[^#&*])/g, 'D*');
-    songChords = songChords.replace(/F(?=[^#&*])/g, 'E&').replace(/F#/g, 'F&');
-    songChords = songChords.replace(/G(?=[^#&*])/g, 'G*').replace(/G#/g, 'G&');
-    songChords = songChords.replace(/[*]/g, '#').replace(/\&/g, '');
-console.log(songChords);
+function transposeDown(result) {
 
-var objectId = getObject(id).objectId;
-var update = Backendless.Persistence.of(Songs).findById(objectId);
-    update["songChords"] = songChords;
-    update = Backendless.Persistence.of(Songs).save(update);
+var chords = String(result.chords);
+    chords = chords.replace(/A(?=[^#&*])/g, 'G*').replace(/A#/g, 'A&');
+    chords = chords.replace(/B(?=[^#&*])/g, 'A&');
+    chords = chords.replace(/C(?=[^#&*])/g, 'B&').replace(/C#/g, 'C&');
+    chords = chords.replace(/D(?=[^#&*])/g, 'C*').replace(/D#/g, 'D&');
+    chords = chords.replace(/E(?=[^#&*])/g, 'D*');
+    chords = chords.replace(/F(?=[^#&*])/g, 'E&').replace(/F#/g, 'F&');
+    chords = chords.replace(/G(?=[^#&*])/g, 'F*').replace(/G#/g, 'G&');
+    chords = chords.replace(/[*]/g, '#').replace(/\&/g, '');
+
+    db.get(result._id).then(function(doc) {
+    return db.put({
+      _id: result._id,
+      _rev: doc._rev,
+      title: String(result.title),
+      artist: String(result.artist),
+      albumName: String(result.albumName),
+      albumArt: String(result.albumArt),
+      key: String(result.key),
+      bpm: String(result.bpm),
+      urlYouTube: String(result.urlYouTube),
+      urlSpotify: String(result.urlSpotify),
+      urlOther: String(result.urlOther),
+      sheet: String(result.sheet),
+      lyrics: String(result.lyrics),
+      chords: String(chords),
+      sections: String(result.collect),
+      headers: String(result.headers),
+      category: 'song'
+    });
+    }).then(function(response) {
+      console.log("Lyrics updated.")
+    }).catch(function (err) {
+      console.log(err);
+    });
 }
 
 function sendMail(content, arr) {

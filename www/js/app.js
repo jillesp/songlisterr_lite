@@ -72,7 +72,8 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
                         templateUrl: 'templates/song-landing.html',
                         controller: 'SongLandingCtrl'
                     }
-                }
+                },
+                params: {msg:null}
             })
 
                 .state('song', {
@@ -319,5 +320,5 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
                 }
             })
 
-  $urlRouterProvider.otherwise('tab/setlists');
+  $urlRouterProvider.otherwise('tab/browse');
 });

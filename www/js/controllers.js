@@ -127,22 +127,26 @@ angular.module('songDroid.controllers', [])
 })
 
 .controller('SetlistItemsCtrl', function($scope, Setlists, Songs, $location, $stateParams, sharedProperties, sharedProperties2, $state, $window, $timeout) {
+  
+  var songs = [];
   Setlists.get($stateParams.setlistId).then(function(result) {
     $scope.title = result.title;
 
-    var songs = [];
-    (result.songs).forEach(function(item){
-      Songs.get(item).then(function(result) {
-        songs.push(result);
+    angular.forEach(result.songs, function(song){
+        Songs.get(song).then(function(result) {
+          songs.push(result);
+        });
+    });
+
+    $scope.remove = function(song) {
+      result.songs.splice(result.songs.indexOf(song._id), 1);
+      removeFromSetlist(result);
+      Setlists.get($stateParams.setlistId).then(function(result) {
+        $state.go($state.$current, {}, {reload: true})
       });
-    })
-
-    $scope.songs = songs;
-
-    $scope.remove = function(songId) {
-      removeFromSetlist(result._id, songId);
     };
 
+    $scope.songs = songs;
   });
 
    $scope.go = function(id) {
@@ -150,16 +154,16 @@ angular.module('songDroid.controllers', [])
        $location.path('tab/' + id + '/landing');
    };
 
-  $scope.goSpotify = function() {
-    var url = Setlists.get(sharedProperties2.getProperty()).setlistSpotify;
-    $window.open(url);
-  };
+  // $scope.goSpotify = function() {
+  //   var url = Setlists.get(sharedProperties2.getProperty()).setlistSpotify;
+  //   $window.open(url);
+  // };
 
-   var id = $stateParams.setlistId;
+  //  var id = $stateParams.setlistId;
 
-   $scope.editSetlist = function(id){
-        $location.path('setlist/setlists/' + id + '/edit')
-   }
+  //  $scope.editSetlist = function(id){
+  //       $location.path('setlist/setlists/' + id + '/edit')
+  //  }
 
 
 
@@ -218,37 +222,58 @@ angular.module('songDroid.controllers', [])
   $scope.back = function() {
     $location.path('tab/'+sharedProperties.getProperty()+'/landing');
   };
+
+
 })
 
 .controller('SongLandingCtrl', function($scope, $stateParams, Songs, $location, $state, sharedProperties, $window, $sanitize, $sce, $ionicScrollDelegate, $ionicLoading, $timeout, $anchorScroll, $ionicPopover) {
 
+   $scope.hasParams = false;
+   $scope.isActiveOne = true;
+
+   if($state.params.msg!=null){
+      $scope.hasParams = true;
+      $scope.msg = $state.params.msg;
+        $timeout(function(){
+          $scope.hasParams = false;
+          $state.params.msg = "";
+          $scope.msg = null;
+        }, 1000);
+   };
+
   //TEST OK
-  Songs.get(sharedProperties.getProperty()).then(function(result) {
+  Songs.get($stateParams.songId).then(function(result) {
     $scope.song = result;
     $scope.go = function() {
         $location.path('song/' + result._id + '/info');
     };
+
+    $scope.transposeUp = function() {
+      transposeUp(result);
+
+      Songs.get(sharedProperties.getProperty()).then(function(result) {
+        $state.go($state.$current, {msg: "Song transposed."}, {reload: true})
+      });
+    }
+
+    $scope.transposeDown = function() {
+      transposeDown(result);
+
+      Songs.get(sharedProperties.getProperty()).then(function(result) {
+        $state.go($state.$current, {msg: "Song transposed."}, {reload: true})
+      });
+    }
   });
 
   $scope.back = function() {
     $location.path('tab/browse');
   }
 
-  $scope.goSpotify = function() {
-    var url = Songs.get(sharedProperties.getProperty()).songSpotify;
-    console.log(url);
-    $window.open(url);
-  };
-
-  $scope.transposeUp = function(id) {
-    transposeUp(id);
-    $state.reload();
-  }
-
-  $scope.transposeDown = function(id) {
-    transposeDown(id);
-    $state.reload();
-  }
+  // $scope.goSpotify = function() {
+  //   var url = Songs.get(sharedProperties.getProperty()).songSpotify;
+  //   console.log(url);
+  //   $window.open(url);
+  // };
 
   var sections = Songs.get(sharedProperties.getProperty()).songSections;
 
@@ -277,86 +302,81 @@ angular.module('songDroid.controllers', [])
   $scope.form = {};
   $scope.model.chordsVisible = true;
 
- $scope.toggleChords = function() {
+  $scope.toggleChords = function() {
     if($scope.model.chordsVisible == true){
       $scope.model.chordsVisible = false;
     } else {
       $scope.model.chordsVisible = true;
     }
- }
- $scope.jumpTo = function() {
+  }
+
+  $scope.jumpTo = function() {
     var loc = $scope.model.section;
     $location.hash(loc);
     $ionicScrollDelegate.scrollBy(0, -100, true);
 
     $scope.doJump = false;
- };
+  };
 
-   $scope.prevSong= function() {
+  $scope.prevSong = function() {
     $ionicLoading.show({
       content: 'Loading',
       animation: 'fade-in',
       showBackdrop: true,
       maxWidth: 200,
       showDelay: 0,
-      duration: 800
+      duration: 400
     });
 
-    var storage = [];
-    var songs = Songs.active();
-    angular.forEach(songs, function(song){
-        storage.push(song.songId);
+    var iterator = [];
+    Songs.active().then(function(result) {
+      angular.forEach(result.docs, function(song){
+        iterator.push(song._id);
+      });
+
+      Songs.get($stateParams.songId).then(function(result) {
+        nextIndex = iterator.indexOf(result._id) - 1;
+
+        if(nextIndex < 0) {
+          nextIndex = iterator.length - 1;
+        }
+
+        Songs.active().then(function(result) {
+          $state.go($state.$current, {msg: "Song updated.", songId: result.docs[nextIndex]._id}, {reload: true})
+        });
+      });
     });
-    console.log(JSON.stringify(storage));
-      var current = Songs.get(sharedProperties.getProperty()).songId;
-      var index = storage.indexOf(current);
-          index = index + 1;
-      console.log("Next index:" + index);
+  };
 
-      if(index < storage.length && index >= 0){
-        var nextSong = storage[index];
-        sharedProperties.setProperty(nextSong);
-        $location.path('tab/' + nextSong + '/landing');
-      } else {
-        var nextSong = storage[0];
-        sharedProperties.setProperty(nextSong);
-        $location.path('tab/' + nextSong + '/landing');
-        console.log("Index defaulted to " + storage.length - 1);
-      }
-   };
-
-   $scope.nextSong = function() {
+  $scope.nextSong = function() {
     $ionicLoading.show({
       content: 'Loading',
       animation: 'fade-in',
       showBackdrop: true,
       maxWidth: 200,
       showDelay: 0,
-      duration: 800
+      duration: 400
     });
-    var storage = [];
-    var songs = Songs.active();
-    angular.forEach(songs, function(song){
-        storage.push(song.songId);
+
+    var iterator = [];
+    Songs.active().then(function(result) {
+      angular.forEach(result.docs, function(song){
+        iterator.push(song._id);
+      });
+
+      Songs.get($stateParams.songId).then(function(result) {
+        nextIndex = iterator.indexOf(result._id) + 1;
+
+        if(nextIndex == iterator.length) {
+          nextIndex = 0;
+        }
+
+        Songs.active().then(function(result) {
+          $state.go($state.$current, {msg: "Song updated.", songId: result.docs[nextIndex]._id}, {reload: true})
+        });
+      });
     });
-      var current = Songs.get(sharedProperties.getProperty()).songId;
-      var index = storage.indexOf(current);
-          index = index - 1;
-      console.log("Next index:" + index);
-
-      if(index >= 0 && index < storage.length){
-        var nextSong = storage[index];
-        sharedProperties.setProperty(nextSong);
-        $location.path('tab/' + nextSong + '/landing');
-      } else {
-        var nextSong = storage[storage.length - 1];
-        sharedProperties.setProperty(nextSong);
-        $location.path('tab/' + nextSong + '/landing');
-        console.log("Index defaulted to 0.");
-      }
-   };
-
-
+  };
 })
 
 .controller('SongActionCtrl', function($scope, $stateParams, Songs, sharedProperties, $location, $window, $state, $timeout) {
@@ -760,7 +780,6 @@ angular.module('songDroid.controllers', [])
 
   Songs.get(sharedProperties.getProperty()).then(function(result) {
     $scope.song = result;
-    console.log(result);
     $scope.model = { sheet: '' };
     $scope.form = {};
     $scope.model.sheet = result.sheet;

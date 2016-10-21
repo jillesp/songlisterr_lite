@@ -11,17 +11,17 @@
       </div>
 
     <ion-list>
-      <ion-item class="wrapper" ng-repeat="song in songs" type="item-text-wrap" ng-click="go({{song._id}})">
+      <ion-item class="wrapper" ng-repeat="song in songs" type="item-text-wrap">
           <ion-side-menus enable-menu-with-back-views="true" >
             <ion-side-menu-content edge-drag-threshold="50"> 
                 <div class="listItem" ng-click="go({{song._id}})">
-                  <h2 ng-click="go({{song._id}})" class="heading">{{song.title}}</h2>
-                  <p ng-click="go({{song._id}})" class="subheading"><span>{{song.albumName}}</span> by <span>{{song.artist}}</span></p>
+                  <h2 class="heading">{{song.title}}</h2>
+                  <p class="subheading"><span>{{song.albumName}}</span> by <span>{{song.artist}}</span></p>
                 </div>
             </ion-side-menu-content>
             <ion-side-menu  side="right" width="80">
               <ion-content class="sideMenu">
-                <a class="button" ng-click="remove({{song._id}})">
+                <a class="button" ng-click="remove({{song}})">
                   <i class="ion-minus-circled"></i>
                 </a>                
               </ion-content>
