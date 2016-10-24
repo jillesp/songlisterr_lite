@@ -63,6 +63,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
 
 .service('Setlists', function(localStorageService, $q, pouchDB) {
 
+  db.createIndex({index: {fields: ['title']}}).then(function (result) {}).catch(function (err) {console.log(err);});
   db.createIndex({index: {fields: ['category']}}).then(function (result) {}).catch(function (err) {console.log(err);});
 
     return {
@@ -76,31 +77,34 @@ angular.module('songDroid.services', ['LocalStorageModule'])
         return setlists;
       },
       listed: function(setlistId) {
-        console.log("Function redirected.");
-        // var setlist = String(setlistId);
-        //     setlist = $q.when(db.get(setlistId).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
-        // return setlist;        
+        console.log("Function redirected.");      
       },
       get: function(setlistId) {
         var setlist = String(setlistId);
             setlist = $q.when(db.get(setlistId).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
         return setlist;
       },
-
       //TESTING
       active: function() {
         var setList = $q.when(db.find({selector: {category: {$eq:"setlist"}}}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
         return setList;
       },
-
       search: function(type, string) {
-        getData();
-        setlists = Backendless.Persistence.of(Setlists).find();
-          var query = {condition:  type + " LIKE '%" + string + "%' and isActive = 1 and isPrivate = false" };
-          var foundItems = Backendless.Persistence.of(Setlists).find(query);
-          return foundItems.data;
-      },
+        var setList = $q.when(db.find({
+          selector: {
+            title: {$lte: string},
+            category: {$eq:"setlist"}
+          }
+        }).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
+        
+        // function(doc, emit) { // extra 'emit' tells PouchDB to allow closures
+        //   if(doc.hp > horsePower) {
+        //     emit(doc.value, null);
+        //   }
+        // }
 
+        return setList;
+      },
       pinned: function(userObjId) {
         // getData();
         setlists = localStorageService.get('localSetlists').data;

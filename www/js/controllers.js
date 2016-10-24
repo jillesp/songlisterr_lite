@@ -721,7 +721,9 @@ angular.module('songDroid.controllers', [])
         if( type == 'songs') {
             $scope.songs = Songs.search(column, string);
         } else if ( type == 'setlists') {
-            $scope.setlists = Setlists.search(column, string);
+            Setlists.search(column, string).then(function(result) {
+              $scope.setlists = result.docs;
+            });
         } else if ( type == 'tags'){
             var tag = Tags.search(column, string);
         } else {
@@ -899,16 +901,22 @@ angular.module('songDroid.controllers', [])
 })
 
 .controller('MainTabsCtrl', function($scope, sharedProperties2, Roles, $location, $state, $stateParams) {
-  // $scope.goTo = function(location) {
-  //   switch (location) {
-  //     case "":
-  //       $state.go('song.song-info', {msg:null}, {});
-  //     break;
-  //     case "":
-  //      $state.go('song.song-action', {}, {});
-  //     break;
-  //     default:
-  //     break;
-  //   }
-  // }
+  $scope.goTo = function(location) {
+    switch (location) {
+      case "search":
+        $state.go('tab.search', {msg:null}, {});
+        break;
+      case "songs":
+        $state.go('tab.songs', {msg:null}, {});
+        break;
+      case "pinned":
+        $state.go('tab.practice', {msg:null}, {});
+        break;
+      case "setlists":
+        $state.go('tab.setlists', {msg:null}, {});
+        break;
+      default:
+      break;
+    }
+  }
 })
