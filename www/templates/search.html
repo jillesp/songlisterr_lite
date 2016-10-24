@@ -1,6 +1,6 @@
 <ion-view view-title="Search" cache-view="false">
   <ion-nav-bar class="bar-dark">
-    
+
   </ion-nav-bar>
 
   <ion-content class="padding search">
@@ -14,21 +14,21 @@
               <div class="query" ng-click="activateTwo()" ng-class="{'underline': isActiveTwo}"><p>Artist</p></div>
               <div class="query" ng-click="activateThree()" ng-class="{'underline': isActiveThree}"><p>Album</p></div>
               <div class="query" ng-click="activateFour()" ng-class="{'underline': isActiveFour}"><p>Setlist</p></div>
-              <div class="query" ng-click="activateFive()" ng-class="{'underline': isActiveFive}"><p>Tags</p></div>
+              <!-- <div class="query" ng-click="activateFive()" ng-class="{'underline': isActiveFive}"><p>Tags</p></div> -->
         </div>
-      </div>      
+      </div>
 
       <ion-item class="wrapper" ng-repeat="song in songs" type="item-text-wrap" ng-show="val">
           <ion-side-menus enable-menu-with-back-views="true" >
-            <ion-side-menu-content edge-drag-threshold="50"> 
-                <div class="listItem" ng-click="go({{song.songId}})">
-                  <h2 ng-click="go({{song.songId}})" class="heading">{{song.title}}</h2>
-                  <p ng-click="go({{song.songId}})" class="subheading"><span>{{song.albumName}}</span> by <span>{{song.artist}}</span></p>
+            <ion-side-menu-content edge-drag-threshold="50">
+                <div class="listItem" ng-click="go({{song.doc._id}})">
+                  <h2 ng-click="go({{song.doc._id}})" class="heading">{{song.doc.title}}</h2>
+                  <p ng-click="go({{song.doc._id}})" class="subheading"><span>{{song.doc.albumName}}</span> by <span>{{song.doc.artist}}</span></p>
                 </div>
             </ion-side-menu-content>
             <ion-side-menu  side="left" width="60" class="sideMenuParent">
               <ion-content class="sideMenu">
-                <a class="button" ng-click="addToSetlist({{song.songId}})">
+                <a class="button" ng-click="addToSetlist({{song.doc._id}})">
                   <i class="ion-android-add-circle"></i>
                 </a>
               </ion-content>
@@ -38,21 +38,21 @@
                 <a class="button two">
                   <i class="ion-code-download"></i>
                 </a>
-                <a class="button two" ng-click="delete({{song.songId}})">
+                <a class="button two" ng-click="delete({{song.doc._id}})">
                   <i class="ion-trash-a"></i>
-                </a>                
+                </a>
               </ion-content>
-            </ion-side-menu>            
+            </ion-side-menu>
           </ion-side-menus>
       </ion-item>
 
-      <ion-item class="wrapper" ng-hide="val" ng-repeat="setlist in setlists" type="item-text-wrap" ng-click="goSetlist({{setlist.setlistId}})">
+      <ion-item class="wrapper" ng-hide="val" ng-repeat="setlist in setlists" type="item-text-wrap" ng-click="goSetlist({{setlist.doc._id}})">
          <ion-side-menus enable-menu-with-back-views="true" >
-            <ion-side-menu-content edge-drag-threshold="50"> 
+            <ion-side-menu-content edge-drag-threshold="50">
                 <div class="listItem" style="overflow:hidden;">
-                  <div style="float:left; border: none;" ng-click="go({{setlist.setlistId}})">
-                    <h2 class="heading">{{setlist.title}}</h2>
-                    <p class="subheading"><span>{{setlist.setlistSongs.length}}</span> Tracks, by <span style="color: #00cc44;">{{setlist.ownerId}}</span></p>
+                  <div style="float:left; border: none;" ng-click="go({{setlist.doc._id}})">
+                    <h2 class="heading">{{setlist.doc.title}}</h2>
+                    <p class="subheading"><span>{{setlist.doc.songs.length}}</span> Tracks, by <span style="color: #00cc44;">{{setlist.doc.owner}}</span></p>
                   </div>
                   <i class="ion-android-more-vertical" style="float:right; color: #1a1a1a;" ng-click="goInfo({{setlist.setlistId}})"></i>
                 </div>
@@ -69,11 +69,11 @@
                 <a class="button two">
                   <i class="ion-code-download"></i>
                 </a>
-                <a class="button two" ng-click="deleteItem({{setlist.setlistId}})">
+                <a class="button two" ng-click="deleteItem({{setlist.doc._id}})">
                   <i class="ion-trash-a"></i>
-                </a>                
+                </a>
               </ion-content>
-            </ion-side-menu>            
+            </ion-side-menu>
           </ion-side-menus>
       </ion-item>
 

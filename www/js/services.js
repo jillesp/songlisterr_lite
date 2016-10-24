@@ -21,18 +21,15 @@ angular.module('songDroid.services', ['LocalStorageModule'])
               song = $q.when(db.get(song).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
           return song;
         },
-        //TEST OK -- returns song count
+        //TEST OK
         count: function() {
-          var songs = $q.when(db.allDocs({include_docs: true, startkey: "songs"}).then(function (result){ return result.total_rows + 1; }).catch(function (err) {console.log(err);}));
+          var songs = $q.when(db.find({selector: {category: {$eq:"song"}}}).then(function (result){ return result.docs.length + 1; }).catch(function (err) {console.log(err);}));
           return songs;
         },
-        search: function(type, string) {
-          // songs = localStorageService.get('localSongs');
-          // dataStore = Backendless.Persistence.of(Songs);
-
-          //   var query = {condition:  type + " LIKE '%" + string + "%' and isActive = 1" };
-          //   var foundItems = dataStore.find(query);
-          //   return foundItems.dat
+        //TEST OK
+        search: function(string) {
+          var songs = $q.when(db.allDocs({include_docs: true, startkey: 'song_' + string, endkey: 'song_' + string + '\uffff'}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
+          return songs;
         }
       }
 })
@@ -63,46 +60,36 @@ angular.module('songDroid.services', ['LocalStorageModule'])
 
 .service('Setlists', function(localStorageService, $q, pouchDB) {
 
-  db.createIndex({index: {fields: ['title']}}).then(function (result) {}).catch(function (err) {console.log(err);});
   db.createIndex({index: {fields: ['category']}}).then(function (result) {}).catch(function (err) {console.log(err);});
-
     return {
       all: function() {
         // getData();
         setlists = localStorageService.get('localSetlists').data;
         return setlists.data;
       },
+      //TEST OK
       count: function() {
-        var setlists = $q.when(db.allDocs({include_docs: true, startkey: "setlists"}).then(function (result){ return result.total_rows + 1; }).catch(function (err) {console.log(err);}));
-        return setlists;
+        var setList = $q.when(db.find({selector: {category: {$eq:"setlist"}}}).then(function (result){ return result.docs.length + 1; }).catch(function (err) {console.log(err);}));
+        console.log(setList);
+        return setList;
       },
+      //TEST OK -- dunno where this gets called
       listed: function(setlistId) {
-        console.log("Function redirected.");      
+        console.log("Function redirected.");
       },
       get: function(setlistId) {
         var setlist = String(setlistId);
             setlist = $q.when(db.get(setlistId).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
         return setlist;
       },
-      //TESTING
+      //TEST OK
       active: function() {
         var setList = $q.when(db.find({selector: {category: {$eq:"setlist"}}}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
         return setList;
       },
-      search: function(type, string) {
-        var setList = $q.when(db.find({
-          selector: {
-            title: {$lte: string},
-            category: {$eq:"setlist"}
-          }
-        }).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
-        
-        // function(doc, emit) { // extra 'emit' tells PouchDB to allow closures
-        //   if(doc.hp > horsePower) {
-        //     emit(doc.value, null);
-        //   }
-        // }
-
+      //TEST OK
+      search: function(string) {
+        var setList = $q.when(db.allDocs({include_docs: true, startkey: 'setlist_' + string, endkey: 'setlist_' + string + '\uffff'}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
         return setList;
       },
       pinned: function(userObjId) {

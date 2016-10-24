@@ -202,7 +202,7 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
                         templateUrl: 'templates/setlist-items.html',
                         controller: 'SetlistItemsCtrl'
                     }
-                }, 
+                },
                 params: {msg:true}
             })
 

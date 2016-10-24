@@ -64,7 +64,6 @@ angular.module('songDroid.controllers', [])
 
   Setlists.active().then(function(result) {
     $scope.setlists = result.docs;
-
     $scope.go = function(setlist) {
         sharedProperties2.setProperty(setlist._id);
         $location.path('tab/setlists/' + setlist._id + '/items');
@@ -127,7 +126,7 @@ angular.module('songDroid.controllers', [])
 })
 
 .controller('SetlistItemsCtrl', function($scope, Setlists, Songs, $location, $stateParams, sharedProperties, sharedProperties2, $state, $window, $timeout) {
-  
+
   var songs = [];
   Setlists.get($stateParams.setlistId).then(function(result) {
     $scope.title = result.title;
@@ -649,8 +648,7 @@ angular.module('songDroid.controllers', [])
 
 .controller('SearchCtrl', function($scope, Songs, Setlists, $location, $stateParams, sharedProperties, sharedProperties2, $state, $ionicScrollDelegate ) {
 
-    var type = "songs";
-    var column = "songTitle";
+    var type = "song";
     $scope.val = true;
 
     $scope.isActiveOne = true;
@@ -662,8 +660,7 @@ angular.module('songDroid.controllers', [])
         $scope.isActiveFour = false;
         $scope.isActiveFive = false;
 
-        type = "songs";
-        column = "songTitle";
+        type = "song";
         $scope.val = true;
     }
     $scope.activateTwo = function(){
@@ -673,8 +670,7 @@ angular.module('songDroid.controllers', [])
         $scope.isActiveFour = false;
         $scope.isActiveFive = false;
 
-        type = "songs";
-        column = "songArtist";
+        type = "artist";
         $scope.val = true;
     }
     $scope.activateThree = function(){
@@ -684,8 +680,7 @@ angular.module('songDroid.controllers', [])
         $scope.isActiveFour = false;
         $scope.isActiveFive = false;
 
-        type = "songs";
-        column = "songAlbumName";
+        type = "album";
         $scope.val = true;
     }
     $scope.activateFour = function(){
@@ -695,39 +690,62 @@ angular.module('songDroid.controllers', [])
         $scope.isActiveFour = true;
         $scope.isActiveFive = false;
 
-        type = "setlists";
-        column = "setlistName";
+        type = "setlist";
         $scope.val = false;
     }
-    $scope.activateFive = function(){
-        $scope.isActiveOne = false;
-        $scope.isActiveTwo = false;
-        $scope.isActiveThree = false;
-        $scope.isActiveFour = false;
-        $scope.isActiveFive = true;
-
-        type = "songs";
-        column = "songTags";
-        $scope.val = true;
-    }
+    // $scope.activateFive = function(){
+    //     $scope.isActiveOne = false;
+    //     $scope.isActiveTwo = false;
+    //     $scope.isActiveThree = false;
+    //     $scope.isActiveFour = false;
+    //     $scope.isActiveFive = true;
+    //
+    //     type = "songs";
+    //     column = "songTags";
+    //     $scope.val = true;
+    // }
 
           $scope.model = { query: '' };
           $scope.form = {};
 
    $scope.search = function() {
         var string = $scope.model.query;
-        console.log(column +"/"+ string);
+        console.log(type + " / " + string);
 
-        if( type == 'songs') {
-            $scope.songs = Songs.search(column, string);
-        } else if ( type == 'setlists') {
-            Setlists.search(column, string).then(function(result) {
-              $scope.setlists = result.docs;
+        switch (type) {
+          case 'song':
+            Songs.search(string.toLowerCase()).then(function(result) {
+                $scope.songs = result.rows;
             });
-        } else if ( type == 'tags'){
-            var tag = Tags.search(column, string);
-        } else {
-            console.log("tf u lookin' for bruh");
+          break;
+          case 'artist':
+            var songs = [];
+            Songs.search('').then(function(result) {
+              (result.rows).forEach(function(song){
+                var regEx = new RegExp(string, 'gi');
+                if( (song.doc.artist).match(regEx) ) {
+                  songs.push(song);
+                }
+              })
+              $scope.songs = songs;
+            });
+          break;
+          case 'album':
+            Songs.search('').then(function(result) {
+              (result.rows).forEach(function(song){
+                var regEx = new RegExp(string, 'gi');
+                if( (song.doc.album).match(regEx) ) {
+                  songs.push(song);
+                }
+              })
+              $scope.songs = songs;
+            });
+          break;
+          case 'setlist':
+            Setlists.search(string.toLowerCase()).then(function(result) {
+              $scope.setlists = result.rows;
+            });
+          break;
         }
    }
 

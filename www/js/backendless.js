@@ -84,7 +84,7 @@ function saveEditSong(id, info, result) {
 //TEST OK
 function saveNewSong(info) {
   db.put({
-      _id: 'songs000' + String(info.id),
+      _id: "song_" + String(info.title).toLowerCase() + "_" + String(info.id),
       title: String(info.title),
       artist: String(info.artist),
       albumName: String(info.albumName),
@@ -108,8 +108,10 @@ function saveNewSong(info) {
 }
 
 function saveNewSetlist(info) {
+
+
     db.put({
-      _id: 'setlists000' + String(info.id),
+      _id: "setlist_" + String(info.title).toLowerCase() + "_" + String(info.id),
       title: String(info.title),
       notes: String(info.notes),
       urlSpotify: String(info.urlSpotify),
