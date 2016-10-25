@@ -108,8 +108,6 @@ function saveNewSong(info) {
 }
 
 function saveNewSetlist(info) {
-
-
     db.put({
       _id: "setlist_" + String(info.title).toLowerCase() + "_" + String(info.id),
       title: String(info.title),
@@ -184,17 +182,21 @@ function saveEditedSetlist(info, id) {
     // console.log("Setlist updated: " + updated);
 }
 
-function pinSetlist(setlistId) {
-     var setlistId = getSetlist(setlistId).objectId;
-     console.log(setlistId);
-     var setlistObject = Backendless.Persistence.of(Setlists).findById(setlistId);
-
-     var userObject = Backendless.Persistence.of(Backendless.User).findById("F2AC443E-7F6D-4D8E-FFD1-5BEA2E195300");
-
-     var unpin = userObject["setlists"].splice(0,5,{objectId: setlistObject.objectId,___class: "Setlists"});
-
-     var updated = Backendless.Persistence.of(Backendless.User).save(userObject);
-     console.log("Setlist added to User: " + JSON.stringify(updated));
+function pinSetlist(setlist, user) {
+  console.log(setlist);
+    db.get(user).then(function(doc) {
+      return db.put({
+        _id: user,
+        _rev: doc._rev,
+        username: 'jilles',
+        password: null,
+        pinned: setlist._id
+      });
+    }).then(function(response) {
+      console.log(setlist.title + " pinned.")
+    }).catch(function (err) {
+      console.log(err);
+    });
 }
 
 function removeFromSetlist(setlist) {

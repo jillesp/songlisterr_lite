@@ -2,6 +2,98 @@ angular.module('songDroid.services', ['LocalStorageModule'])
 
 .service('Songs', function(localStorageService, $q, pouchDB) {
 
+  db.put().then(function (response) {
+    console.log("User created.");
+  }).catch(function (err) {
+    // console.log(err);
+    console.log("User already exists.");
+  });
+
+  db.bulkDocs([
+    {
+      _id: 'user_jilles',
+      username: 'jilles',
+      password: null,
+      pinned: null
+    },
+    {
+      _id: "song_photograph_0",
+      title: 'Photograph',
+      artist: 'Ed Sheeran',
+      albumName: 'x',
+      albumArt: 'https://upload.wikimedia.org/wikipedia/en/a/ad/X_cover.png',
+      key: 'E',
+      bpm: 592,
+      urlYouTube: null,
+      urlSpotify: null,
+      urlOther: null,
+      category: 'song',
+      sheet: "",
+      lyrics: "",
+      chords: "",
+      sections: "",
+      headers: ""
+    },
+    {
+      _id: "song_lost stars_0",
+      title: 'Lost Stars',
+      artist: 'Adam Levine',
+      albumName: 'V',
+      albumArt: 'https://upload.wikimedia.org/wikipedia/en/5/53/Maroon_5_-_V_(Official_Album_Cover).png',
+      key: 'F',
+      bpm: 98,
+      urlYouTube: null,
+      urlSpotify: null,
+      urlOther: null,
+      category: 'song',
+      sheet: "",
+      lyrics: "",
+      chords: "",
+      sections: "",
+      headers: ""
+    },
+    {
+      _id: "song_me and my broken heart_0",
+      title: 'Me and My Broken Heart',
+      artist: 'Rixton',
+      albumName: 'Me and My Broken Heart',
+      albumArt: 'http://netstorage.metrolyrics.com/albums/3892814jpg.jpg',
+      key: 'Am',
+      bpm: 912938,
+      urlYouTube: null,
+      urlSpotify: null,
+      urlOther: null,
+      category: 'song',
+      sheet: "",
+      lyrics: "",
+      chords: "",
+      sections: "",
+      headers: ""
+    },
+    {
+      _id: "song_disappear_0",
+      title: 'Disappear',
+      artist: 'Parachute',
+      albumName: 'Overnight',
+      albumArt: 'https://upload.wikimedia.org/wikipedia/en/b/b9/Parachute_-_Overnight.jpg',
+      key: 'Em',
+      bpm: 21,
+      urlYouTube: null,
+      urlSpotify: null,
+      urlOther: null,
+      category: 'song',
+      sheet: "",
+      lyrics: "",
+      chords: "",
+      sections: "",
+      headers: ""
+    }
+  ]).then(function (result) {
+    console.log("Multiple objects created.");
+  }).catch(function (err) {
+    console.log("Objects already exist.");
+  });
+
   db.createIndex({index: {fields: ['category']}}).then(function (result) {}).catch(function (err) {console.log(err);});
 
       return {
@@ -77,6 +169,8 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       listed: function(setlistId) {
         console.log("Function redirected.");
       },
+
+      //TEST OK
       get: function(setlistId) {
         var setlist = String(setlistId);
             setlist = $q.when(db.get(setlistId).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
@@ -92,16 +186,12 @@ angular.module('songDroid.services', ['LocalStorageModule'])
         var setList = $q.when(db.allDocs({include_docs: true, startkey: 'setlist_' + string, endkey: 'setlist_' + string + '\uffff'}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
         return setList;
       },
-      pinned: function(userObjId) {
-        // getData();
-        setlists = localStorageService.get('localSetlists').data;
-        users = localStorageService.get('localUsers').data;
-        users = users.filter(
-          function(users){
-            return users.objectId == userObjId;
-          }
-        )
-        return users[0].setlists;
+
+      //TESTING
+      pinned: function(user) {
+        var user = String(user);
+            user = $q.when(db.get(user).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
+        return user;
       }
     }
 })

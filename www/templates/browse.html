@@ -4,26 +4,28 @@
   </ion-nav-bar>
 
   <ion-content class="padding search">
-    <div class="container browse">
+    <!-- <div class="container browse">
       <div class="buttonGroup browse">
             <div class="query" ng-click="readConnection()" ng-class="{'underline': isActiveOne}"><p>All</p></div>
-            <!-- <div class="query disabled" ng-click="readConnection()" ng-class="{'underline': isActiveTwo}"><p>Owned</p></div> -->
             <div class="query disabled" ng-click="return;" ng-class="{'underline': isActiveThree}"><p>Offline</p></div>
       </div>
-    </div>
+    </div> -->
 
     <div class="notification" ng-class="{'success': hasParams}">
       <p>{{msg}}</p>
     </div>
 
-    <ion-list ng-hide="offline">
+    <ion-list ng-hide="offline" class="template-browse">
       <ion-item class="wrapper" ng-repeat="song in songs" type="item-text-wrap" >
           <ion-side-menus enable-menu-with-back-views="true" >
             <ion-side-menu-content edge-drag-threshold="50">
-                <div class="listItem" ng-click="go({{song}})">
+                <div class="list-item" ng-click="go({{song}})">
+                  <img src="{{song.albumArt}}">
                   <i class="ion-ios-locked"></i>
-                  <h2 ng-click="go({{song}})" class="heading">{{song.title}}</h2>
-                  <p ng-click="go({{song}})" class="subheading"><span>{{song.albumName}}</span> by <span>{{song.artist}}</span></p>
+                  <div class="item-content">
+                    <h2 ng-click="go({{song}})" class="heading">{{song.title}}</h2>
+                    <p ng-click="go({{song}})" class="subheading"><span>{{song.albumName}}</span> by <span>{{song.artist}}</span></p>
+                  </div>
                 </div>
             </ion-side-menu-content>
             <ion-side-menu  side="left" width="60" class="sideMenuParent">
