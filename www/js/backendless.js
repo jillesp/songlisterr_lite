@@ -438,3 +438,18 @@ function addRole(info) {
     var updated = Backendless.Persistence.of(Roles).save(newRole);
     console.log("Role saved: " + updated);
 }
+
+function saveSetlist(user, setlist) {
+    console.log('Implementing user-session system..');
+    // db.put({
+    //   _id: user.username
+    //   _id: 'jilles_main party ',
+    //   setlist: 'setlist_new collection_0',
+    //   roles: [],
+    //   category: 'private'
+    // }).then(function(response) {
+    //   console.log("Song saved.")
+    // }).catch(function (err) {
+    //   console.log(err);
+    // });
+}

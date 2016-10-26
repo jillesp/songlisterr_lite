@@ -5,18 +5,33 @@
   </ion-nav-bar>
 
   <ion-content class="padding action">
+    <div class="container browse">
+      <div class="buttonGroup browse">
+            <div class="query" ng-click="showResults('owned')" ng-class="{'underline': showOwned}"><p>Owned</p></div>
+            <div class="query" ng-click="showResults('all')" ng-class="{'underline': showAll}"><p>All</p></div>
+      </div>
+    </div>
 
     <div class="notification" ng-class="{'success': hasParams}">
       <p>{{msg}}</p>
     </div>
 
+    <ion-list ng-hide="offline" class="template-setlist">
       <ion-item class="wrapper" ng-repeat="setlist in setlists" type="item-text-wrap">
          <ion-side-menus enable-menu-with-back-views="true" >
             <ion-side-menu-content edge-drag-threshold="50">
                 <div class="listItem" style="overflow:hidden;">
                   <div style="border: none; display: inline-block; width: 80%;" ng-click="go({{setlist}})">
-                    <h2 class="heading">{{setlist.title}}</h2>
-                    <p class="subheading"><span>{{setlist.songs.length}}</span> Tracks, by <span style="color: #00cc44;">{{setlist.owner}}</span></p>
+                    <p class="tracks">{{setlist.songs.length}}</p>
+                    <label class="tracks-label">Tracks</label>
+                    <div class="setlist-content">
+                      <h2 class="heading">{{setlist.title}}</h2>
+                      <p class="owner">{{setlist.owner}}</p>
+                    </div>
+                    <!-- <p class="subheading">
+                      <span>{{setlist.songs.length}}</span> Tracks, 
+                      <span style="color: #00cc44;">{{setlist.owner}}</span>
+                    </p> -->
                   </div>
                   <i class="ion-android-more-vertical" style="display: inline-block; width: 18%; text-align: right; color: #1a1a1a;" ng-click="goInfo({{setlist}})"></i>
                 </div>
@@ -26,9 +41,15 @@
                 <a class="button" ng-click="practice({{setlist}})">
                   <i class="ion-ipod"></i>
                 </a>
+                <a class="button" ng-click="save({{setlist}})">
+                  <i class="ion-bookmark"></i>
+                </a>
+                <a class="button two" ng-click="deleteItem({{setlist}})">
+                  <i class="ion-trash-a"></i>
+                </a>
               </ion-content>
             </ion-side-menu>
-            <ion-side-menu  side="right" width="120">
+            <!-- <ion-side-menu  side="right" width="120">
               <ion-content class="sideMenu">
                 <a class="button two">
                   <i class="ion-code-download"></i>
@@ -37,8 +58,9 @@
                   <i class="ion-trash-a"></i>
                 </a>
               </ion-content>
-            </ion-side-menu>
+            </ion-side-menu> -->
           </ion-side-menus>
       </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>
