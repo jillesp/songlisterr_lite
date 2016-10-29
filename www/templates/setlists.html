@@ -6,7 +6,7 @@
 
   <ion-content class="padding action">
     <div class="container browse">
-      <div class="buttonGroup browse">
+      <div class="buttonGroup setlist">
             <div class="query" ng-click="showResults('owned')" ng-class="{'underline': showOwned}"><p>Owned</p></div>
             <div class="query" ng-click="showResults('all')" ng-class="{'underline': showAll}"><p>All</p></div>
       </div>
@@ -20,20 +20,22 @@
       <ion-item class="wrapper" ng-repeat="setlist in setlists" type="item-text-wrap">
          <ion-side-menus enable-menu-with-back-views="true" >
             <ion-side-menu-content edge-drag-threshold="50">
-                <div class="listItem" style="overflow:hidden;">
-                  <div style="border: none; display: inline-block; width: 80%;" ng-click="go({{setlist}})">
-                    <p class="tracks">{{setlist.songs.length}}</p>
-                    <label class="tracks-label">Tracks</label>
-                    <div class="setlist-content">
-                      <h2 class="heading">{{setlist.title}}</h2>
-                      <p class="owner">{{setlist.owner}}</p>
+                <div class="list-item" style="overflow:hidden;">
+                  <div>
+                    <div class="tracks-container" ng-click="go({{setlist}})">
+                      <p class="tracks">{{setlist.songs.length}}</p>
+                      <label class="tracks-label">Tracks</label>
                     </div>
-                    <!-- <p class="subheading">
-                      <span>{{setlist.songs.length}}</span> Tracks, 
-                      <span style="color: #00cc44;">{{setlist.owner}}</span>
-                    </p> -->
+                    <div class="setlist-content">
+                      <div class="details-container" ng-click="go({{setlist}})">
+                        <h2 class="heading">{{setlist.title}}</h2>
+                        <p class="owner">{{setlist.owner}}</p>
+                      </div>
+                      <div class="options-container" ng-click="goInfo({{setlist}})">
+                        <i class="ion-android-more-vertical" style="display: inline-block; width: 18%; text-align: right; color: #1a1a1a;"></i>
+                      </div>
+                    </div>
                   </div>
-                  <i class="ion-android-more-vertical" style="display: inline-block; width: 18%; text-align: right; color: #1a1a1a;" ng-click="goInfo({{setlist}})"></i>
                 </div>
             </ion-side-menu-content>
             <ion-side-menu  side="left" width="60" class="sideMenuParent">

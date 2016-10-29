@@ -48,8 +48,43 @@ angular.module('songDroid.controllers', [])
 
 //TESTING
 .controller('SetlistsCtrl', function($scope, Setlists, $location, $stateParams, sharedProperties2, $state, $timeout) {
+  
   $scope.hasParams = false;
-  $scope.isActiveOne = true;
+
+  $scope.showAll = true;
+  $scope.showOwned = false;
+
+  $scope.showResults = function(type) {
+    switch (type) {
+      case 'owned':
+        $scope.showAll = false;
+        $scope.showOwned = true;
+
+        // TEST USER !!
+        var user = 'jilles';
+        var setlists = [];
+        Setlists.owned(user).then(function(result) {
+          result.rows.forEach(function(setlist) {
+            Setlists.get(setlist.doc.setlistId).then(function(result) {
+              setlists.push(result);
+            });
+          })
+        });
+        $scope.setlists = setlists;
+      break;
+      default:
+        $scope.showAll = true;
+        $scope.showOwned = false;
+
+        Setlists.active().then(function(result) {
+          $scope.setlists = result.docs;
+        });
+      break;
+    }
+  } 
+
+  $scope.showResults();
+
 
   if($state.params.msg!=null){
      $scope.hasParams = true;
@@ -61,11 +96,17 @@ angular.module('songDroid.controllers', [])
        }, 1000);
   };
 
-  Setlists.active().then(function(result) {
-    $scope.setlists = result.docs;
+  // Setlists.active().then(function(result) {
+  //   $scope.setlists = result.docs;
+  //   $scope.go = function(setlist) {
+  //       sharedProperties2.setProperty(setlist._id);
+  //       $location.path('tab/setlists/' + setlist._id + '/items');
+  //   };
+  // });
+
     $scope.go = function(setlist) {
-        sharedProperties2.setProperty(setlist._id);
-        $location.path('tab/setlists/' + setlist._id + '/items');
+      sharedProperties2.setProperty(setlist._id);
+      $location.path('tab/setlists/' + setlist._id + '/items');
     };
 
     $scope.goInfo = function(setlist) {
@@ -83,7 +124,6 @@ angular.module('songDroid.controllers', [])
     $scope.addSetlist = function() {
         $location.path('/tab/setlists/new');
     };
-  });
 
     $scope.practice = function(setlist){
         var user = 'user_jilles';
@@ -741,14 +781,10 @@ angular.module('songDroid.controllers', [])
           break;
           case 'setlist':
             Setlists.search(string.toLowerCase()).then(function(result) {
+              console.log(result.rows);
               $scope.setlists = result.rows;
             });
           break;
-          // case 'song':
-          //   Songs.search(string.toLowerCase()).then(function(result) {
-          //       $scope.songs = result;
-          //   });
-          // break;
         }
    }
 

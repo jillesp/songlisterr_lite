@@ -3,35 +3,41 @@
     <ion-nav-buttons side="left"><button class="button" ng-click="back()"><i class="ion-ios-arrow-back"></i></button></ion-nav-buttons>
     <ion-nav-buttons side="right"><button class="button" ng-click="goSpotify()"><img src="img/spotify.png"></button></ion-nav-buttons>
   </ion-nav-bar>
-  <ion-content class="padding">
+  <ion-content>
       <p class="heading" ng-show="!isPinned">Pinned Setlist Songs:</p>
-      <ion-item class="wrapper" ng-repeat="song in songs" type="item-text-wrap">
-         <ion-side-menus enable-menu-with-back-views="true" >
-            <ion-side-menu-content edge-drag-threshold="50">
-                <div class="listItem" ng-click="go({{song}})">
-                  <h2 class="heading">{{song.title}}</h2>
-                  <p class="subheading">{{song.artist}} | {{song.albumName}}</p>
-                </div>
-            </ion-side-menu-content>
-            <ion-side-menu  side="left" width="60" class="sideMenuParent">
-              <ion-content class="sideMenu">
-                <a class="button" ng-click="addToSetlist({{song}})">
-                  <i class="ion-android-add-circle"></i>
-                </a>
-              </ion-content>
-            </ion-side-menu>
-            <!-- <ion-side-menu  side="right" width="120">
-              <ion-content class="sideMenu">
-                <a class="button two">
-                  <i class="ion-code-download"></i>
-                </a>
-                <a class="button two" ng-click="delete({{song}})">
-                  <i class="ion-trash-a"></i>
-                </a>
-              </ion-content>
-            </ion-side-menu> -->
-          </ion-side-menus>
-      </ion-item>
+      <ion-list class="template-browse">
+        <ion-item class="wrapper" ng-repeat="song in songs" type="item-text-wrap">
+           <ion-side-menus enable-menu-with-back-views="true" >
+              <ion-side-menu-content edge-drag-threshold="50">
+                  <div class="list-item" ng-click="go({{song}})">
+                    <img src="{{song.albumArt}}">
+                    <i class="ion-ios-locked"></i>
+                    <div class="item-content">
+                      <h2 ng-click="go({{song}})" class="heading">{{song.title}}</h2>
+                      <p ng-click="go({{song}})" class="subheading"><span>{{song.albumName}}</span> by <span>{{song.artist}}</span></p>
+                    </div>
+                  </div>
+              </ion-side-menu-content>
+              <ion-side-menu  side="left" width="60" class="sideMenuParent">
+                <ion-content class="sideMenu">
+                  <a class="button" ng-click="addToSetlist({{song}})">
+                    <i class="ion-android-add-circle"></i>
+                  </a>
+                </ion-content>
+              </ion-side-menu>
+              <!-- <ion-side-menu  side="right" width="120">
+                <ion-content class="sideMenu">
+                  <a class="button two">
+                    <i class="ion-code-download"></i>
+                  </a>
+                  <a class="button two" ng-click="delete({{song}})">
+                    <i class="ion-trash-a"></i>
+                  </a>
+                </ion-content>
+              </ion-side-menu> -->
+            </ion-side-menus>
+        </ion-item>
+      </ion-list>
   <p class="pinMsg" ng-show="isPinned">There are no pinned setlists.</p>
   </ion-content>
 </ion-view>

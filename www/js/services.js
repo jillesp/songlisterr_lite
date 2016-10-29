@@ -14,14 +14,50 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       _id: 'user_jilles',
       username: 'jilles',
       password: null,
-      pinned: null
+      pinned: null,
+      roles: null,
+      category: 'user'
+    },
+    {
+      _id: 'user_wendell',
+      username: 'Mr. Windy',
+      password: null,
+      pinned: null,
+      roles: null,
+      category: 'user'
+    },
+    {
+      _id: 'jilles_sample setlist_0',
+      setlistId: 'setlist_Sample Setlist_0',
+      roles: null,
+      category: 'owned'
+    },
+    {
+      _id: 'setlist_sample setlist_0',
+      title: 'Sample Setlist',
+      notes: 'Sample notes.',
+      urlSpotify: null,
+      songs: ['song_photograph_0','song_lost stars_0'],
+      roles: [],
+      owner: 'jilles',
+      category: 'setlist'
+    },
+    {
+      _id: 'setlist_sample setlist 2_0',
+      title: 'Sample Setlist',
+      notes: 'Sample notes.',
+      urlSpotify: null,
+      songs: ['song_photograph_0','song_lost stars_0'],
+      roles: [],
+      owner: 'Mr. Windy',
+      category: 'setlist'
     },
     {
       _id: "song_photograph_0",
       title: 'Photograph',
       artist: 'Ed Sheeran',
       albumName: 'x',
-      albumArt: 'https://upload.wikimedia.org/wikipedia/en/a/ad/X_cover.png',
+      albumArt: 'img/photograph.jpg',
       key: 'E',
       bpm: 592,
       urlYouTube: null,
@@ -39,7 +75,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       title: 'Lost Stars',
       artist: 'Adam Levine',
       albumName: 'V',
-      albumArt: 'https://upload.wikimedia.org/wikipedia/en/5/53/Maroon_5_-_V_(Official_Album_Cover).png',
+      albumArt: 'img/lost_stars.jpg',
       key: 'F',
       bpm: 98,
       urlYouTube: null,
@@ -57,7 +93,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       title: 'Me and My Broken Heart',
       artist: 'Rixton',
       albumName: 'Me and My Broken Heart',
-      albumArt: 'http://netstorage.metrolyrics.com/albums/3892814jpg.jpg',
+      albumArt: 'img/rixton.jpg',
       key: 'Am',
       bpm: 912938,
       urlYouTube: null,
@@ -75,7 +111,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       title: 'Disappear',
       artist: 'Parachute',
       albumName: 'Overnight',
-      albumArt: 'https://upload.wikimedia.org/wikipedia/en/b/b9/Parachute_-_Overnight.jpg',
+      albumArt: 'img/disappear.jpg',
       key: 'Em',
       bpm: 21,
       urlYouTube: null,
@@ -165,11 +201,6 @@ angular.module('songDroid.services', ['LocalStorageModule'])
         console.log(setList);
         return setList;
       },
-      //TEST OK -- dunno where this gets called
-      listed: function(setlistId) {
-        console.log("Function redirected.");
-      },
-
       //TEST OK
       get: function(setlistId) {
         var setlist = String(setlistId);
@@ -186,13 +217,17 @@ angular.module('songDroid.services', ['LocalStorageModule'])
         var setList = $q.when(db.allDocs({include_docs: true, startkey: 'setlist_' + string, endkey: 'setlist_' + string + '\uffff'}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
         return setList;
       },
-
-      //TESTING
+      //TEST OK
       pinned: function(user) {
         var user = String(user);
             user = $q.when(db.get(user).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
         return user;
-      }
+      },
+      //TEST OK
+      owned: function(user) {
+        var setList = $q.when(db.allDocs({include_docs: true, startkey: user + '_', endkey: user + '_\uffff'}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
+        return setList;
+      },
     }
 })
 

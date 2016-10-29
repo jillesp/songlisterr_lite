@@ -56,6 +56,9 @@ p.required {padding: 5px 0; color: #990000; font-size: 10px; text-align: left;}
 .buttonGroup.browse .query {width: 50%;}
 .buttonGroup.browse .disabled {background: #CCC;}
 
+.buttonGroup.setlist {min-width: 320px;}
+.buttonGroup.setlist .query {width: 50%;}
+
 .search {width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important;}
 .search form {overflow: hidden; border-bottom: 1px solid #F2F2F2;}
 .search form input {padding: 10px; position: relative; z-index: 10; float: left; width: 80%; height: 40px !important;}
@@ -193,8 +196,40 @@ img.spotify {width: 42px;}
 .textarea-padding {padding: 10px;}
 
 .list {overflow: auto; text-align: center;}
-.template-browse .item {height: 195px; width: 150px; padding: 0; display: inline-block; margin: 10px; text-align: left; box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.15); background-color: #FFF;}
+.template-browse .item {height: 195px; width: 150px; padding: 0; display: inline-block; margin: 5px; text-align: left; box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.15); background-color: #FFF;}
 .template-browse .item img {width: 100%; height: 150px; display: block; margin: 0 auto;}
 .template-browse .item .item-content {padding: 8px 5px 0;}
 .template-browse .item .item-content h2 {margin: 0; text-align: left; font-size: 14px;}
 .template-browse .item .item-content p {font-size: 10px; line-height: 10px;}
+
+.template-setlist .list-item {padding: 5px;}
+.template-setlist .item {height: 90px; width: 145px; padding: 0; display: inline-block; margin: 10px 5px; text-align: left; box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.15); background-color: #FFF;}
+.template-setlist .tracks-container {width: 100%;}
+.template-setlist .tracks-container .tracks {height: 40px; width: 40px; display: inline-block; border-radius: 1000px; background-color: #444; text-align: center; line-height: 40px; color: #FFF;}
+.template-setlist .tracks-container label {display: inline-block; vertical-align: top; line-height: 40px;}
+.template-setlist .setlist-content {overflow: auto;}
+.template-setlist .setlist-content .details-container,
+.template-setlist .setlist-content .options-container {float: left;}
+.template-setlist .setlist-content .details-container {width: 90%;}
+.template-setlist .setlist-content .details-container .heading {text-align: left; line-height: 12px; font-size: 14px;}
+.template-setlist .setlist-content .details-container .owner {line-height: 12px; font-size: 10px;}
+.template-setlist .setlist-content .options-container {width: 10%;}
+
+.template-search-songs .item {height: 80px; width: 100%; padding: 0;}
+.template-search-songs .list-item {overflow: auto;}
+.template-search-songs .item img {display: block; height: 80px; float: left;}
+.template-search-songs .item .song-content {padding: 10px; float: left; height: 80px;}
+.template-search-songs .item .song-content .heading {text-align: left; font-size: 14px; line-height: 12px;}
+.template-search-songs .item .song-content .subheading {text-align: left; font-size: 12px; line-height: 12px;}
+.template-search-songs .item .song-details {height: 35px;}
+.template-search-songs .item .buttons {height: 25px; text-align: left;}
+.template-search-songs .item .buttons a {display: inline-block; padding: 0 5px; line-height: 25px;}
+.template-search-songs .item .buttons a i {font-size: 22px;}
+
+.template-search-setlists .item {height: 60px; padding: 0;}
+.template-search-setlists .list-item {height: 60px; overflow: auto; padding: 10px;}
+.template-search-setlists .setlist-details {float: left; width: 60%; height: 40px;}
+.template-search-setlists .setlist-options {float: left; width: 40%; height: 40px; text-align: right;}
+.template-search-setlists .heading {text-align: left; font-size: 14px; line-height: 14px;}
+.template-search-setlists .subheading {text-align: left; font-size: 12px; line-height: 16px;}
+.template-search-setlists .setlist-options a {line-height: 40px; padding: 0 5px;}
