@@ -1,7 +1,7 @@
 var db = new PouchDB('testDB');
 // db.plugin(require('pouchdb-find'));
 
-angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','songDroid.controllers', 'songDroid.services'])
+angular.module('songDroid', ['ionic', 'pouchdb', 'angular-md5', 'ngSanitize', 'ngCookies', 'hmTouchEvents','songDroid.controllers', 'songDroid.services'])
 
 .config(function($ionicConfigProvider) {
     $ionicConfigProvider.tabs.position('bottom');
@@ -22,6 +22,12 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
 .config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
+
+    .state('login', {
+        url: "/login",
+        templateUrl: "templates/login.html",
+        controller: 'LoginCtrl'
+    })
 
     .state('tab', {
     url: "/tab",
@@ -320,5 +326,5 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'ngSanitize', 'hmTouchEvents','
                 }
             })
 
-  $urlRouterProvider.otherwise('tab/browse');
+  $urlRouterProvider.otherwise('login');
 });

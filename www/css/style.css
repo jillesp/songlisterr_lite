@@ -57,7 +57,7 @@ p.required {padding: 5px 0; color: #990000; font-size: 10px; text-align: left;}
 .buttonGroup.browse .disabled {background: #CCC;}
 
 .buttonGroup.setlist {min-width: 320px;}
-.buttonGroup.setlist .query {width: 50%;}
+.buttonGroup.setlist .query {width: 33.33%;}
 
 .search {width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important;}
 .search form {overflow: hidden; border-bottom: 1px solid #F2F2F2;}
@@ -219,8 +219,8 @@ img.spotify {width: 42px;}
 .template-search-songs .list-item {overflow: auto;}
 .template-search-songs .item img {display: block; height: 80px; float: left;}
 .template-search-songs .item .song-content {padding: 10px; float: left; height: 80px;}
-.template-search-songs .item .song-content .heading {text-align: left; font-size: 14px; line-height: 12px;}
-.template-search-songs .item .song-content .subheading {text-align: left; font-size: 12px; line-height: 12px;}
+.template-search-songs .item .song-content .heading {text-align: left; font-size: 14px; line-height: 16px;}
+.template-search-songs .item .song-content .subheading {text-align: left; font-size: 12px; line-height: 16px; margin-top: -3px;}
 .template-search-songs .item .song-details {height: 35px;}
 .template-search-songs .item .buttons {height: 25px; text-align: left;}
 .template-search-songs .item .buttons a {display: inline-block; padding: 0 5px; line-height: 25px;}
@@ -233,3 +233,16 @@ img.spotify {width: 42px;}
 .template-search-setlists .heading {text-align: left; font-size: 14px; line-height: 14px;}
 .template-search-setlists .subheading {text-align: left; font-size: 12px; line-height: 16px;}
 .template-search-setlists .setlist-options a {line-height: 40px; padding: 0 5px;}
+
+.template-login {background-color: #ff8533;}
+.template-login .loginForm {position: absolute; top: 50%; transform: translateY(-50%); width: 100%; padding: 25px;}
+.template-login .loginForm input {padding: 10px; margin: 10px 0;}
+.template-login .loginForm button {border: 0; outline: 0; background: #FFF; height: 35px; width: 92px; display: block; margin: 0 auto; border-radius: 10px; position: relative;}
+.template-login .loginForm button div {position: absolute; height: 31px; width: 88px; top: 2px; left: 2px; right: 2px; bottom: 2px; background-color: #FFF; border-radius: 10px; border: 1px solid #ff8533; line-height: 30px; color: #ff8533;}
+.template-login .error-label {font-size: 12px; margin: 20px 0; display: block; color: red; display: none;}
+.template-login .error-label.show {display: block;}
+.template-login .dev-message {font-size: 12px; background: rgba(255,255,255,.5); padding: 5px 10px; color: green; display: none;}
+.template-login .dev-message.show {display: block;}
+
+.template-profile button {border: 0; outline: 0; background: #FFF; height: 35px; width: 92px; display: block; margin: 20px auto; border-radius: 10px; position: relative;}
+.template-profile button div {position: absolute; height: 31px; width: 88px; top: 2px; left: 2px; right: 2px; bottom: 2px; background-color: #FFF; border-radius: 10px; border: 1px solid #ff8533; line-height: 30px; color: #ff8533;}

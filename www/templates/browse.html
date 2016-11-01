@@ -20,7 +20,7 @@
           <ion-side-menus enable-menu-with-back-views="true" >
             <ion-side-menu-content edge-drag-threshold="50">
                 <div class="list-item" ng-click="go({{song}})">
-                  <img src="{{song.albumArt}}">
+                  <img ng-src="{{song.albumArt}}">
                   <i class="ion-ios-locked"></i>
                   <div class="item-content">
                     <h2 ng-click="go({{song}})" class="heading">{{song.title}}</h2>
@@ -33,10 +33,6 @@
                 <a class="button" ng-click="addToSetlist({{song}})">
                   <i class="ion-android-add-circle"></i>
                 </a>
-              </ion-content>
-            </ion-side-menu>
-            <ion-side-menu  side="right" width="120">
-              <ion-content class="sideMenu">
                 <a class="button two" ng-click="saveOffline({{song}})">
                   <i class="ion-code-download"></i>
                 </a>

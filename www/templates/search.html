@@ -21,7 +21,7 @@
       <ion-list class="template-search-songs">
         <ion-item class="wrapper" ng-repeat="song in songs" type="item-text-wrap" ng-show="val">
           <div class="list-item">
-            <img src="{{song.doc.albumArt}}">
+            <img ng-src="{{song.doc.albumArt}}">
             <div class="song-content">
               <div ng-click="goSong({{song}})" class="song-details">
                   <h2 class="heading">{{song.doc.title}}</h2>

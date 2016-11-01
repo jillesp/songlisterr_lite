@@ -1,2 +1,17 @@
 TO/DO
 
+Search:
+	Prevent input clearing on click
+	Display message if list is empty
+
+Songs:
+	UI Improvement
+
+Login:
+	User Tokens
+	Ionic Service Authentication
+
+	Globalize Push/Devmode Settings
+
+
+// Create Confirmation Modals

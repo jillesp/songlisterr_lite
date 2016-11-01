@@ -37,35 +37,52 @@ angular.module('songDroid.controllers', [])
   $scope.toggleLeft = function() {
       $ionicSideMenuDelegate.toggleLeft();
   };
-  // END TEST
 
   $scope.addToSetlist = function(song) {
-      // sharedProperties.setProperty(song.id);
       $location.path('song/' + song._id + '/add');
   };
 
 })
 
-//TESTING
-.controller('SetlistsCtrl', function($scope, Setlists, $location, $stateParams, sharedProperties2, $state, $timeout) {
+.controller('SetlistsCtrl', function($scope, Setlists, $location, $stateParams, sharedProperties2, $state, $timeout, $cookies) {
   
   $scope.hasParams = false;
 
   $scope.showAll = true;
   $scope.showOwned = false;
+  $scope.showSaved = false;
 
   $scope.showResults = function(type) {
     switch (type) {
       case 'owned':
         $scope.showAll = false;
         $scope.showOwned = true;
+        $scope.showSaved = false;
 
-        // TEST USER !!
-        var user = 'jilles';
+        var user = $cookies.get('username');
+
         var setlists = [];
         Setlists.owned(user).then(function(result) {
-          result.rows.forEach(function(setlist) {
-            Setlists.get(setlist.doc.setlistId).then(function(result) {
+          result.forEach(function(setlist) {
+            Setlists.get(setlist._id).then(function(result) {
+              setlists.push(result);
+            });
+          })
+        });
+        $scope.setlists = setlists;
+      break;
+      case 'saved':
+        $scope.showAll = false;
+        $scope.showOwned = false;
+        $scope.showSaved = true;
+
+        // TEST USER !!
+        var user = $cookies.get('username');
+
+        var setlists = [];
+        Setlists.saved(user).then(function(result) {
+          result.forEach(function(setlist) {
+            Setlists.get(setlist._id).then(function(result) {
               setlists.push(result);
             });
           })
@@ -75,6 +92,7 @@ angular.module('songDroid.controllers', [])
       default:
         $scope.showAll = true;
         $scope.showOwned = false;
+        $scope.showSaved = false;
 
         Setlists.active().then(function(result) {
           $scope.setlists = result.docs;
@@ -96,13 +114,6 @@ angular.module('songDroid.controllers', [])
        }, 1000);
   };
 
-  // Setlists.active().then(function(result) {
-  //   $scope.setlists = result.docs;
-  //   $scope.go = function(setlist) {
-  //       sharedProperties2.setProperty(setlist._id);
-  //       $location.path('tab/setlists/' + setlist._id + '/items');
-  //   };
-  // });
 
     $scope.go = function(setlist) {
       sharedProperties2.setProperty(setlist._id);
@@ -125,8 +136,9 @@ angular.module('songDroid.controllers', [])
         $location.path('/tab/setlists/new');
     };
 
+    //TEST USER
     $scope.practice = function(setlist){
-        var user = 'user_jilles';
+        var user = $cookies.get('userId');
         var pin = pinSetlist(setlist, user);
         sharedProperties2.setProperty(setlist._id);
         $location.path('/tab/setlists/' + setlist._id +'/items');
@@ -809,13 +821,13 @@ angular.module('songDroid.controllers', [])
     };
 })
 
-.controller('PracticeCtrl', function($scope, Songs, Setlists, $location, $stateParams, sharedProperties, $state, $window) {
+.controller('PracticeCtrl', function($scope, Songs, Setlists, $location, $stateParams, sharedProperties, $state, $window, $cookies) {
 
-   var user = 'user_jilles';
+   var user = $cookies.get('userId');
 
    Setlists.pinned(user).then(function(result) {
+    if(!angular.isUndefinedOrNull(result.songs)) {
      Setlists.get(result.pinned).then(function(result) {
-
        var songs = [];
        angular.forEach(result.songs, function(song){
            Songs.get(song).then(function(songContent) {
@@ -826,6 +838,7 @@ angular.module('songDroid.controllers', [])
        $scope.isPinned = true;
         if(songs.length < 1) $scope.isPinned = false;
      });
+    };
    });
 
     $scope.go = function(song) {
@@ -901,14 +914,13 @@ angular.module('songDroid.controllers', [])
   }
 })
 
-.controller('ProfileCtrl', function($scope, sharedProperties, Users, $location, $state, $stateParams) {
+.controller('ProfileCtrl', function($scope, sharedProperties, Users, $location, $state, $stateParams, $cookies) {
+  $scope.logout = function() {
+    $cookies.remove('username');
+    $cookies.remove('userId');
+    $cookies.remove('level');
 
-  $scope.profileUser =Users.data();
-  var userid= $scope.profileUser.userId
-
-  $scope.editProfileRoles = function() {
-  console.log("clicky");
-     $location.path('tab/profile-edit');
+    $state.go('login');
   }
 })
 
@@ -982,8 +994,51 @@ angular.module('songDroid.controllers', [])
       case "setlists":
         $state.go('tab.setlists', {msg:null, $stateParams}, {});
         break;
+      case "profile":
+        $state.go('tab.profile', {msg:null, $stateParams}, {});
+        break;
       default:
       break;
     }
+  }
+})
+
+.controller('LoginCtrl', function($scope, $location, $state, $stateParams, Users, md5, $cookies) {
+  
+  $scope.devmode = false;
+  $scope.invalid = false;
+
+  $scope.model = { name: '' };
+  $scope.form = { login: '' };
+
+  $scope.req = $scope.form.login.$invalid;
+
+  $scope.verify = function() {
+     if($scope.form.login.$valid) {
+         var user = new Object();
+          if(!angular.isUndefinedOrNull($scope.model.username)) { user.username = $scope.model.username; }
+          if(!angular.isUndefinedOrNull($scope.model.password)) { user.password = $scope.model.password; };
+
+          // Change implementation to salted hash, user tokens
+
+          Users.check(user.username.toLowerCase()).then(function(result) {
+            if(result) {
+              if(md5.createHash(user.password) == result.password){
+                $cookies.put('username', result.username);
+                $cookies.put('userId', result._id);
+                $cookies.put('level', result.level);
+
+                $state.go('tab.songs');
+              } else {
+                console.log('Invalid.');
+                $scope.invalid = true;
+              }
+            } else {
+              console.log('Nope.')
+              $scope.invalid = true;
+            }
+          })
+
+     }
   }
 })

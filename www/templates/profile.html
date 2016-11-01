@@ -1,12 +1,9 @@
-<ion-view view-title="User Profile" cache-view="false">
-    <ion-nav-bar class="bar-dark">
-        <ion-nav-buttons side="right"><button class="button" ng-click="editProfileRoles()"><i class="ion-edit"></i></button></ion-nav-buttons>
-    </ion-nav-bar>
-      <ion-content class="padding">
-        <div>
-            <p style="font-size 20px; font-weight: bold; margin: 10px auto 0; color: #ff8533;">Name: {{profileUser.username}}</p>
-            <p style="font-size: 10px; margin: 10px auto 0; line-height: 12px;">Email Address: <span style="color: #33adff;">{{profileUser.email}}</span></p>
-            <p style="font-size: 10px; margin: 10px auto 0; line-height: 12px;">Band Role: <span style="color: #33adff;">{{profileUser.profileBandRole}}</span></p>
-        </div>
-      </ion-content>
-</ion-view>
+<ion-view view-title="User">
+	<ion-content class="template-profile">
+		<button ng-click="logout()">
+			<div>
+				Log Out
+			</div>
+		</button>
+	</ion-content>
+</ion-content>
