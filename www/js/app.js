@@ -1,7 +1,7 @@
 var db = new PouchDB('testDB');
 // db.plugin(require('pouchdb-find'));
 
-angular.module('songDroid', ['ionic', 'pouchdb', 'angular-md5', 'ngSanitize', 'ngCookies', 'hmTouchEvents','songDroid.controllers', 'songDroid.services'])
+angular.module('songDroid', ['ionic', 'ionic.cloud', 'pouchdb', 'angular-md5', 'ngSanitize', 'ngCookies', 'hmTouchEvents','songDroid.controllers', 'songDroid.services'])
 
 .config(function($ionicConfigProvider) {
     $ionicConfigProvider.tabs.position('bottom');
@@ -11,12 +11,16 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'angular-md5', 'ngSanitize', 'n
 })
 
 .run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    if (window.StatusBar) {
-      StatusBar.styleDefault();
-    }
-  });
-
+    $ionicCloudProvider.init({
+        "core": {
+            "app_id": "7efcfbf1"
+        }
+    });
+    $ionicPlatform.ready(function() {
+        if (window.StatusBar) {
+          StatusBar.styleDefault();
+        }
+    });
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -168,14 +172,14 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'angular-md5', 'ngSanitize', 'n
                         })
 
         .state('tab.practice', {
-        url: '/practice',
-        cache: false,
-        views: {
-                'practice': {
-                    templateUrl: 'templates/practice.html',
-                    controller: 'PracticeCtrl'
+            url: '/practice',
+            cache: false,
+            views: {
+                    'practice': {
+                        templateUrl: 'templates/practice.html',
+                        controller: 'PracticeCtrl'
+                    }
                 }
-            }
         })
 
         .state('tab.setlists', {
@@ -250,8 +254,6 @@ angular.module('songDroid', ['ionic', 'pouchdb', 'angular-md5', 'ngSanitize', 'n
                         }
                     }
                 })
-
-
 
             .state('setlist-edit', {
                 url: "/setlist-edit",
