@@ -1,8 +1,5 @@
-<ion-view view-title="{{song.title}}" cache-view="false">
-    <ion-nav-title>
-        <p>{{song.title}}</p>
-    </ion-nav-title>
-    <ion-nav-bar class="bar-dark">
+<ion-view view-title="Setlisterr" cache-view="false">
+    <ion-nav-bar class="bar-light">
         <ion-nav-buttons side="left"><button class="button" ng-click="back()"><i class="ion-ios-arrow-back"></i></button></ion-nav-buttons>
         <ion-nav-buttons side="right"><button class="button" ng-click="editSong({{song.songId}})"><i class="ion-edit"></i></button></ion-nav-buttons>
     </ion-nav-bar>
@@ -13,33 +10,24 @@
           <p>{{msg}}</p>
         </div>
 
-        <img ng-ng-src="{{song.albumArt}}" style="width: 125px; height: 125px; display: block; margin: 20px auto;">
-        <p style="text-align: center; font-size 20px; font-weight: bold;">{{song.title}}</p>
-        <p style="text-align: center; font-size: 14px;">by {{song.artist}}</p>
+        <div class="template-info">
+            <div class="main-info">
+                <img ng-src="{{song.albumArt}}">
+                <div class="content">
+                    <p class="album">{{song.albumName}}</p>
+                    <div>
+                        <p class="title">{{song.title}}</p>
+                        <p class="artist">{{song.artist}}</p>
+                    </div>
+                </div>
+            </div>
 
-        <div class="info centered">
-        	<p>Additional Information:</p>
+            <div class="sub-info">
+                <p class="key">{{song.key}}</p>
+                <p class="bpm">{{song.bpm}}</p>
+                <p class="youtube">{{song.urlYoutube}}</p>
+                <p class="spotify">{{song.urlSpotify}}</p>
+            </div>
 
-        	<label>Album: </label>
-        	<span>{{song.albumName}}</span>
-
-        	<label>Key: </label>
-        	<span>{{song.key}}</span>
-
-            <label>BPM: </label>
-            <span>{{song.bpm}}</span>
-
-            <label>Tags: </label>
-            <span>{{song.tags}}</span>
-
-            <label>Youtube URL: </label>
-            <span style="color: #33adff;">{{song.urlYouTube}}</span>
-
-            <label>Spotify URL: </label>
-            <span style="color: #33adff;">{{song.urlSpotify}}</span>
-
-            <label>Other URL: </label>
-            <span style="color: #33adff;">{{song.urlOther}}</span>
-        </div>
       </ion-content>
 </ion-view>

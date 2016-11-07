@@ -2,7 +2,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
 
 .service('Songs', function(localStorageService, $q, pouchDB) {
 
-  db.createIndex({index: {fields: ['category']}}).then(function (result) {}).catch(function (err) {console.log(err);});
+  db.createIndex({index: {fields: ['category', 'owner']}}).then(function (result) {}).catch(function (err) {console.log(err);});
 
       return {
         all: function() {
@@ -30,7 +30,12 @@ angular.module('songDroid.services', ['LocalStorageModule'])
         search: function(string) {
           var songs = $q.when(db.allDocs({include_docs: true, startkey: 'song_' + string, endkey: 'song_' + string + '\uffff'}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
           return songs;
-        }
+        },
+        //TEST OK
+        owned: function(user) {
+          var songs = $q.when(db.find({selector: {createdBy: {$eq: user}}}).then(function (result){ return result.docs; }).catch(function (err) {console.log(err);}));
+          return songs;
+        },
       }
 })
 
@@ -178,8 +183,8 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       category: 'user'
     },
     {
-      _id: 'user_mr. windy',
-      username: 'Mr. Windy',
+      _id: 'user_demo',
+      username: 'demo',
       password: '5f4dcc3b5aa765d61d8327deb882cf99',
       pinned: null,
       roles: null,
@@ -194,7 +199,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       songs: ['song_photograph_0','song_lost stars_0'],
       roles: [],
       owner: 'jilles',
-      saved: ['Mr. Windy'],
+      saved: ['demo', ],
       category: 'setlist'
     },
     {
@@ -204,7 +209,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       urlSpotify: null,
       songs: ['song_photograph_0','song_lost stars_0'],
       roles: [],
-      owner: 'Mr. Windy',
+      owner: 'demo',
       saved: ['jilles'],
       category: 'setlist'
     },
@@ -224,7 +229,8 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       lyrics: "",
       chords: "",
       sections: "",
-      headers: ""
+      headers: "",
+      createdBy: "demo"
     },
     {
       _id: "song_lost stars_0",
@@ -242,7 +248,8 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       lyrics: "",
       chords: "",
       sections: "",
-      headers: ""
+      headers: "",
+      createdBy: "jilles"
     },
     {
       _id: "song_me and my broken heart_0",
@@ -260,7 +267,8 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       lyrics: "",
       chords: "",
       sections: "",
-      headers: ""
+      headers: "",
+      createdBy: "demo"
     },
     {
       _id: "song_disappear_0",
@@ -278,7 +286,8 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       lyrics: "",
       chords: "",
       sections: "",
-      headers: ""
+      headers: "",
+      createdBy: "demo"
     }
   ]).then(function (result) {
     console.log("Multiple objects created.");
