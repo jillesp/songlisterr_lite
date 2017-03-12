@@ -11,11 +11,11 @@ angular.module('songDroid', ['ionic', 'ionic.cloud', 'pouchdb', 'angular-md5', '
 })
 
 .run(function($ionicPlatform) {
-    $ionicCloudProvider.init({
-        "core": {
-            "app_id": "7efcfbf1"
-        }
-    });
+    // $ionicCloudProvider.init({
+    //     "core": {
+    //         "app_id": "7efcfbf1"
+    //     }
+    // });
     $ionicPlatform.ready(function() {
         if (window.StatusBar) {
           StatusBar.styleDefault();

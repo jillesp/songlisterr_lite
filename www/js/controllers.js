@@ -1,6 +1,6 @@
 angular.module('songDroid.controllers', [])
 
-.controller('BrowseCtrl', function($scope, Songs, $state, $stateParams, sharedProperties, $ionicSideMenuDelegate, $location, $timeout) {
+.controller('BrowseCtrl', function($scope, Songs, $state, $stateParams, sharedProperties, $ionicSideMenuDelegate, $location, $timeout, $cookies) {
   //TEST OK {
  $scope.hasParams = false;
  $scope.isActiveOne = true;
@@ -15,13 +15,44 @@ angular.module('songDroid.controllers', [])
       }, 1000);
  };
 
-  Songs.active().then(function(result) {
-    $scope.songs = result.docs;
-    $scope.go = function(song) {
-        sharedProperties.setProperty(song._id);
-        $location.path('tab/' + song._id + '/landing');
-    };
-  });
+  $scope.showAll = true;
+  $scope.showOwned = false;
+
+  $scope.showResults = function(type) {
+    switch (type) {
+      case 'owned':
+        $scope.showAll = false;
+        $scope.showOwned = true;
+
+        var user = $cookies.get('username');
+
+        var songs = [];
+        Songs.owned(user).then(function(result) {
+          result.forEach(function(song) {
+            Songs.get(song._id).then(function(result) {
+              songs.push(result);
+            });
+          })
+        });
+        $scope.songs = songs;
+      break;
+      default:
+        $scope.showAll = true;
+        $scope.showOwned = false;
+
+        Songs.active().then(function(result) {
+          $scope.songs = result.docs;
+        });
+      break;
+    }
+  } 
+
+  $scope.showResults();
+
+  $scope.go = function(song) {
+    sharedProperties.setProperty(song._id);
+    $location.path('tab/' + song._id + '/landing');
+  };
 
   $scope.delete = function(song) {
       deleteItem(song._id);
@@ -279,6 +310,7 @@ angular.module('songDroid.controllers', [])
 
 .controller('SongLandingCtrl', function($scope, $stateParams, Songs, $location, $state, sharedProperties, $window, $sanitize, $sce, $ionicScrollDelegate, $ionicLoading, $timeout, $anchorScroll, $ionicPopover) {
 
+   $scope.devMode = true;
    $scope.hasParams = false;
    $scope.isActiveOne = true;
 
@@ -296,6 +328,7 @@ angular.module('songDroid.controllers', [])
   Songs.get($stateParams.songId).then(function(result) {
     $scope.song = result;
     $scope.go = function() {
+        sharedProperties.setProperty(result._id);
         $location.path('song/' + result._id + '/info');
     };
 
@@ -760,8 +793,6 @@ angular.module('songDroid.controllers', [])
 
    $scope.search = function() {
         var string = $scope.model.query;
-        console.log(type + " / " + string);
-
         switch (type) {
           case 'song':
             Songs.search(string.toLowerCase()).then(function(result) {
@@ -781,10 +812,11 @@ angular.module('songDroid.controllers', [])
             });
           break;
           case 'album':
+            var songs = [];
             Songs.search('').then(function(result) {
               (result.rows).forEach(function(song){
                 var regEx = new RegExp(string, 'gi');
-                if( (song.doc.album).match(regEx) ) {
+                if( (song.doc.albumName).match(regEx) ) {
                   songs.push(song);
                 }
               })
@@ -792,8 +824,8 @@ angular.module('songDroid.controllers', [])
             });
           break;
           case 'setlist':
+            var songs = [];
             Setlists.search(string.toLowerCase()).then(function(result) {
-              console.log(result.rows);
               $scope.setlists = result.rows;
             });
           break;
@@ -870,7 +902,7 @@ angular.module('songDroid.controllers', [])
       var  info = $scope.model.sheet;
            info = processSheetMusic(info, result._id, result);
       Songs.get(sharedProperties.getProperty()).then(function(){
-          $state.go('tab.song-landing', {msg:  $scope.model.title + " edited."}, {reload: true});
+          $state.go('tab.song-landing', {msg:  $scope.model.title + " edited.", songId: sharedProperties.getProperty()}, {reload: true});
         });
     };
   });
@@ -1005,7 +1037,7 @@ angular.module('songDroid.controllers', [])
 
 .controller('LoginCtrl', function($scope, $location, $state, $stateParams, Users, md5, $cookies) {
   
-  $scope.devmode = false;
+  $scope.devmode = true;
   $scope.invalid = false;
 
   $scope.model = { name: '' };

@@ -22,7 +22,7 @@ i {font-size: 24px; color: #888; cursor: pointer;}
 
 .songAction {height: 60px !important; margin: 0; width: 100%; border: none;}
 .songAction > * {float: left; margin-top: -8px;}
-.songAction i {padding: 8px 8px 8px 10px; text-align: left; border-radius: 100px; background: #ff8533; width: 40px; color: #FFF;}
+.songAction i {padding: 8px 8px 8px 10px; text-align: left; border-radius: 100px; background: #11C1F3; width: 40px; color: #FFF;}
 .songAction h2 {margin-left: 20px; margin-top: 2px;}
 
 .buttons, .button {border: none; outline: none;}
@@ -39,31 +39,34 @@ p.required {padding: 5px 0; color: #990000; font-size: 10px; text-align: left;}
 
 .band {background: #FFF; margin: 0; padding: 10px; border: 1px solid #F2F2F2;}
 .band > div {width: 50%; float: left; border-top: 1px solid #F2F2F2;}
-.band p.header {margin: 0 auto 15px; text-align: left; font-weight: bold; color: #ff8533;}
+.band p.header {margin: 0 auto 15px; text-align: left; font-weight: bold; color: #11C1F3;}
 .band p {text-align: left; color: #888; font-size: 15px; display: block !important; color: #33adff; font-size: 10px;}
 .band label {display: block !important; text-align: left;}
 
-.heading {font-size: 16px; color: #ff8533; text-align: center;}
+.heading {font-size: 16px; color: #11C1F3; text-align: center;}
 
 .search .container {overflow: scroll; clear: both;}
 .buttonGroup {box-shadow: 0px -5px 41px -8px rgba(0,0,0,0.75); border-top: 1px solid #F8F8F8; z-index: 5; width: 100%; min-width: 400px;}
 .buttonGroup .query {height: 40px; width: 25%; background: #FFF; color: #888; font-size: 12px; display: block; float: left;}
 .buttonGroup .query p {text-align: center; margin-top: 10px;}
-.underline {border-bottom: 3px #ff8533 solid;}
+.underline {border-bottom: 3px #11C1F3 solid;}
 
 .container.browse {overflow: hidden;}
 .buttonGroup.browse {width: 100%;}
 .buttonGroup.browse .query {width: 50%;}
 .buttonGroup.browse .disabled {background: #CCC;}
 
-.buttonGroup.setlist {min-width: 320px;}
+.buttonGroup.setlist {min-width: 320px; height: 40px;}
 .buttonGroup.setlist .query {width: 33.33%;}
+
+.buttonGroup.songs {min-width: 320px; height: 40px;}
+.buttonGroup.songs .query {width: 50%;}
 
 .search {width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important;}
 .search form {overflow: hidden; border-bottom: 1px solid #F2F2F2;}
 .search form input {padding: 10px; position: relative; z-index: 10; float: left; width: 80%; height: 40px !important;}
 .search form input[placeholder] {color: #CCC;}
-.search form .searchBtn {float: left; width: 20%; height: 40px; outline: none; border: none; background: #ff8533;}
+.search form .searchBtn {float: left; width: 20%; height: 40px; outline: none; border: none; background: #11C1F3;}
 .search form .searchBtn i {color: #FFF;}
 
 .padding {border: none !important; width: 100% !important; max-width: 100% !important; margin-bottom: 20px !important;}
@@ -80,7 +83,7 @@ p.required {padding: 5px 0; color: #990000; font-size: 10px; text-align: left;}
 .sideMenu .button {text-align: center; height: 100%; vertical-align: middle; background: none; display: block; overflow: hidden;}
 .sideMenu .button:active,
 .sideMenu .button:hover,
-.sideMenu .button:focus {background: #1a1a1a !important; color: #ff8533 !important;}
+.sideMenu .button:focus {background: #1a1a1a !important; color: #11C1F3 !important;}
 
 .sideMenu .button.two {float: left; width: 50%;}
 .sideMenu .button i {font-size: 32px; color: #FFF; vertical-align: middle; line-height: 70px;}
@@ -88,7 +91,7 @@ p.required {padding: 5px 0; color: #990000; font-size: 10px; text-align: left;}
 .listItem {margin: 15px 10px 0; background: none;}
 .listItem .heading {font-weight: bold; font-size: 15px; text-align: left; margin: 0; color: #888;}
 .listItem .subheading {font-size: 12px; margin: 0;}
-.listItem .subheading span:nth-child(1) {color: #ff8533;}
+.listItem .subheading span:nth-child(1) {color: #11C1F3;}
 .listItem .subheading span:nth-child(2) {color: #33adff;}
 
 .centered * {text-align: center;}
@@ -111,6 +114,8 @@ p.chorded.headers {line-height: 20px;}
 .sheetmusic .preview {background: #bf4040;}
 .sheetmusic .submit {background: #ac3973;}
 
+.header-item {font-family: 'Pacifico', cursive;}
+
 .sheetmusic .results {margin: 0; line-height: auto;}
 .sheetmusic .section {position: relative; width: 100% !important;}
 .sheetmusic .lyrics {font-size: 12px; width: 100% !important;}
@@ -125,14 +130,15 @@ p.chorded.headers {line-height: 20px;}
 .right-buttons i {color: #FFF;}
 .right-buttons img {margin-top: 2px;}
 
-.tabs {height: 65px !important; padding: 0 !important; box-shadow: 0px 0px 40px -12px rgba(0,0,0,0.75) !important; background: #888;}
+.tabs {height: 50px !important; padding: 0 !important; box-shadow: 0px 0px 40px -12px rgba(0,0,0,0.75) !important;}
 .tabs .tabs-item {max-width: none !important; width: 100% !important; vertical-align: middle !important;}
-.tabs .icon {margin-top: 10px !important;}
-.tabs i {color: #888;}
+.tabs .icon {margin-top: 8px !important;}
+.tabs i {color: #FFF;}
 
-.tab-item {max-width: 100%; background: #FFF; opacity: 1;}
-.tab-item-active {background: #888; border-top: #ff8533 solid 4px; position: relative; margin-top: -10px; border-radius: 5px 5px 0 0;}
-.tab-item-active i {color: #FFF;}
+.tab-item {max-width: 100%; background: #11c1f3; opacity: 1; border: transparent solid 2px !important; border-radius: 0 !important; margin: 0 !important;}
+.tab-item .tab-title {font-family: 'Josefin Sans', sans-serif; display: none;}
+.tab-item-active {position: relative; margin-top: -10px; border-radius: 5px 5px 0 0; background-color: #FFF;}
+.tab-item-active i {color: #11c1f3;}
 .tab-item-active .tab-title {color: #FFF;}
 
 .track {height: 20px !important; width: 42px !important;}
@@ -145,7 +151,7 @@ img.spotify {width: 42px;}
 
 .controls {height: 40px; width: 100%; position: fixed; top: 40px; background: #FFF; border-top: 2px solid #CCC; box-shadow: 0px -5px 41px -8px rgba(0,0,0,0.75); z-index: 8;}
 .controls > div {float: left;}
-.controls button {outline: none; border: none; background: #ff8533; width: 25px; height: 25px; margin: 8px 1px 0; border-radius: 100px;}
+.controls button {outline: none; border: none; background: #11C1F3; width: 25px; height: 25px; margin: 8px 1px 0; border-radius: 100px;}
 .controls div button i {color: #FFF; line-height: 14px; font-size: 18px; position: relative;}
 .controls div > * {float: left;}
 .controls label {font-size: 10px; display: block; margin: 12px 5px 0;}
@@ -165,14 +171,14 @@ img.spotify {width: 42px;}
 .controls.two  * {height: 38px; border: none; outline: none; background: #FFF;}
 .controls.two form {overflow: hidden;}
 .controls.two form select {float: left; width: 80%;}
-.controls.two form button {float: left; width: 20%; background: #ff8533; border-radius: 0; margin: 0;}
+.controls.two form button {float: left; width: 20%; background: #11C1F3; border-radius: 0; margin: 0;}
 .controls.two form button i {color: #FFF; background: none;}
 
 .platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader) {height: 40px !important;}
 
 .songLanding .option {font-size: 30px; margin: 15px 0 0 0; color: #1a1a1a;}
 
-.btnRole {width: 100%; background: #ff8533; outline: none; border: none; color: #FFF; height: 40px; margin: 20px 2.5%; width: 45%; float: left; border-radius: 10px;}
+.btnRole {width: 100%; background: #11C1F3; outline: none; border: none; color: #FFF; height: 40px; margin: 20px 2.5%; width: 45%; float: left; border-radius: 10px;}
 
 .assignment label {margin-top: -5px;}
 .assignment p {margin: -2.5px 0 0 10px;}
@@ -199,8 +205,8 @@ img.spotify {width: 42px;}
 .template-browse .item {height: 195px; width: 150px; padding: 0; display: inline-block; margin: 5px; text-align: left; box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.15); background-color: #FFF;}
 .template-browse .item img {width: 100%; height: 150px; display: block; margin: 0 auto;}
 .template-browse .item .item-content {padding: 8px 5px 0;}
-.template-browse .item .item-content h2 {margin: 0; text-align: left; font-size: 14px;}
-.template-browse .item .item-content p {font-size: 10px; line-height: 10px;}
+.template-browse .item .item-content h2 {margin: 0; text-align: left; font-size: 14px; font-family: 'Josefin Sans', sans-serif;}
+.template-browse .item .item-content p {font-size: 10px; line-height: 10px; font-family: 'Josefin Sans', sans-serif;}
 
 .template-setlist .list-item {padding: 5px;}
 .template-setlist .item {height: 90px; width: 145px; padding: 0; display: inline-block; margin: 10px 5px; text-align: left; box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.15); background-color: #FFF;}
@@ -234,15 +240,35 @@ img.spotify {width: 42px;}
 .template-search-setlists .subheading {text-align: left; font-size: 12px; line-height: 16px;}
 .template-search-setlists .setlist-options a {line-height: 40px; padding: 0 5px;}
 
-.template-login {background-color: #ff8533;}
+.template-login {background-color: #11C1F3;}
 .template-login .loginForm {position: absolute; top: 50%; transform: translateY(-50%); width: 100%; padding: 25px;}
 .template-login .loginForm input {padding: 10px; margin: 10px 0;}
 .template-login .loginForm button {border: 0; outline: 0; background: #FFF; height: 35px; width: 92px; display: block; margin: 0 auto; border-radius: 10px; position: relative;}
-.template-login .loginForm button div {position: absolute; height: 31px; width: 88px; top: 2px; left: 2px; right: 2px; bottom: 2px; background-color: #FFF; border-radius: 10px; border: 1px solid #ff8533; line-height: 30px; color: #ff8533;}
+.template-login .loginForm button div {position: absolute; height: 31px; width: 88px; top: 2px; left: 2px; right: 2px; bottom: 2px; background-color: #FFF; border-radius: 10px; border: 1px solid #11C1F3; line-height: 30px; color: #11C1F3;}
 .template-login .error-label {font-size: 12px; margin: 20px 0; display: block; color: red; display: none;}
 .template-login .error-label.show {display: block;}
 .template-login .dev-message {font-size: 12px; background: rgba(255,255,255,.5); padding: 5px 10px; color: green; display: none;}
 .template-login .dev-message.show {display: block;}
 
 .template-profile button {border: 0; outline: 0; background: #FFF; height: 35px; width: 92px; display: block; margin: 20px auto; border-radius: 10px; position: relative;}
-.template-profile button div {position: absolute; height: 31px; width: 88px; top: 2px; left: 2px; right: 2px; bottom: 2px; background-color: #FFF; border-radius: 10px; border: 1px solid #ff8533; line-height: 30px; color: #ff8533;}
+.template-profile button div {position: absolute; height: 31px; width: 88px; top: 2px; left: 2px; right: 2px; bottom: 2px; background-color: #FFF; border-radius: 10px; border: 1px solid #11C1F3; line-height: 30px; color: #11C1F3;}
+
+.template-landing .dev-msg {position: absolute; padding: 10px; background-color: rgba(0,0,0,.2); color: #FFF; border: #FFF dashed 1px; bottom: 20px; left: 50%; transform: translateX(-50%); width: 80%; font-size: 12px; line-height: 12px;}
+.template-landing .dev-msg ul li {list-style: disc; margin: 5px 10px;}
+
+.template-info {position: relative; top: -30px;}
+.template-info .main-info {position: relative;}
+.template-info .main-info img {width: 100%;}
+.template-info .main-info .content {position: absolute; bottom: 5px; left: 10px; box-shadow: none !important;}
+.template-info .main-info .content p {color: #FFF;}
+.template-info .main-info .content .album {font-size: 14px; padding: 0px 5px; background-color: rgba(0,0,0,.8); display: inline-block; margin-bottom: 5px;}
+.template-info .main-info .content .title {font-size: 24px; display: inline-block;}
+.template-info .main-info .content .artist {display: inline-block; font-size: 12px;}
+.template-info .main-info .content .artist:before {content: "by ";}
+
+.template-info .sub-info {background-color: #FFF; padding: 10px; box-shadow: 0px 0px 5px 2px rgba(199,199,199,1);}
+.template-info .sub-info .key:before {content: "Key: ";}
+.template-info .sub-info .bpm:before {content: "BPM: ";}
+.template-info .sub-info .youtube:before {content: "Youtube URL: ";}
+.template-info .sub-info .spotify:before {content: "Spotify URL: ";}
+.template-info .sub-info ::before {font-weight: bold; font-family: 'Ubuntu Condensed', sans-serif; text-transform: uppercase; font-size: 12px; margin-right: 10px;}
