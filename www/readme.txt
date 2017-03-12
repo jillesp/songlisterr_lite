@@ -31,3 +31,13 @@ Global:
 toRead:
 
 https://auth0.com/blog/cookies-vs-tokens-definitive-guide/
+https://pouchdb.com/guides/replication.html
+
+----
+
+Setting up DB:
+
+app.js: var db = new PouchDB('http://localhost:5984/songlisterr');
+install: npm add-cors-to-couchdb
+run: add-cors-to-couchdb
+http://localhost/5984/songlisterr
