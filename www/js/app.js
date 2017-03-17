@@ -1,5 +1,5 @@
-var db = new PouchDB('testDB');
-// db.plugin(require('pouchdb-find'));
+var db = new PouchDB('songlisterr');
+// var sync = new PouchDB('http://localhost:5984/songlisterr');
 
 angular.module('songDroid', ['ionic', 'ionic.cloud', 'pouchdb', 'angular-md5', 'ngSanitize', 'ngCookies', 'hmTouchEvents','songDroid.controllers', 'songDroid.services'])
 
@@ -10,18 +10,18 @@ angular.module('songDroid', ['ionic', 'ionic.cloud', 'pouchdb', 'angular-md5', '
 
 })
 
-.run(function($ionicPlatform) {
-    // $ionicCloudProvider.init({
-    //     "core": {
-    //         "app_id": "7efcfbf1"
-    //     }
-    // });
-    $ionicPlatform.ready(function() {
-        if (window.StatusBar) {
-          StatusBar.styleDefault();
-        }
-    });
-})
+// .run(function($ionicPlatform) {
+//     $ionicCloudProvider.init({
+//         "core": {
+//             "app_id": "7efcfbf1"
+//         }
+//     });
+//     $ionicPlatform.ready(function() {
+//         if (window.StatusBar) {
+//           StatusBar.styleDefault();
+//         }
+//     });
+// })
 
 .config(function($stateProvider, $urlRouterProvider) {
 

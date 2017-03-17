@@ -1,10 +1,10 @@
-<ion-view view-title="Setlisterr" cache-view="false">
-  <ion-nav-bar class="bar-light">
+<ion-view view-title="Practice" cache-view="false">
+  <ion-nav-bar class="bar-dark">
     <ion-nav-buttons side="left"><button class="button" ng-click="back()"><i class="ion-ios-arrow-back"></i></button></ion-nav-buttons>
     <ion-nav-buttons side="right"><button class="button" ng-click="goSpotify()"><img src="img/spotify.png"></button></ion-nav-buttons>
   </ion-nav-bar>
   <ion-content>
-      <!-- <p class="heading" ng-show="!isPinned">Pinned Setlist Songs:</p> -->
+      <p class="heading" ng-show="!isPinned">Pinned Setlist Songs:</p>
       <ion-list class="template-browse">
         <ion-item class="wrapper" ng-repeat="song in songs" type="item-text-wrap">
            <ion-side-menus enable-menu-with-back-views="true" >

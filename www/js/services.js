@@ -2,40 +2,35 @@ angular.module('songDroid.services', ['LocalStorageModule'])
 
 .service('Songs', function(localStorageService, $q, pouchDB) {
 
-  db.createIndex({index: {fields: ['category', 'owner']}}).then(function (result) {}).catch(function (err) {console.log(err);});
+  sync.createIndex({index: {fields: ['category']}}).then(function (result) {}).catch(function (err) {console.log(err);});
 
       return {
         all: function() {
-          var songsList = $q.when(db.allDocs({include_docs: true, startkey: "songs"}).then(function (result){ return result.rows; }).catch(function (err) {console.log(err);}));
+          var songsList = $q.when(sync.allDocs({include_docs: true, startkey: "songs"}).then(function (result){ return result.rows; }).catch(function (err) {console.log(err);}));
           return songsList;
         },
 
         //TEST: OK
         active: function(songsList) {
-          var songsList = $q.when(db.find({selector: {category: {$eq:"song"}}}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
+          var songsList = $q.when(sync.find({selector: {category: {$eq:"song"}}}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
           return songsList;
         },
         //TEST: OK
         get: function(songId) {
           var song = String(songId);
-              song = $q.when(db.get(song).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
+              song = $q.when(sync.get(song).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
           return song;
         },
         //TEST OK
         count: function() {
-          var songs = $q.when(db.find({selector: {category: {$eq:"song"}}}).then(function (result){ return result.docs.length + 1; }).catch(function (err) {console.log(err);}));
+          var songs = $q.when(sync.find({selector: {category: {$eq:"song"}}}).then(function (result){ return result.docs.length + 1; }).catch(function (err) {console.log(err);}));
           return songs;
         },
         //TEST OK
         search: function(string) {
-          var songs = $q.when(db.allDocs({include_docs: true, startkey: 'song_' + string, endkey: 'song_' + string + '\uffff'}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
+          var songs = $q.when(sync.allDocs({include_docs: true, startkey: 'song_' + string, endkey: 'song_' + string + '\uffff'}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
           return songs;
-        },
-        //TEST OK
-        owned: function(user) {
-          var songs = $q.when(db.find({selector: {createdBy: {$eq: user}}}).then(function (result){ return result.docs; }).catch(function (err) {console.log(err);}));
-          return songs;
-        },
+        }
       }
 })
 
@@ -65,7 +60,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
 
 .service('Setlists', function(localStorageService, $q, pouchDB) {
 
-  db.createIndex({index: {fields: ['category', 'owner', 'saved']}}).then(function (result) {}).catch(function (err) {console.log(err);});
+  sync.createIndex({index: {fields: ['category', 'owner', 'saved']}}).then(function (result) {}).catch(function (err) {console.log(err);});
     return {
       all: function() {
         // getData();
@@ -74,41 +69,41 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       },
       //TEST OK
       count: function() {
-        var setList = $q.when(db.find({selector: {category: {$eq:"setlist"}}}).then(function (result){ return result.docs.length + 1; }).catch(function (err) {console.log(err);}));
+        var setList = $q.when(sync.find({selector: {category: {$eq:"setlist"}}}).then(function (result){ return result.docs.length + 1; }).catch(function (err) {console.log(err);}));
         console.log(setList);
         return setList;
       },
       //TEST OK
       get: function(setlistId) {
         var setlist = String(setlistId);
-            setlist = $q.when(db.get(setlistId).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
+            setlist = $q.when(sync.get(setlistId).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
         return setlist;
       },
       //TEST OK
       active: function() {
-        var setList = $q.when(db.find({selector: {category: {$eq:"setlist"}}}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
+        var setList = $q.when(sync.find({selector: {category: {$eq:"setlist"}}}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
         return setList;
       },
       //TEST OK
       search: function(string) {
-        var setList = $q.when(db.allDocs({include_docs: true, startkey: 'setlist_' + string, endkey: 'setlist_' + string + '\uffff'}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
+        var setList = $q.when(sync.allDocs({include_docs: true, startkey: 'setlist_' + string, endkey: 'setlist_' + string + '\uffff'}).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
         return setList;
       },
       //TEST OK
       pinned: function(user) {
         var user = String(user);
-            user = $q.when(db.get(user).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
+            user = $q.when(sync.get(user).then(function (result){ return result; }).catch(function (err) {console.log(err);}));
         return user;
       },
       //TEST OK
       owned: function(user) {
-        var setList = $q.when(db.find({selector: {owner: {$eq: user}}}).then(function (result){ return result.docs; }).catch(function (err) {console.log(err);}));
+        var setList = $q.when(sync.find({selector: {owner: {$eq: user}}}).then(function (result){ return result.docs; }).catch(function (err) {console.log(err);}));
         return setList;
       },
       //TEST OK
       saved: function(user) {
         var setlists = [];
-        var setList = $q.when(db.find({selector: {category: {$eq:"setlist"}}}).then(function (result){ 
+        var setList = $q.when(sync.find({selector: {category: {$eq:"setlist"}}}).then(function (result){ 
           result.docs.forEach(function(setlist) {
             setlist.saved.forEach(function(check) {
               if( check == user) {
@@ -171,8 +166,9 @@ angular.module('songDroid.services', ['LocalStorageModule'])
 
 .service('Users', function(localStorageService, $q, pouchDB) {
 
-  db.createIndex({index: {fields: ['username']}}).then(function (result) {}).catch(function (err) {console.log(err);});
-  db.bulkDocs([
+  sync.createIndex({index: {fields: ['username']}}).then(function (result) {}).catch(function (err) {console.log(err);});
+  
+  sync.bulkDocs([
     {
       _id: 'user_jilles',
       username: 'jilles',
@@ -183,8 +179,8 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       category: 'user'
     },
     {
-      _id: 'user_demo',
-      username: 'demo',
+      _id: 'user_mr. windy',
+      username: 'Mr. Windy',
       password: '5f4dcc3b5aa765d61d8327deb882cf99',
       pinned: null,
       roles: null,
@@ -199,7 +195,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       songs: ['song_photograph_0','song_lost stars_0'],
       roles: [],
       owner: 'jilles',
-      saved: ['demo', ],
+      saved: ['Mr. Windy'],
       category: 'setlist'
     },
     {
@@ -209,7 +205,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       urlSpotify: null,
       songs: ['song_photograph_0','song_lost stars_0'],
       roles: [],
-      owner: 'demo',
+      owner: 'Mr. Windy',
       saved: ['jilles'],
       category: 'setlist'
     },
@@ -229,8 +225,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       lyrics: "",
       chords: "",
       sections: "",
-      headers: "",
-      createdBy: "demo"
+      headers: ""
     },
     {
       _id: "song_lost stars_0",
@@ -248,8 +243,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       lyrics: "",
       chords: "",
       sections: "",
-      headers: "",
-      createdBy: "jilles"
+      headers: ""
     },
     {
       _id: "song_me and my broken heart_0",
@@ -267,8 +261,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       lyrics: "",
       chords: "",
       sections: "",
-      headers: "",
-      createdBy: "demo"
+      headers: ""
     },
     {
       _id: "song_disappear_0",
@@ -286,8 +279,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
       lyrics: "",
       chords: "",
       sections: "",
-      headers: "",
-      createdBy: "demo"
+      headers: ""
     }
   ]).then(function (result) {
     console.log("Multiple objects created.");
@@ -297,7 +289,7 @@ angular.module('songDroid.services', ['LocalStorageModule'])
 
     return {
       check: function(username) {
-        var user = $q.when(db.allDocs({include_docs: true, startkey: 'user_' + username, endkey: 'user_' + username}).then(function (result){ return result.rows[0].doc; }).catch(function (err) {console.log(err);}));
+        var user = $q.when(sync.allDocs({include_docs: true, startkey: 'user_' + username, endkey: 'user_' + username}).then(function (result){ return result.rows[0].doc; }).catch(function (err) {console.log(err);}));
         return user;
       },
       get: function(username) {

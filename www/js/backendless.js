@@ -1,6 +1,3 @@
-var db = new PouchDB('testDB');
-// db.destroy(db);
-
 function Songs(args) {
     args = args || {};
     this.songId = args.songId || "";

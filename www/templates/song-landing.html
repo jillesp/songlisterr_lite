@@ -1,17 +1,12 @@
-<ion-view view-title="Setlisterr" cache-view="false" class="songLanding">
-    <ion-nav-bar class="bar-light">
+<ion-view view-title="{{song.title}}" cache-view="false" class="songLanding">
+    <ion-nav-title>
+        <p>{{song.title}}</p>
+    </ion-nav-title>
+    <ion-nav-bar class="bar-dark">
         <ion-nav-buttons side="right"><button class="button" ng-click="goSpotify()"><img src="img/spotify.png"></button></ion-nav-buttons>
         <ion-nav-buttons side="left"><button class="button" ng-click="back()"><i class="ion-ios-arrow-back"></i></button></ion-nav-buttons>
     </ion-nav-bar>
-      <ion-content class="padding songLanding template-landing">
-
-        <div class="dev-msg" ng-class="{'devmode': devMode}">
-            <ul>
-                <li>Swipe left or right on the song information card to view another song.</li>
-                <li>Swipe left or right on the lyrics section to tranpose song chords.</li>
-                <li>Double tap to toggle chords on/off.</li>
-            </ul>
-        </div>
+      <ion-content class="padding songLanding">
 
         <div class="notification" ng-class="{'success': hasParams}">
           <p>{{msg}}</p>
